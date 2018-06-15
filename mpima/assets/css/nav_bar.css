@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* CSS Document */
+
+/******************************
+
+[Table of Contents]
+
+1. Drop down
+
+
+******************************/
+/*###################################
+1.	Dropdown Menu
+ #######################################*/
+
+ .nav_dropdown{
+ 	border-radius: 0;
+ 	opacity: 0.8;
+ 	margin-top: 39px;
+ }
+.nav_dropdown a{
+ 	color: #272822!important;
+	display: block;
+	height: 45px
+}
+.nav_dropdown a:hover {
+	background-color: #ffffff;
+	opacity: 1;
+	color: #fd784f !important; #272822
+}

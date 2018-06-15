@@ -1,0 +1,221 @@
+.htmle {
+    border-radius: 5px;
+    border: 0;
+    padding: 0;
+    margin:0 auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+	position:relative;
+	width:792px;
+}
+
+     .tools {
+	    position:relative; 
+		background-color:#ffffff;
+    }
+
+     .tools > div {
+        min-height: 25px;
+    }
+
+     .editview {
+      position:relative;
+	  border: 1px solid #CCC;
+      border-radius: 0;
+        background-color: #fff;
+        padding: 1px;
+      margin: 2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    z-index:1;
+	}
+
+         .editview .wrapper {
+            overflow: auto;
+            margin: auto;
+            width: 99.9%;
+            height: 99.9%;
+        }
+
+     [contenteditable]:focus {
+        outline: none;
+    }
+
+     .editview.codeview {
+        background-color: #24272a;
+    }
+
+     .frame {
+        width: 100%;
+        border: 0;
+    }
+
+     .body,
+     .codebody {
+        min-height: 80px;
+    }
+
+     .codebody {
+        color: #5EABFF;
+        font-weight: normal;
+        font-family: 'Courier New';
+        white-space: pre-wrap !important;
+        max-height: 250px;
+    }
+
+     .dropdown-htmle {
+      border-radius: 3px;
+        margin: 1px;
+        /*min-width: 75px;*/
+        height: 20px;
+		border: 1px solid #cfcfcf;
+		box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+		color: #767676;
+		
+      min-height: 26px;
+      padding: 1px 1px 0 4px;
+      display: inline-block;
+    }
+
+     .dropdown-htmle * {
+        vertical-align: middle;
+    }
+
+     .colorbox {
+        height: 5px;
+        width: 5px;
+        display: inline-block;
+        float: right;
+        margin: 2px;
+    }
+
+         .dropdown-htmle select {
+            margin: -1px 2px;
+            border: none;
+            height: 20px;
+            background: inherit;
+            outline: none;
+        }
+
+/* buttons */
+.tools .btn {
+border-radius: 3px;	
+background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(244, 244, 244, 1) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+border: 1px solid #cfcfcf;
+box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+color: #767676;
+width: 26px;
+height: 26px;
+margin: 1px;
+}
+#btn-html {
+  float: right;
+}
+.tools .btn:after {
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+   color: #767676;
+    font-size: 13.5px;
+    margin: -10px -6px;
+    position: absolute;
+}
+
+#btn-clear:after {
+    content: "\f0f6";
+}
+
+#btn-print:after {
+    content: "\f02f";
+}
+
+#btn-undo:after {
+    content: "\f0e2";
+}
+
+#btn-redo:after {
+    content: "\f01e";
+}
+
+#btn-removeformat:after {
+    content: "\f12d";
+}
+
+#btn-bold:after {
+    content: "\f032";
+}
+
+#btn-italic:after {
+    content: "\f033";
+}
+
+#btn-underline:after {
+    content: "\f0cd";
+}
+
+#btn-alignleft:after {
+    content: "\f036";
+}
+
+#btn-aligncenter:after {
+    content: "\f037";
+}
+
+#btn-alignright:after {
+    content: "\f038";
+}
+
+#btn-alignjust:after {
+    content: "\f039";
+}
+
+#btn-orderedlist:after {
+    content: "\f0cb";
+}
+
+#btn-unorderedlist:after {
+    content: "\f0ca";
+}
+
+#btn-indentdec:after {
+    content: "\f03c";
+}
+
+#btn-indentinc:after {
+    content: "\f03b";
+}
+
+#btn-selectall:after {
+    content: "\f069";
+}
+
+#btn-html:after {
+    content: "\f121";
+}
+
+#btn-createlink:after {
+    content: "\f0c1";
+}
+
+#btn-unlink:after {
+    content: "\f127";
+}
+
+#btn-increasefont:after {
+    content: "\f031";
+}
+
+#btn-decreasefont:after {
+    content: "\f031";
+    font-size: x-small;
+}
+
+.btns-separate {
+  width: 0;
+    border: none;
+    display: inline-block;
+}

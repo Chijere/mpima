@@ -1,0 +1,23 @@
+.error{
+color:#ff0000;
+font-size:14px;
+padding-left:5px;
+}
+
+.error.g{
+background:#ff6c6c;
+color:#ffffff;
+font-weight:bold;
+border-radius: 4px;   
+border:1px solid #ff6666;   
+//width:80px;
+padding-right:10px;
+padding-left:10px;
+margin-top:10px;
+margin-bottom:10px;
+}
+
+input.error{
+color: #000000;
+padding: 0px;
+}
