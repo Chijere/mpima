@@ -20,7 +20,7 @@
         assets/vendors/iCheck/icheck.min.js
      */
 
-    $page_data['page_title']='Mpima About';
+    $page_data['page_title']= SITE_NAME.' Admin';
     $page_data['css_links']=array( 'assets/css/admin.min.css',
                                 );
 
@@ -104,10 +104,12 @@
                             </td>
                             <td class=" "><?php echo $value['item_id']; ?></td>
                             <td class=" " style="width: 130px; padding-left: 30px"><img src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'_t.jpg'; ?>" alt="" width="50" height="50"></td>
-                            <td class=" "><?php echo $value['item_name']; ?><i class="success fa fa-long-arrow-up"></i></td>
+                            <td class=" "><?php echo $value['item_name']; ?></td>
                             <td class=" "><?php echo $value['date']; ?></td>
                             <td class="a-right a-right "><?php echo $value['price']; ?></td>
-                            <td class=" last"><a href="#">View Edit Delete</a>
+                            <td class=" last">
+                              <a class="action_link" href="<?php echo base_url().'listings_single/'.$value['item_id']; ?>">View</a>&nbsp;&nbsp;
+                              <a class="action_link" href="<?php echo base_url().'edit_property/'.$value['item_id']; ?>">Edit</a>
                             </td>
                           </tr>
                           <?php } ?>

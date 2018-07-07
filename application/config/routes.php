@@ -77,8 +77,12 @@ $route['(?i)send_request'] = 'send_request';
 
 #About
 $route['(?i)admin'] = 'admin';
+$route['(?i)admin/draft'] = 'admin/draft';
 $route['(?i)add_property'] = 'admin/add_property';
+$route['(?i)edit_property/(:num)'] = 'admin/edit_property';
 $route['(?i)admin/add_property/form'] = 'admin/add_property_form';
+$route['(?i)admin/edit_property/form'] = 'admin/edit_property_form';
+$route['(?i)admin/edit_property/form/delete'] = 'admin/delete_property_form';
 #------
 
 #defaults

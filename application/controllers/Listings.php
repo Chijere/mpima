@@ -298,10 +298,16 @@ class Listings extends CI_Controller {
 	public function listings_single()
 	{
 
+		/*########################################
+          0. load classes
+        #######################################*/		    
 
         $this->load->model('item_model');
 		$this->load->library('general_functions');
-								    
+		
+		/*########################################
+          1. Get Data from Database using Models
+        #######################################*/		    
    		$pass_data = array(	'item_id' => $this->uri->segment(2)
    						   );
 
@@ -322,6 +328,10 @@ class Listings extends CI_Controller {
 				$model_data['data']['records'][$key]['item_name']=$this->general_functions->wordTrimmer($value['item_name'],23,'&hellip;');
 
    		}
+
+		/*########################################
+          2. Send data to view
+        #######################################*/		    
 
 		$data['page_data']= array();	
 		$data['page_data']['item']= $model_data;	

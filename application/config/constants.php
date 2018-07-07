@@ -94,12 +94,12 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 |
 */
 //defined('IMAGE_SRC_URL')        	OR define('IMAGE_SRC_URL', 'http://192.168.137.1/shoppedVer2/'); 
-defined('IMAGE_SRC_URL')        	OR define('IMAGE_SRC_URL', 'http://localhost/mpima/'); 
-//defined('DESKTOP_VERSION_URL')      OR define('DESKTOP_VERSION_URL', 'http://192.168.137.1/mpima/');
-defined('DESKTOP_VERSION_URL')      OR define('DESKTOP_VERSION_URL', 'http://localhost/mpima/');
-//defined('MOBILE_VERSION_URL')      OR define('MOBILE_VERSION_URL', 'http://192.168.137.1/mobile.mpima/');  
-defined('MOBILE_VERSION_URL')      OR define('MOBILE_VERSION_URL', 'http://localhost/mobile.mpima/');  
-defined('IMAGE_SRC_DIR')        	OR define('IMAGE_SRC_DIR', '../mpima/'); 
+defined('IMAGE_SRC_URL')        	OR define('IMAGE_SRC_URL', 'http://localhost/mpima_git/'); 
+//defined('DESKTOP_VERSION_URL')      OR define('DESKTOP_VERSION_URL', 'http://192.168.137.1/mpima_git/');
+defined('DESKTOP_VERSION_URL')      OR define('DESKTOP_VERSION_URL', 'http://localhost/mpima_git/');
+//defined('MOBILE_VERSION_URL')      OR define('MOBILE_VERSION_URL', 'http://192.168.137.1/mobile.mpima_git/');  
+defined('MOBILE_VERSION_URL')      OR define('MOBILE_VERSION_URL', 'http://localhost/mobile.mpima_git/');  
+defined('IMAGE_SRC_DIR')        	OR define('IMAGE_SRC_DIR', '../mpima_git/'); 
 
 /*
 |--------------------------------------------------------------------------
@@ -111,3 +111,12 @@ defined('IMAGE_SRC_DIR')        	OR define('IMAGE_SRC_DIR', '../mpima/');
 |
 */
 defined('SITE_VERSION')        	OR define('SITE_VERSION', 'desktop'); 
+
+/*
+|--------------------------------------------------------------------------
+| Other Basic constants
+|--------------------------------------------------------------------------
+|
+|
+*/
+defined('SITE_NAME')        	OR define('SITE_NAME', 'Mpima'); 

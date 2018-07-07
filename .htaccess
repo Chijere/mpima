@@ -2,5 +2,5 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /mpima/index.php/$1 [L]
+RewriteRule ^(.*)$ /mpima_git/index.php/$1 [L]
 </IfModule>

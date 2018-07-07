@@ -753,6 +753,10 @@ class Item_model extends CI_Model {
 					{
 						array_push($miniWhereSubQueryArry,'`item_id`!=:not_item_id'.$n ); 
 						$n++;
+					}elseif($key==='on_display' || ($key==='on_display'.$n) )
+					{
+						array_push($miniWhereSubQueryArry,'`on_display`=:on_display'.$n ); 
+						$n++;
 					}elseif($key==='price_from' || ($key==='price_from'.$n) )
 					{
 						array_push($miniWhereSubQueryArry,'`price`>=:price_from'.$n ); 
@@ -806,9 +810,9 @@ class Item_model extends CI_Model {
 																			) AS `s4` ON  `s4`.`s4_user_id`= `s1`.`user_id`
 																			
 																			LEFT JOIN( 
-																			SELECT `parent_name` AS `category_parent_name`,`parent_id` AS `category_parent_id`, `category_name`, `category_id` AS `s5_category_id`
+																			SELECT `parent_name` AS `category_parent_name`,`parent_id` AS `category_parent_id`, `name` AS `category_name`, `id` AS `s5_category_id`
 																			FROM `category` `s5_a1`
-																					LEFT JOIN( SELECT `category_name` As parent_name,`category_id` AS `s5_b1_category_id` 
+																					LEFT JOIN( SELECT `name` As parent_name,`id` AS `s5_b1_category_id` 
 																								FROM `category` 
 																					)AS `s5_b1` ON  `s5_b1`.`s5_b1_category_id` = `s5_a1`.`parent_id`							
 																			) AS `s5` ON  `s5`.`s5_category_id`= `s1`.`category_id`
@@ -880,6 +884,9 @@ class Item_model extends CI_Model {
 														
 					if($key==='item_id' || ($key==='item_id'.$n) ) 
 					{$dbquery1->bindValue(":item_id".$n,$value2); $n++; }
+														
+					if($key==='on_display' || ($key==='on_display'.$n) ) 
+					{$dbquery1->bindValue(":on_display".$n,$value2); $n++; }
 														
 					if($key==='deleted_by_seller' || ($key==='deleted_by_seller'.$n) ) 
 					{$dbquery1->bindValue(":deleted_by_seller".$n,$value2); $n++; }
@@ -1092,10 +1099,6 @@ class Item_model extends CI_Model {
 			   	$itemsPerLocation = $dbquery5->fetchAll();
 			   	$itemsPerType = $dbquery6->fetchAll();
 				
-			   	#add levels to the categories
-			   	$this->load->model('category_model');
-			   	$itemsPerCategory=$this->category_model->category_levels_setter ($itemsPerCategory,1,0);
-
 				#collect for item
 			  	$this->status = true;
 			  	$sql_result = $dbquery2->fetchAll();
@@ -1200,6 +1203,10 @@ class Item_model extends CI_Model {
 											"user_verification"=>$value['verification'],
 											"condition_name`"=>$value['condition_name'],
 											"condition_id"=>$value['condition_id'],
+											"type_id"=>$value['type_id'],
+											"type_name"=>$value['type_name'],
+											"location_id"=>$value['location_id'],
+											"location_name"=>$value['location_name'],
 											"item_description"=>$value['description'],
 											"user_profile_pic"=>$profile_picArray,
 											"user_name"=>$value['user_name'],									
@@ -1209,7 +1216,6 @@ class Item_model extends CI_Model {
 					}
 				}
 			}    
-	          	           
 		   
 	        return $info = array("status"=>$this->status,
 	                            "data"=> array('records'=> $result,
@@ -1545,7 +1551,7 @@ class Item_model extends CI_Model {
 	    if(!isset($data['condition_id'])) $data['condition_id']='';
 	    if(!isset($data['category_id'])) $data['category_id']='';
 	    if(!isset($data['price'])) $data['price']='';
-	    if(!isset($data['on_display'])) $data['on_display']=1;
+	    if(!isset($data['on_display'])) $data['on_display']="";
 	    if(!isset($data['allow_null_photos'])) $data['allow_null_photos']=false;
 
 
@@ -1793,11 +1799,14 @@ class Item_model extends CI_Model {
 							 UPDATE `item` SET 
 							`name`= CASE WHEN :name=:emptyField THEN `name` ELSE :name END,
 							`category_id`= CASE WHEN :category_id=:emptyField THEN `category_id` ELSE :category_id END,
+							`location_id`= CASE WHEN :location_id=:emptyField THEN `location_id` ELSE :location_id END,
+							`type_id`= CASE WHEN :type_id=:emptyField THEN `type_id` ELSE :type_id END,
 							`price`= CASE WHEN :price=:emptyField THEN `price` ELSE :price END,
 							`date`= `date`,
 							`condition_id`= CASE WHEN :condition_id=:emptyField THEN `condition_id` ELSE :condition_id END,
 							`on_display`= CASE WHEN :on_display=:emptyField THEN `on_display` ELSE :on_display END,
 							`description`= CASE WHEN :description=:emptyField THEN `description` ELSE :description END,
+							`summary`= CASE WHEN :summary=:emptyField THEN `summary` ELSE :summary END,
 							`item_pic`= :item_pic
 							WHERE (`item_id`=:item_id AND `user_id`=:user_id )
 			");
@@ -1806,9 +1815,12 @@ class Item_model extends CI_Model {
 			$dbquery2->bindParam(":item_pic",$replaceRecordsString);
 			$dbquery2->bindParam(":name",$data['name']);
 			$dbquery2->bindParam(":category_id",$data['category_id']);
+			$dbquery2->bindParam(":location_id",$data['location_id']);
+			$dbquery2->bindParam(":type_id",$data['type_id']);
 			$dbquery2->bindParam(":price",$data['price']);
 			$dbquery2->bindParam(":on_display",$data['on_display']);
 			$dbquery2->bindParam(":description",$data['description']);
+			$dbquery2->bindParam(":summary",$data['summary']);
 			$dbquery2->bindParam(":condition_id",$data['condition_id']);
 			$dbquery2->bindParam(":emptyField",$emptyField);                 
 	        

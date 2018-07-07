@@ -21,7 +21,8 @@
                   <li><a><i class="fa fa-edit"></i> Properties <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url(); ?>add_property">Add</a></li>
-                      <li><a href="<?php echo base_url(); ?>admin">View all</a></li>
+                      <li><a href="<?php echo base_url(); ?>admin">View Published properties</a></li>
+                      <li><a href="<?php echo base_url(); ?>admin/draft">View Drafts</a></li>
                     </ul>
                   </li>
                 </ul>

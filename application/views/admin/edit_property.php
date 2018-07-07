@@ -20,7 +20,7 @@
         assets/vendors/iCheck/icheck.min.js
      */
 
-    $page_data['page_title']='Mpima Add Property';
+    $page_data['page_title']='Mpima Edit Property';
     $page_data['css_links']=array( 'assets/css/admin.min.css',
                                     'assets/vendors/dropzone/dist/min/dropzone.min.css',
                                     'assets/vendors/Holdon/HoldOn.min.css',
@@ -29,7 +29,7 @@
 
     $page_data['tag']=array( 
                         '<script src="'.base_url().'assets/js/admin_custom.min.js" async ></script>',
-                        '<script src="'.base_url().'assets/js/file-upload.js" ></script>',
+                        '<script src="'.base_url().'assets/js/file-upload_edit.js" ></script>',
                         '<script src="'.base_url().'assets/vendors/validator/validator.js" ></script>',
                         '<script src="'.base_url().'assets/vendors/jquery.form.min.js" ></script>',
                         '<script src="'.base_url().'assets/vendors/dropzone/dist/min/dropzone.min.js" ></script>'
@@ -59,7 +59,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Add Property</h3>
+                <h3>Edit Property</h3>
               </div>
             </div>
 
@@ -82,7 +82,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Propety Title<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[4, 20]" name="name" placeholder="e.g House in Nyambadwe" required="required" 
+                          <input type="text" class="form-control" data-parsley-length="[4, 20]" name="name" placeholder="<?php echo $page_data['item']['data']['records'][0]['item_name']; ?>" 
                             data-parsley-length-message="It should be between 4 to 20 characters"
                           >
                         </div>
@@ -90,7 +90,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Price</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input name="price" type="text" class="form-control" placeholder="e.g 30000" type="number" data-parsley-type="integer" data-parsley-length="[5, 10]" required="required" >
+                          <input name="price" type="text" class="form-control" placeholder="<?php echo $page_data['item']['data']['records'][0]['price']; ?>" type="number" data-parsley-type="integer" data-parsley-length="[6, 10]"  >
                         </div>
                       </div>
                       <div class="form-group">
@@ -98,7 +98,7 @@
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <select name="type" class="form-control">
                             <?php foreach ($page_data['type']['data']['records'] as $key => $value): ?>
-                              <option  value="<?php echo $value['type_id'] ?>" ><?php echo $value['type_name'] ?></option>
+                              <option <?php if($page_data['item']['data']['records'][0]['type_id'] == $value['type_id']) echo 'selected="selected"'; ?> value="<?php echo $value['type_id'] ?>" ><?php echo $value['type_name'] ?></option>
                             <?php endforeach ?>
                           </select>
                         </div>
@@ -108,7 +108,7 @@
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <select name="category" class="form-control">
                             <?php foreach ($page_data['category']['data']['records'] as $key => $value): ?>
-                              <option  value="<?php echo $value['category_id'] ?>" ><?php echo $value['category_name'] ?></option>
+                              <option <?php if($page_data['item']['data']['records'][0]['category_id'] == $value['category_id']) echo 'selected="selected"'; ?>  value="<?php echo $value['category_id'] ?>" ><?php echo $value['category_name'] ?></option>
                             <?php endforeach ?>
                           </select>
                         </div>
@@ -116,25 +116,25 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Location</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select name="location" class="select2_group form-control">
+                            <select name="location" class="select2_group form-control">
                             <optgroup label="Northern Region">
                             <?php foreach ($page_data['location']['data']['records'] as $key => $value): ?>
                               <?php if ($value['region']=='Northern Region'): ?>
-                                  <option  value="<?php echo $value['location_id'] ?>" ><?php echo $value['location_name'] ?></option>
+                                  <option <?php if($page_data['item']['data']['records'][0]['location_id'] == $value['location_id']) echo 'selected="selected"'; ?> value="<?php echo $value['location_id'] ?>" ><?php echo $value['location_name'] ?></option>
                               <?php endif ?>
                             <?php endforeach ?> 
                             </optgroup>
                             <optgroup label="Central Region">
                             <?php foreach ($page_data['location']['data']['records'] as $key => $value): ?>
                               <?php if ($value['region']=='Central Region'): ?>
-                                  <option  value="<?php echo $value['location_id'] ?>" ><?php echo $value['location_name'] ?></option>
+                                  <option <?php if($page_data['item']['data']['records'][0]['location_id'] == $value['location_id']) echo 'selected="selected"'; ?> value="<?php echo $value['location_id'] ?>" ><?php echo $value['location_name'] ?></option>
                               <?php endif ?>
                             <?php endforeach ?>
                             </optgroup>
                             <optgroup label="Southern Region"> 
                             <?php foreach ($page_data['location']['data']['records'] as $key => $value): ?>
                               <?php if ($value['region']=='Southern Region'): ?>
-                                  <option  value="<?php echo $value['location_id'] ?>" ><?php echo $value['location_name'] ?></option>
+                                  <option <?php if($page_data['item']['data']['records'][0]['location_id'] == $value['location_id']) echo 'selected="selected"'; ?> value="<?php echo $value['location_id'] ?>" ><?php echo $value['location_name'] ?></option>
                               <?php endif ?>
                             <?php endforeach ?>
                             </optgroup> 
@@ -146,7 +146,7 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <textarea name="summary" class="form-control" rows="3"
-                              data-parsley-length="[10, 60]" name="name" placeholder="e.g. modern House in Nyambadwe with 4 bedrooms" required="required" 
+                              data-parsley-length="[10, 60]" name="name" placeholder="<?php echo $page_data['item']['data']['records'][0]['summary']; ?>" 
                             data-parsley-length-message="It should be between 10 to 60 characters"
                           ></textarea>
                         </div>
@@ -155,7 +155,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Description <span class="required">*</span>
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <textarea name="description" class="form-control" rows="5" required="required"></textarea>
+                          <textarea name="description" placeholder="<?php echo $page_data['item']['data']['records'][0]['item_description']; ?>" class="form-control" rows="5" ></textarea>
                         </div>
                       </div>
 
@@ -176,18 +176,19 @@
                   </div>
                   <div class="x_content">
                     <br />
-                    <form class="form-horizontal form-label-left form_publish" action="<?php echo base_url(); ?>admin/add_property/form">
+                    <form class="form-horizontal form-label-left form_publish" action="<?php echo base_url(); ?>admin/edit_property/form">
+                      <input type="hidden" name="i_ref" value="<?php echo $page_data['item']['data']['records'][0]['item_id'] ?>" />
                       <div class="form-group">
                         <label class="control-label">Published <small> work will immediately show on the front end </small></label>
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="">
-                          <button type="submit" class="btn btn-primary publish">Publish</button>
-                          <button type="submit" class="btn btn-success save_drft">Save Draft</button>
+                          <button  style="width:70px" type="submit" class="btn btn-primary publish">Publish</button>
+                          <button  type="submit" class="btn btn-success save_drft"> <?php if($page_data['item']['data']['records'][0]['on_display'] != 0) echo "Move"; else echo "Save"; ?> to Draft</button>
+                          <button style="width:70px" type="submit" class="btn btn-danger delete">Delete </button>
                         </div>
                       </div>
-
                     </form>
                   </div>
                 </div>
@@ -204,7 +205,8 @@
                   </div>
                   <div class="x_content">
                     <p>Drag Images to the box below to upload or click to select Images. 3mb max</p>
-                    <form id="featured_form" action="<?php echo base_url(); ?>upload/pic/attch" class="dropzone featured_form" style="min-height: 80px; border: 1px solid #e5e5e5;"></form>
+                    <form id="featured_form" action="<?php echo base_url(); ?>upload/pic/attch" class="dropzone featured_form" style="min-height: 80px; border: 1px solid #e5e5e5;">
+                    </form>
                   </div>
                 </div>
               </div>
@@ -242,6 +244,7 @@
 
     <data id="info" style="display: none;">
       <span id="base_url"><?php echo base_url(); ?></span>
+      <span id="IMAGE_SRC_URL"><?php echo IMAGE_SRC_URL; ?></span>
     </data>
     
   <script src="http://localhost/mpima/assets/vendors/parsleyjs/dist/parsley.min.js" ></script>
@@ -262,7 +265,6 @@
           //event.preventDefault();
           //return false;
         });
- 
  
         $('.form_publish .publish').on('click',function(event) {
         event.preventDefault();
@@ -316,11 +318,59 @@
           }
         });
 
+        $('.form_publish .delete').on('click',function(event) {
+          event.preventDefault();
+          
+          $.sweetModal({
+          content: 'Confirm to delete this Property?',
+          theme:$.sweetModal.THEME_MIXED,
+          showCloseButton:false,                
+          buttons: {
+            someAction: {
+              label: 'cancel',
+              classes: '',
+              action: function() {
+              }
+              },
+            someAction2: {
+              label: 'Yes',
+              classes: 'redB',
+              action: function() {
+                       $('.main_form').parsley().validate();
+                        if (true === $('.main_form').parsley().isValid()) {
+                        
+                        $('.form_publish').append('<input type="hidden" name="on_display" value="0" />');
+
+                          $('.bs-callout-info').removeClass('hidden');
+                          $('.bs-callout-warning').addClass('hidden');
+                           
+                          $.ajax({
+                              url  : $(".form_publish").attr('action')+'/delete',
+                              type : 'POST',
+                              data : $('.main_form,.gallery_form,.featured_form,.form_publish').serialize(),
+                              success : afterSuccess_delete,
+                              beforeSubmit: beforeSubmit(),
+                              });
+
+                        } else {
+
+                          $('.bs-callout-info').addClass('hidden');
+                          $('.bs-callout-warning').removeClass('hidden');
+                        
+                        }
+              }
+              },
+            },
+            onClose:function() {
+            }
+          });
+
+        });
 
           var validateFront = function() {
             if (true === $('.main_form').parsley().isValid()) {
               $('.bs-callout-info').removeClass('hidden');
-              $('.bs-callout-warning').addClass('hidden');
+              $('.bs-callout-warning').addClass('hidden'); 
             } else {
               $('.bs-callout-info').addClass('hidden');
               $('.bs-callout-warning').removeClass('hidden');
@@ -333,7 +383,7 @@
             var valid=true;
            
             // check pics
-            if($('.featured_form').find('input[name="input1"]').length <1)
+           /* if($('.featured_form').find('input[name="input1"]').length <1)
             {
               valid = false;
                 $.sweetModal({
@@ -348,7 +398,7 @@
                     }
                   ]
                 });
-            }
+            } */
 
             if(valid)
             {
@@ -365,25 +415,18 @@
 
               
           //function after succesful file upload (when server response)
-          function afterSuccess(info)
+          function afterSuccess_delete(info)
           { 
               HoldOn.close();
             if(info.status)
             {
               $.sweetModal({
-                content: 'Propety Added.',
+                content: 'Propety deleted.',
                 icon: $.sweetModal.ICON_SUCCESS,
                 theme:$.sweetModal.THEME_MIXED,                
                 buttons: {
-                  someOtherAction: {
-                    label: 'Add another Propety',
-                    classes: 'lightGreyB bordered flat',
-                    action: function() {
-                      window.location.href = $('#info #base_url').html()+'admin/add_property';
-                    }
-                  },
                   someAction: {
-                    label: 'View',
+                    label: 'close',
                     classes: '',
                     action: function() {
                       window.location.href = $('#info #base_url').html()+'admin';
@@ -391,6 +434,63 @@
                     },
                   },
                   onClose:function() {
+                    window.location.href = $('#info #base_url').html()+'admin';
+                  }
+              });
+            }
+            else
+            { 
+              if(info.data.addition_info.indexOf('validation') !== -1)
+              {
+                jQuery.each(info.data.result_array,function(index,mssg){
+                         if( $('input[name=' + index + ']').length ) // use this if you are using id to check
+                              {
+                                  $('input[name=' + index + ']').parsley().reset();
+                                  window.ParsleyUI.addError($('input[name=' + index + ']').parsley(), index + '-custom', mssg);  
+                              }
+
+                });
+              }
+              else
+              {
+                $.sweetModal({
+                  content: info.data.result_info,
+                  title: 'Error',
+                  icon: $.sweetModal.ICON_ERROR,
+                  theme:$.sweetModal.THEME_MIXED,
+                  buttons: [
+                    {
+                      label: 'Back',
+                      classes: 'redB'
+                    }
+                  ]
+                });
+              }
+            }
+
+          } 
+              
+          //function after succesful file upload (when server response)
+          function afterSuccess(info)
+          { 
+              HoldOn.close();
+            if(info.status)
+            {
+              $.sweetModal({
+                content: 'Propety Edited.',
+                icon: $.sweetModal.ICON_SUCCESS,
+                theme:$.sweetModal.THEME_MIXED,                
+                buttons: {
+                  someAction: {
+                    label: 'close',
+                    classes: '',
+                    action: function() {
+                      window.location.href = $('#info #base_url').html()+'admin';
+                    }
+                    },
+                  },
+                  onClose:function() {
+                   window.location.href = $('#info #base_url').html()+'admin';
                   }
               });
             }

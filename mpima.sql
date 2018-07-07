@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2018 at 12:43 PM
+-- Generation Time: Jul 07, 2018 at 10:47 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -44,18 +44,18 @@ CREATE TABLE IF NOT EXISTS `cart` (
 
 CREATE TABLE IF NOT EXISTS `category` (
   `parent_id` bigint(255) NOT NULL,
-  `category_id` bigint(255) NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(50) NOT NULL,
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
   `rank` enum('1','2','3','5','6','7','8','9','10') NOT NULL DEFAULT '1',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`category_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`parent_id`, `category_id`, `category_name`, `rank`, `date`) VALUES
+INSERT INTO `category` (`parent_id`, `id`, `name`, `rank`, `date`) VALUES
 (1, 2, 'Houses', '6', '2016-04-05 17:22:37'),
 (1, 3, 'Plot', '5', '2016-04-05 17:52:14'),
 (1, 4, 'Land', '3', '2016-04-05 17:53:44');
@@ -212,19 +212,18 @@ CREATE TABLE IF NOT EXISTS `item` (
   KEY `location_id` (`location_id`),
   KEY `category_id_2` (`category_id`),
   FULLTEXT KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`item_id`, `user_id`, `name`, `category_id`, `price`, `condition_id`, `date`, `on_display`, `description`, `item_pic`, `deleted_by_seller`, `location_id`, `type_id`, `summary`) VALUES
-(1, 1, 'nyambadwe ', 2, '6000038', 1, '2018-06-06 07:59:44', '1', 'akaja akajsn akjslkal alslas', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_22/b29d2cdbb5cbf12981a6|#$(delimiter-2)$#|0', '0', 1, 1, 'hajd kakjd akajska'),
-(2, 1, 'Namiwawa South', 2, '400000', 1, '2018-06-06 07:59:44', '1', '3 bedroom house in the city', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_22/829b81d01c550e08e340|#$(delimiter-2)$#|0|#$(delimiter-1)$#|1|#$(delimiter-2)$#|media/user/1/image/item/2018_22/4d9479a2fb2fe2855847|#$(delimiter-2)$#|0', '0', 1, 1, '3 bedroom house in the city'),
 (3, 1, 'Nkolokosa', 2, '300000', 1, '2018-06-06 07:59:44', '1', '2 bedroom house best condtion', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_22/dc3f8e1d2ca73ce0c1db|#$(delimiter-2)$#|0|#$(delimiter-1)$#|1|#$(delimiter-2)$#|media/user/1/image/item/2018_22/9cfc8c65f18cd066dae9|#$(delimiter-2)$#|0', '0', 1, 1, '2 bedroom house best condtion'),
-(4, 1, 'Cholobwe township', 2, '450000', 1, '2018-06-06 07:59:44', '1', 'Cholobwe township', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_22/4046f2d40721fd4b054b|#$(delimiter-2)$#|0', '0', 1, 2, 'Cholobwe township'),
 (5, 1, 'Bangwe township', 4, '708880', 1, '2018-06-06 07:59:44', '1', 'Bangwe township', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_22/dd98133c29b2e005a1cf|#$(delimiter-2)$#|0', '0', 1, 2, 'Bangwe township morden'),
-(6, 1, 'chigumula township', 4, '459000', 1, '2018-06-06 07:59:44', '1', 'chigumula township', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_22/f6e0865cd37c1d909021|#$(delimiter-2)$#|0', '0', 1, 1, 'chigumula township');
+(8, 1, 'Ndirande', 2, '200000', 1, '2018-07-06 22:17:52', '1', 'nice', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_27/f9d1f9796819ba818abf|#$(delimiter-2)$#|0|#$(delimiter-1)$#|1|#$(delimiter-2)$#|media/user/1/image/item/2018_27/b92f6f66c0fa7839b8f2|#$(delimiter-2)$#|0|#$(delimiter-1)$#|2|#$(delimiter-2)$#|media/user/1/image/item/2018_27/a34d31478bf47e2a7e7f|#$(delimiter-2)$#|0', '0', 17, 1, 'goose House'),
+(9, 1, 'chiromoni', 2, '30000', 1, '2018-07-06 22:48:53', '0', 'nice', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_27/d52328b829382fdb1a36|#$(delimiter-2)$#|0', '0', 29, 2, 'cool indeed'),
+(10, 1, 'Vumbwe', 2, '50000', 1, '2018-07-06 22:50:05', '1', 'really nice', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_27/38c63ce5bb6256c7c69d|#$(delimiter-2)$#|0|#$(delimiter-1)$#|1|#$(delimiter-2)$#|media/user/1/image/item/2018_27/7827d58fdea2434dd14d|#$(delimiter-2)$#|0', '0', 29, 2, 'right at the peek');
 
 -- --------------------------------------------------------
 
@@ -259,25 +258,49 @@ INSERT INTO `item_condition` (`condition_name`, `condition_id`, `date`, `rank`) 
 --
 
 CREATE TABLE IF NOT EXISTS `location` (
-  `name` varchar(15) NOT NULL,
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `region` varchar(15) CHARACTER SET utf8 DEFAULT NULL,
+  `name` varchar(10) CHARACTER SET utf8 DEFAULT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `rank` enum('1','2','3','5','6','7','8','9','10') NOT NULL DEFAULT '1',
-  `description` varchar(2000) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `rank` enum('1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
 
 --
 -- Dumping data for table `location`
 --
 
-INSERT INTO `location` (`name`, `id`, `date`, `rank`, `description`) VALUES
-('Good', 1, '2016-04-10 08:28:18', '1', ''),
-('Perfect', 2, '2016-04-10 08:28:18', '2', ''),
-('Brand New', 3, '2016-04-10 08:28:37', '5', ''),
-('Excellent', 4, '2016-03-08 00:26:37', '3', ''),
-('Fairly used', 7, '2016-04-10 09:10:33', '1', ''),
-('Used', 9, '2016-04-10 09:10:33', '1', '');
+INSERT INTO `location` (`id`, `region`, `name`, `date`, `description`, `rank`) VALUES
+(1, 'Central Region', 'Dedza', '2018-07-03 16:24:58', '', '1'),
+(2, 'Central Region', 'Dowa', '2018-07-03 16:24:58', '', '1'),
+(3, 'Central Region', 'Kasungu', '2018-07-03 16:24:58', '', '1'),
+(4, 'Central Region', 'Lilongwe', '2018-07-03 16:24:58', '', '5'),
+(5, 'Central Region', 'Mchinji', '2018-07-03 16:24:58', '', '1'),
+(6, 'Central Region', 'Nkhotakota', '2018-07-03 16:24:58', '', '1'),
+(7, 'Central Region', 'Ntcheu', '2018-07-03 16:24:58', '', '1'),
+(8, 'Central Region', 'Ntchisi', '2018-07-03 16:24:58', '', '1'),
+(9, 'Central Region', 'Salima', '2018-07-03 16:24:58', '', '1'),
+(10, 'Northern Region', 'Chitipa', '2018-07-03 16:24:58', '', '1'),
+(11, 'Northern Region', 'Karonga', '2018-07-03 16:24:58', '', '1'),
+(12, 'Northern Region', 'Likoma', '2018-07-03 16:24:58', '', '1'),
+(13, 'Northern Region', 'Mzimba', '2018-07-03 16:24:58', '', '1'),
+(14, 'Northern Region', 'Nkhata Bay', '2018-07-03 16:24:58', '', '1'),
+(15, 'Northern Region', 'Rumphi', '2018-07-03 16:24:58', '', '1'),
+(16, 'Southern Region', 'Balaka', '2018-07-03 16:24:58', '', '1'),
+(17, 'Southern Region', 'Blantyre', '2018-07-03 16:24:58', '', '5'),
+(18, 'Southern Region', 'Chikwawa', '2018-07-03 16:24:58', '', '1'),
+(19, 'Southern Region', 'Chiradzulu', '2018-07-03 16:24:58', '', '1'),
+(20, 'Southern Region', 'Machinga', '2018-07-03 16:24:58', '', '1'),
+(21, 'Southern Region', 'Mangochi', '2018-07-03 16:24:58', '', '1'),
+(22, 'Southern Region', 'Mulanje', '2018-07-03 16:24:58', '', '1'),
+(23, 'Southern Region', 'Mwanza', '2018-07-03 16:24:58', '', '1'),
+(24, 'Southern Region', 'Nsanje', '2018-07-03 16:24:58', '', '1'),
+(25, 'Southern Region', 'Thyolo', '2018-07-03 16:24:58', '', '1'),
+(26, 'Southern Region', 'Phalombe', '2018-07-03 16:24:58', '', '1'),
+(27, 'Southern Region', 'Zomba', '2018-07-03 16:24:58', '', '5'),
+(28, 'Southern Region', 'Neno', '2018-07-03 16:24:58', '', '1'),
+(29, 'Northern Region', 'Mzuzu', '2018-07-03 16:31:11', '', '5');
 
 -- --------------------------------------------------------
 
@@ -820,9 +843,9 @@ ALTER TABLE `followed_page`
 ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`condition_id`) REFERENCES `item_condition` (`condition_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `item_ibfk_3` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `item_ibfk_4` FOREIGN KEY (`type_id`) REFERENCES `type` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `item_ibfk_5` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `item_ibfk_5` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `item_ibfk_6` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `message`

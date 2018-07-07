@@ -1,5 +1,5 @@
 <?php
-class Category_model extends CI_Model {
+class Type_model extends CI_Model {
 
     //default variables
     private $addition_info="";
@@ -23,7 +23,7 @@ class Category_model extends CI_Model {
              $this->fail_result=false;
     } 
 
-	public function getCategory($filters=array())
+	public function getType($filters=array())
 	{
 	        //reset variables
 			$this->reset_defaults();
@@ -84,11 +84,11 @@ class Category_model extends CI_Model {
            		$miniWhereSubQueryArry=array();			   
 			   	foreach($valueFormated as $key2 => $value2)
 			   	{
-					if($key==='category_id' || ($key==='category_id'.$n) )
+					if($key==='type_id' || ($key==='type_id'.$n) )
 					{
 						array_push($miniWhereSubQueryArry,'`id`=:id'.$n ); 
 						$n++;
-					}elseif($key==='category_name' || ($key==='category_name'.$n) )
+					}elseif($key==='type_name' || ($key==='type_name'.$n) )
 					{
 						array_push($miniWhereSubQueryArry,'`name`=:name'.$n ); 
 						$n++;
@@ -122,7 +122,7 @@ class Category_model extends CI_Model {
 			 
 			$dbquery1 =  $this->db->conn_id->prepare("									
 														SELECT ".$get_total_recordsQuery." * 
-														FROM `category` 
+														FROM `type` 
 														 	".$WheresubQuery."
 
 														GROUP BY `id`
@@ -144,10 +144,10 @@ class Category_model extends CI_Model {
 
 				   	foreach($valueFormated as $key2 => $value2)
 				   	{					   
-						if($key==='category_id' || ($key==='category_id'.$n) ) 
+						if($key==='type_id' || ($key==='type_id'.$n) ) 
 						{$dbquery1->bindValue(":id".$n,$value2); 	$n++;}
 						
-						if($key==='category_name' || ($key==='category_name'.$n) ) 
+						if($key==='type_name' || ($key==='type_name'.$n) ) 
 						{$dbquery1->bindValue(":name".$n,$value2); $n++; }
 						
 									
@@ -181,10 +181,9 @@ class Category_model extends CI_Model {
 						
 							//do some format
 							$result[$key]=array(									
-												"category_id"=>$value['id'],
-												"category_name"=>$value['name'],
-												"category_rank"=>$value['rank'],
-												"parent_id"=>$value['parent_id'],
+												"type_id"=>$value['id'],
+												"type_name"=>$value['name'],
+												"type_rank"=>$value['rank'],
 												);
 						}
 					}

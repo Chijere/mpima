@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/mpima';
-//$config['base_url'] = 'http://192.168.137.1/mpima';
+$config['base_url'] = 'http://localhost/mpima_git';
+//$config['base_url'] = 'http://192.168.137.1/mpima_git';
 
 /*
 |--------------------------------------------------------------------------
