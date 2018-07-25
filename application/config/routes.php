@@ -73,11 +73,14 @@ $route['(?i)contact'] = 'about/contact';
 
 #send_request
 $route['(?i)send_request'] = 'send_request';
+$route['(?i)send_request/form'] = 'send_request/send_request_form';
 #------
 
 #About
 $route['(?i)admin'] = 'admin';
 $route['(?i)admin/draft'] = 'admin/draft';
+$route['(?i)admin/requests'] = 'admin/view_requests';
+$route['(?i)single_request/(:num)'] = 'admin/single_request';
 $route['(?i)add_property'] = 'admin/add_property';
 $route['(?i)edit_property/(:num)'] = 'admin/edit_property';
 $route['(?i)admin/add_property/form'] = 'admin/add_property_form';

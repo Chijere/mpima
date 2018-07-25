@@ -216,7 +216,7 @@
                 <div class="pswp__caption__center"></div>
             </div>
         </div>
-    </div>
+    </div> 
 </div>
 
 

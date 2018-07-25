@@ -80,9 +80,10 @@
                             <th>
                               <input type="checkbox" id="check-all" class="flat">
                             </th>
-                            <th class="column-title">Propert ID </th>
-                            <th class="column-title">Feature Image </th>
-                            <th class="column-title">Title </th>
+                            <th class="column-title">Request ID </th>
+                            <th class="column-title">Name </th>
+                            <th class="column-title">Type </th>
+                            <th class="column-title">Location </th>
                             <th class="column-title">Date </th>
                             <th class="column-title">Price </th>
                             <th class="column-title no-link last"><span class="nobr">Action</span>
@@ -103,13 +104,13 @@
                               <input type="checkbox" class="flat" name="table_records">
                             </td>
                             <td class=" "><?php echo $value['item_id']; ?></td>
-                            <td class=" " style="width: 130px; padding-left: 30px"><img src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'_t.jpg'; ?>" alt="" width="50" height="50"></td>
                             <td class=" "><?php echo $value['item_name']; ?></td>
+                            <td class=" "><?php echo $value['type_name']; ?></td>
+                            <td class=" "><?php echo $value['location_name']; ?></td>
                             <td class=" "><?php echo $value['date']; ?></td>
                             <td class="a-right a-right "><?php echo $value['price']; ?></td>
                             <td class=" last">
-                              <a class="action_link" href="<?php echo base_url().'listings_single/'.$value['item_id']; ?>">View</a>&nbsp;&nbsp;
-                              <a class="action_link" href="<?php echo base_url().'edit_property/'.$value['item_id']; ?>">Edit</a>
+                              <a class="action_link" href="<?php echo base_url().'single_request/'.$value['item_id']; ?>">View</a>
                             </td>
                           </tr>
                           <?php } ?>

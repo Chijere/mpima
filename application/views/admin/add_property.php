@@ -137,7 +137,7 @@
                                   <option  value="<?php echo $value['location_id'] ?>" ><?php echo $value['location_name'] ?></option>
                               <?php endif ?>
                             <?php endforeach ?>
-                            </optgroup> 
+                            </optgroup>  
                           </select>
                         </div>
                       </div>
@@ -391,6 +391,7 @@
                     },
                   },
                   onClose:function() {
+                    location.reload();
                   }
               });
             }
@@ -434,11 +435,6 @@
                   editableFormElement.find('input[name="'+index+'"]').parents('td').children('label.error').html(mssg);     
                 });
           }
-
-        //---Enter --   
-        $(".form_publish").on("click",'.save_drft',function(){
-            
-        });
 
       });
     </script>

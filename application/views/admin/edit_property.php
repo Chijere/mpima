@@ -535,11 +535,6 @@
                 });
           }
 
-        //---Enter --   
-        $(".form_publish").on("click",'.save_drft',function(){
-            
-        });
-
       });
     </script>
     <!-- /Parsley -->

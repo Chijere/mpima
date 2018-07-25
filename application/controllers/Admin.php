@@ -625,6 +625,153 @@ class Admin extends CI_Controller {
        elseif(1==0)
        {}
 	}	
+
+	public function single_request()
+	{
+
+		/*########################################
+          0. load classes
+        #######################################*/		    
+
+        $this->load->model('item_request_model');
+		$this->load->library('general_functions');
+		$this->load->model('Type_model');
+        $this->load->model('Category_model');
+        $this->load->model('Location_model');
+        
+		
+		/*########################################
+          1. Get Data from Database using Models
+        #######################################*/		   
+        $type =$this->Type_model->getType(); 
+		$category =$this->Category_model->getCategory(); 
+		$location =$this->Location_model->getLocation(); 
+
+   		$pass_data = array(	'item_id' => $this->uri->segment(2)
+   						   );
+
+   		$model_data=$this->item_request_model->getItem($pass_data);
+
+   		$href=base_url();
+   		$addition_info=$model_data['addition_info'];
+   		$status=$model_data['status'];
+
+   		//do some formating to the results
+   		foreach ($model_data['data']['records'] as $key => $value) {
+
+			$model_data['data']['records'][$key]['price']='MK'.$value['price'];
+			$model_data['data']['records'][$key]['date']=date( "j M Y", strtotime($value['date']));
+			foreach ($value['item_pic'] as $key2 => $value2) {
+				# calculate image dimensions
+				$width=600;$height =600;
+				if (file_exists($value2['path'].'.jpg')) 
+					list($width, $height, $type, $attr) = getimagesize($value2['path'].'.jpg');	
+				else
+					$model_data['data']['records'][$key]['item_pic'][$key2]['path'] = 'media/default/images/no_image';
+					$model_data['data']['records'][$key]['item_pic'][$key2]['dimension'] = $width.'x'.$height;
+			}
+			#limit length 				
+			if(strlen($value['item_name'])>23)
+				$model_data['data']['records'][$key]['item_name']=$this->general_functions->wordTrimmer($value['item_name'],23,'&hellip;');
+
+   		}
+
+		/*########################################
+          2. Send data to view
+        #######################################*/		    
+
+        $data['page_data']= array();	
+        $data['page_data']['type']= $type;	
+		$data['page_data']['category']= $category;	
+		$data['page_data']['location']= $location;	
+		$data['page_data']['item']= $model_data;
+
+        //echo "<pre>";
+		//print_r($model_data);
+		//return;
+         //check if is ajax call
+         // We added an ajax call because the item images got called by jquery after the page is already loaded
+       if($this->input->is_ajax_request())
+       {
+        $data['info']=array();         
+        $data['info']['item']= $model_data;        
+        $data['print_as']='json';         
+        $this->load->view('ajaxCall/ajaxCall',$data);  
+       }
+       else
+       { 
+		$this->load->view('admin/single_request',$data);
+       }
+
+	}
+
+
+	public function view_requests()
+	{
+
+		/*########################################
+          0. load classes
+        #######################################*/		    
+
+        $this->load->model('item_request_model');
+		$this->load->library('general_functions');
+		
+		
+		/*########################################
+          1. Get Data from Database using Models
+        #######################################*/		   
+        
+   		$pass_data = array(	
+   						   );
+
+   		$model_data=$this->item_request_model->getItem($pass_data);
+
+   		$href=base_url();
+   		$addition_info=$model_data['addition_info'];
+   		$status=$model_data['status'];
+
+   		//do some formating to the results
+   		foreach ($model_data['data']['records'] as $key => $value) {
+
+
+   			if(!empty($value['price']))
+			$model_data['data']['records'][$key]['price']='MK'.$value['price'];
+			else
+			$model_data['data']['records'][$key]['price']='---';	
+
+			$model_data['data']['records'][$key]['date']=date( "j M Y", strtotime($value['date']));
+
+			#limit length 				
+			if(strlen($value['item_name'])>23)
+				$model_data['data']['records'][$key]['item_name']=$this->general_functions->wordTrimmer($value['item_name'],23,'&hellip;');
+
+   		}
+
+		/*########################################
+          2. Send data to view
+        #######################################*/		    
+
+        $data['page_data']= array();	
+        $data['page_data']['item']= $model_data;
+
+        //echo "<pre>";
+		//print_r($model_data);
+		//return;
+         //check if is ajax call
+         // We added an ajax call because the item images got called by jquery after the page is already loaded
+       if($this->input->is_ajax_request())
+       {
+        $data['info']=array();         
+        $data['info']['item']= $model_data;        
+        $data['print_as']='json';         
+        $this->load->view('ajaxCall/ajaxCall',$data);  
+       }
+       else
+       { 
+		$this->load->view('admin/view_requests',$data);
+       }
+
+	}
 	public function delete_property_form($pdata=array())
 	{
 
