@@ -39,7 +39,7 @@ class Home extends CI_Controller {
           2. Get Data from Database using Models
          #######################################*/  
    		$pass_data['from']=0;
-   		$pass_data['take']=3;
+   		$pass_data['take']=4;
    		$pass_data['get_total_records']=true;
    		$pass_data['category_id']=2;
 

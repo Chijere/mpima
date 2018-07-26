@@ -98,10 +98,22 @@ class Listings extends CI_Controller {
 		$url_parameters['url'] = base_url().'listings/?ty=eer'.$priceUrlPart.$paginationUrlPart.$locationUrlPart.$typeUrlPart; 
 		$url_parameters['params'] = $Url_value; 
 
+		/*########################################
+          3. load classes
+        #######################################*/		    
+
+          $this->load->model('Type_model');
+          $this->load->model('Category_model');
+          $this->load->model('Location_model');
 
         /*########################################
           4. Get Data from Database using Models
          #######################################*/  
+
+		$type =$this->Type_model->getType(); 
+		$category =$this->Category_model->getCategory(); 
+		$location =$this->Location_model->getLocation(); 
+
    		$pass_data['from']=$take_from;
    		$pass_data['take']=$records_per_page;
    		$pass_data['get_total_records']=true;
@@ -128,32 +140,35 @@ class Listings extends CI_Controller {
 
 		/*
 		###############################
-		 2. Send data to Views
+		 5. Send data to Views
 		############################### */
 
    		$data['page_data']= array();			
+		$data['page_data']['type']= $type;	
+		$data['page_data']['category']= $category;	
+		$data['page_data']['location']= $location;	
 
-		/*
-		###############################
-		 1.1 For Pagination -part2
-		###############################
-	    */
-		if(!isset($model_data['data']['total_records']))$model_data['data']['total_records']=1;
-		$total_pages=ceil($model_data['data']['total_records']/$records_per_page);
-		
-		if($current_page>1)$prev_page=$current_page-1;else$prev_page=1;
-		if($current_page>$total_pages)$next_page=$current_page+1;else$next_page=$total_pages;
+			/*
+			###############################
+			 1.1 For Pagination -part2
+			###############################
+		    */
+			if(!isset($model_data['data']['total_records']))$model_data['data']['total_records']=1;
+			$total_pages=ceil($model_data['data']['total_records']/$records_per_page);
+			
+			if($current_page>1)$prev_page=$current_page-1;else$prev_page=1;
+			if($current_page>$total_pages)$next_page=$current_page+1;else$next_page=$total_pages;
 
-		$data['page_data']['pagination']=array(
-													'href'=>$url_parameters['url'],
-													'current_page'=>$current_page,
-													'total_pages'=>$total_pages,
-												);
-	   		/*
-		###############################
-		 	End For Pagination 
-		###############################
-	    */
+			$data['page_data']['pagination']=array(
+														'href'=>$url_parameters['url'],
+														'current_page'=>$current_page,
+														'total_pages'=>$total_pages,
+													);
+		   		/*
+			###############################
+			 	End For Pagination 
+			###############################
+		    */
 
 		$data['page_data']['item']= $model_data;	
 		$data['page_data']['url_parameters']= $url_parameters;	
@@ -235,9 +250,22 @@ class Listings extends CI_Controller {
 		$url_parameters['params'] = $Url_value; 
 
 
+		/*########################################
+          3. load classes
+        #######################################*/		    
+
+          $this->load->model('Type_model');
+          $this->load->model('Category_model');
+          $this->load->model('Location_model');
+
         /*########################################
           4. Get Data from Database using Models
          #######################################*/  
+
+		$type =$this->Type_model->getType(); 
+		$category =$this->Category_model->getCategory(); 
+		$location =$this->Location_model->getLocation(); 
+
    		$pass_data['from']=$take_from;
    		$pass_data['take']=$records_per_page;
    		$pass_data['get_total_records']=true;
@@ -262,32 +290,35 @@ class Listings extends CI_Controller {
 
 		/*
 		###############################
-		 2. Send data to Views
+		 5. Send data to Views
 		############################### */
 
    		$data['page_data']= array();			
+		$data['page_data']['type']= $type;	
+		$data['page_data']['category']= $category;	
+		$data['page_data']['location']= $location;	
 
-		/*
-		###############################
-		 1.1 For Pagination -part2
-		###############################
-	    */
-		if(!isset($model_data['data']['total_records']))$model_data['data']['total_records']=1;
-		$total_pages=ceil($model_data['data']['total_records']/$records_per_page);
-		
-		if($current_page>1)$prev_page=$current_page-1;else$prev_page=1;
-		if($current_page>$total_pages)$next_page=$current_page+1;else$next_page=$total_pages;
+			/*
+			###############################
+			 1.1 For Pagination -part2
+			###############################
+		    */
+			if(!isset($model_data['data']['total_records']))$model_data['data']['total_records']=1;
+			$total_pages=ceil($model_data['data']['total_records']/$records_per_page);
+			
+			if($current_page>1)$prev_page=$current_page-1;else$prev_page=1;
+			if($current_page>$total_pages)$next_page=$current_page+1;else$next_page=$total_pages;
 
-		$data['page_data']['pagination']=array(
-													'href'=>$url_parameters['url'],
-													'current_page'=>$current_page,
-													'total_pages'=>$total_pages,
-												);
-	   		/*
-		###############################
-		 	End For Pagination 
-		###############################
-	    */
+			$data['page_data']['pagination']=array(
+														'href'=>$url_parameters['url'],
+														'current_page'=>$current_page,
+														'total_pages'=>$total_pages,
+													);
+		   		/*
+			###############################
+			 	End For Pagination 
+			###############################
+		    */
 
 		$data['page_data']['item']= $model_data;	
 		$data['page_data']['url_parameters']= $url_parameters;	
@@ -322,7 +353,15 @@ class Listings extends CI_Controller {
 
 			$model_data['data']['records'][$key]['price']='MK'.$value['price'];
 			$model_data['data']['records'][$key]['date']=date( "j M Y", strtotime($value['date']));
-
+			foreach ($value['item_pic'] as $key2 => $value2) {
+				# calculate image dimensions
+				$width=600;$height =600;
+				if (file_exists($value2['path'].'.jpg')) 
+					list($width, $height, $type, $attr) = getimagesize($value2['path'].'.jpg');	
+				else
+					$model_data['data']['records'][$key]['item_pic'][$key2]['path'] = 'media/default/images/no_image';
+					$model_data['data']['records'][$key]['item_pic'][$key2]['dimension'] = $width.'x'.$height;
+			}
 			#limit length 				
 			if(strlen($value['item_name'])>23)
 				$model_data['data']['records'][$key]['item_name']=$this->general_functions->wordTrimmer($value['item_name'],23,'&hellip;');

@@ -44,16 +44,16 @@
 <div class="super_container">
 	
 	<!-- Home -->
-	<div class="home">
+	<div class="home" style="height: 300px;">
 		<!-- Image by: https://unsplash.com/@breather -->
-		<div class="home_background" style="background-image:url(<?php echo IMAGE_SRC_URL;?>media/default/images/contact.jpg)"></div>
+		<div class="home_background"  style="background-image:url(<?php echo IMAGE_SRC_URL;?>media/default/images/contact.jpg)"></div>
 		
 		<div class="container">
 			<div class="row">
 				<div class="col">
 					<div class="home_content">
 						<div class="home_title">
-							<h2>single listings</h2>
+							<h2>Reach us</h2>
 						</div>
 						<div class="breadcrumbs">
 							<span><a href="index.html">Home</a></span>
@@ -76,21 +76,6 @@
 	<div class="contact">
 		<div class="container">
 			<div class="row">
-				
-				<div class="col-lg-6 contact_col">
-					<div class="estate_contact_form">
-						<div class="contact_title">say hello</div>
-						<div class="estate_contact_form_container">
-							<form id="estate_contact_form" class="estate_contact_form" action="post">
-								<input id="estate_contact_form_name" class="estate_input_field estate_contact_form_name" type="text" placeholder="Name" required="required" data-error="Name is required.">
-								<input id="estate_contact_form_email" class="estate_input_field estate_contact_form_email" type="email" placeholder="E-mail" required="required" data-error="Valid email is required.">
-								<input id="estate_contact_form_subject" class="estate_input_field estate_contact_form_subject" type="email" placeholder="Subject" required="required" data-error="Subject is required.">
-								<textarea id="estate_contact_form_message" class="estate_text_field estate_contact_form_message" name="message" placeholder="Message" required="required" data-error="Please, write us a message."></textarea>
-								<button id="estate_contact_send_btn" type="submit" class="estate_contact_send_btn trans_200" value="Submit">send</button>
-							</form>
-						</div>
-					</div>
-				</div>
 
 				<div class="col-lg-3 contact_col">
 					<div class="contact_title">contact info</div>

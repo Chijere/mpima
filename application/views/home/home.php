@@ -48,7 +48,7 @@
 
 			<div class="row featured_row">
 	            <?php   foreach ($page_data['item']['data']['records'] as $key => $value) { ?>
-					<div class="col-lg-4 featured_card_col">						
+					<div class="col-sm-3 featured_card_col">						
 							<div class="featured_card_container">
 								<div class="card featured_card trans_300">
 									<a href="<?php echo base_url().'listings_single/'.$value['item_id']; ?>">

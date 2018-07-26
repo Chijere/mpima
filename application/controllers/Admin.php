@@ -885,4 +885,117 @@ class Admin extends CI_Controller {
        {}
 	}	
 
+	public function delete_request_form($pdata=array())
+	{
+
+
+
+		//default valiables	
+		$status=false;
+		$fail_result=false;
+		$addition_info='';
+		$result_info="";
+		$item_id = '';
+		$result_array=array();
+		$href='';
+		
+		//echo "string";
+		//include libraries
+		$this->load->library('form_validation');
+
+		//validation configurations
+		$validationRules['rule1']=array(
+						        array(
+						                'field' => 'i_ref',
+						                'label' => 'i_ref',
+						                'rules' => 'required|numeric',
+						                'errors' => array(
+						                				'required' => 'system_error',
+						                				'numeric' => '1system_error',
+						                				),	 		                
+						        	),
+						    );
+
+
+ 		//validate
+        $this->form_validation->set_rules($validationRules['rule1']);
+  
+	    if (!$fail_result && $this->form_validation->run() == FALSE)
+        {
+        	$fail_result=true;
+   			$addition_info='validation error';
+   			$result_info="Sorry An error Occurred";
+   			// control the error messsages
+   			$result_array= $this->form_validation->error_array(); 
+			
+   			//correct common errors first
+			$commonErrors=false;
+			foreach ($result_array as $key => $value) {
+				if('system_error'!= $value)
+					$commonErrors=true;
+			}
+
+			/*
+			the logic is treat common errors first then for systems error prompt user to refresh the page 
+			 */
+			// control the error messsages
+   			$errors = $this->form_validation->error_array();
+   			// define them
+   			if(!isset($errors['type']))$errors['type']='';
+   			if(!isset($errors['location']))$errors['location']='';
+   			if(!isset($errors['category']))$errors['category']='';
+
+   			if(($errors['type']=='system_error' || $errors['location']=='system_error' || $errors['category']=='system_error') && !$commonErrors)
+   			{
+   				$addition_info='system error';	
+   			}
+   			
+			for ($i=1; $i <5 ; $i++) { 
+       			
+       			if(isset($error['input'.$i]))
+       			if($errors['input'.$i]=='system_error' && !$commonErrors)
+       			{
+       				$addition_info='system error';	
+       			}					
+	 		}     			
+        }	  
+
+	   // flesh load	
+       if(!$fail_result)
+       {
+
+
+       		$pass_data = array(	'user_id' => $_SESSION['user_id'],
+       							'item_id' => $this->input->post('i_ref',true),
+       						);
+
+		   	$this->load->model('Item_request_model');
+       		$model_data=$this->Item_request_model->deleteItemPermanently($pass_data);
+
+       		$href=base_url();
+       		$addition_info=$model_data['addition_info'];
+       		$status=$model_data['status'];
+       		$result_info=$model_data['data']['result_info'];
+       		//$item_id=$model_data['data']['item_id'];
+       }
+
+
+       //check if is ajax call
+       if($this->input->is_ajax_request())
+       {
+	       	$data['info']['status']=$status;
+	       	$data['info']['data']=array(
+	       								 'href'=>$href,
+	       								 'addition_info'=>$addition_info,	
+	       								 'result_array'=>$result_array,	
+	       								 'result_info'=>$result_info,
+	       								 'item_id'=>$item_id	
+	       								);
+	       	$data['print_as']='json';         
+	        $this->load->view('ajaxCall/ajaxCall',$data);
+       }
+       elseif(1==0)
+       {}
+	}	
+
 }

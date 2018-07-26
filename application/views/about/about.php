@@ -44,7 +44,7 @@
 <div class="super_container">
 	
 	<!-- Home -->
-	<div class="home">
+	<div class="home" style="height: 350px;">
 		<!-- Image by: https://unsplash.com/@jbriscoe -->
 		<div class="home_background" style="background-image:url(<?php echo IMAGE_SRC_URL;?>media/default/images/home_background.jpg)"></div>
 		
@@ -87,71 +87,6 @@
 						<img src="<?php echo IMAGE_SRC_URL;?>media/default/images/intro.png" alt="">
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Milestones -->
-
-	<div class="milestones">
-		<div class="milestones_background parallax-window" data-parallax="scroll" data-image-src="<?php echo IMAGE_SRC_URL;?>media/default/images/milestones.jpg"></div>
-		<div class="container">
-			<div class="row">
-				
-				<!-- Milestone -->
-				<div class="col-lg-2 milestone_col">
-					<div class="milestone text-center d-flex flex-column align-items-center justify-content-start">
-						<div class="milestone_icon d-flex flex-column justify-content-end"><img src="<?php echo IMAGE_SRC_URL;?>media/default/images/milestone_1.svg" alt=""></div>
-						<div class="milestone_counter" data-end-value="403">0</div>
-						<div class="milestone_text">houses Designs sold</div>
-					</div>
-				</div>
-
-				<!-- Milestone -->
-				<div class="col-lg-2 milestone_col">
-					<div class="milestone text-center d-flex flex-column align-items-center justify-content-start">
-						<div class="milestone_icon d-flex flex-column justify-content-end"><img src="<?php echo IMAGE_SRC_URL;?>media/default/images/milestone_2.svg" alt=""></div>
-						<div class="milestone_counter" data-end-value="129">0</div>
-						<div class="milestone_text">clients</div>
-					</div>
-				</div>
-
-				<!-- Milestone -->
-				<div class="col-lg-2 milestone_col">
-					<div class="milestone text-center d-flex flex-column align-items-center justify-content-start">
-						<div class="milestone_icon d-flex flex-column justify-content-end"><img src="<?php echo IMAGE_SRC_URL;?>media/default/images/milestone_3.svg" alt=""></div>
-						<div class="milestone_counter" data-end-value="14">0</div>
-						<div class="milestone_text">property managed</div>
-					</div>
-				</div>
-
-				<!-- Milestone -->
-				<div class="col-lg-2 milestone_col">
-					<div class="milestone text-center d-flex flex-column align-items-center justify-content-start">
-						<div class="milestone_icon d-flex flex-column justify-content-end"><img src="<?php echo IMAGE_SRC_URL;?>media/default/images/milestone_4.svg" alt=""></div>
-						<div class="milestone_counter" data-end-value="521">0</div>
-						<div class="milestone_text">rented land</div>
-					</div>
-				</div>
-
-				<!-- Milestone -->
-				<div class="col-lg-2 milestone_col">
-					<div class="milestone text-center d-flex flex-column align-items-center justify-content-start">
-						<div class="milestone_icon d-flex flex-column justify-content-end"><img src="<?php echo IMAGE_SRC_URL;?>media/default/images/milestone_5.svg" alt=""></div>
-						<div class="milestone_counter" data-end-value="1107">0</div>
-						<div class="milestone_text">land valueted</div>
-					</div>
-				</div>
-
-				<!-- Milestone -->
-				<div class="col-lg-2 milestone_col">
-					<div class="milestone text-center d-flex flex-column align-items-center justify-content-start">
-						<div class="milestone_icon d-flex flex-column justify-content-end"><img src="<?php echo IMAGE_SRC_URL;?>media/default/images/milestone_6.svg" alt=""></div>
-						<div class="milestone_counter" data-end-value="39">0</div>
-						<div class="milestone_text">monitored sites</div>
-					</div>
-				</div>
-
 			</div>
 		</div>
 	</div>

@@ -99,7 +99,7 @@
                           <select name="type" class="form-control">
                             <?php foreach ($page_data['type']['data']['records'] as $key => $value): ?>
                               <option <?php if($page_data['item']['data']['records'][0]['type_id'] == $value['type_id']) echo 'selected="selected"'; ?> value="<?php echo $value['type_id'] ?>" ><?php echo $value['type_name'] ?></option>
-                            <?php endforeach ?>
+                            <?php endforeach ?> 
                           </select>
                         </div>
                       </div>

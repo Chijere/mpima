@@ -24,6 +24,8 @@
     $page_data['css_links']=array(  'assets/css/admin.min.css',
                                     'assets/vendors/PhotoSwipe-master/dist/photoswipe.css',
                                     'assets/vendors/PhotoSwipe-master/dist/default-skin/default-skin.css',
+                                    'assets/vendors/Holdon/HoldOn.min.css',
+                                    'assets/vendors/jquery.sweet-modal-1.3.3/min/jquery.sweet-modal.min.css',
                                 );
 
     $page_data['js_links']=array( 'assets/vendors/PhotoSwipe-master/dist/photoswipe.min.js',
@@ -129,6 +131,35 @@
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-3 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Actions</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left form_action" action="<?php echo base_url(); ?>admin/edit_request/form">
+                      <input type="hidden" name="i_ref" value="<?php echo $page_data['item']['data']['records'][0]['item_id'] ?>" />
+                      <div class="form-group">
+                        <label class="control-label"><small> please delete only review requests </small></label>
+                      </div>
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="">
+                          <button style="width:70px" type="submit" class="btn btn-danger delete">Delete </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div> 
+
             </div>
 
             <div class="row">
@@ -221,6 +252,119 @@
         </div>
     </div> 
 </div>
+
+  <script src="http://localhost/mpima/assets/vendors/parsleyjs/dist/parsley.min.js" ></script>
+  <script src="http://localhost/mpima/assets/vendors/Holdon/HoldOn.min.js" ></script>
+  <script src="http://localhost/mpima/assets/vendors/jquery.sweet-modal-1.3.3/min/jquery.sweet-modal.min.js" ></script>
+
+
+    <!-- Parsley -->
+    <script>
+      $(document).ready(function() {
+      
+
+        $('.form_action .delete').on('click',function(event) {
+          event.preventDefault();
+          
+          $.sweetModal({
+          content: 'Confirm to delete this Request?',
+          theme:$.sweetModal.THEME_MIXED,
+          showCloseButton:false,                
+          buttons: {
+            someAction: {
+              label: 'cancel',
+              classes: '',
+              action: function() {
+              }
+              },
+            someAction2: {
+              label: 'Yes',
+              classes: 'redB',
+              action: function() {
+                       
+                $.ajax({
+                    url  : $(".form_action").attr('action')+'/delete',
+                    type : 'POST',
+                    data : $('.form_action').serialize(),
+                    success : afterSuccess_delete,
+                    beforeSubmit: beforeSubmit(),
+                    });
+
+              }
+              },
+            },
+            onClose:function() {
+            }
+          });
+
+        });
+
+          //beforeSubmit  
+          function beforeSubmit(jqXHR,element)
+          {
+            var valid=true;
+           
+            if(valid)
+            {
+               HoldOn.open({
+                       theme:"sk-cube-grid",
+                       message:'Uploading, please wait ...',
+                       backgroundColor:"#456789",
+                       textColor:"#c5d1e0"
+                  });
+            }
+
+            return valid;   
+          }
+
+              
+          //function after succesful file upload (when server response)
+          function afterSuccess_delete(info)
+          { 
+              HoldOn.close();
+            if(info.status)
+            {
+              $.sweetModal({
+                content: 'Request deleted.',
+                icon: $.sweetModal.ICON_SUCCESS,
+                theme:$.sweetModal.THEME_MIXED,                
+                buttons: {
+                  someAction: {
+                    label: 'close',
+                    classes: '',
+                    action: function() {
+                      window.location.href = $('#info #base_url').html()+'admin/requests';
+                    }
+                    },
+                  },
+                  onClose:function() {
+                    window.location.href = $('#info #base_url').html()+'admin/requests';
+                  }
+              });
+            }
+            else
+            { 
+              
+                $.sweetModal({
+                  content: info.data.result_info,
+                  title: 'Error',
+                  icon: $.sweetModal.ICON_ERROR,
+                  theme:$.sweetModal.THEME_MIXED,
+                  buttons: [
+                    {
+                      label: 'Back',
+                      classes: 'redB'
+                    }
+                  ]
+                });
+              
+            }
+
+          } 
+            
+      });
+    </script>
+    <!-- /Parsley -->
 
   </body>
 

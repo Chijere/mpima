@@ -110,7 +110,7 @@
 			            	<div class="listing_video_link" style="margin-top: 10px">
 				                <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
 				  						<?php foreach($page_data['item']['data']['records'][0]['item_pic'] as $key =>$value): ?>
-									      <li  data-size="1000x667" data-thumb="<?php echo IMAGE_SRC_URL.$value['path'].'_t.jpg'; ?>" data-src="<?php echo IMAGE_SRC_URL.$value['path'].'.jpg'; ?>" >
+									      <li  data-size="<?php echo $value['dimension']; ?>" data-thumb="<?php echo IMAGE_SRC_URL.$value['path'].'_t.jpg'; ?>" data-src="<?php echo IMAGE_SRC_URL.$value['path'].'.jpg'; ?>" >
 									        <img src="<?php echo IMAGE_SRC_URL.$value['path'].'.jpg'; ?>" />
 									      </li>
 										<?php endforeach ?>

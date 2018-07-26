@@ -37,22 +37,58 @@
 
 						<div class="search_box_content" style="padding-right: 15px; padding-bottom: 13px; padding-top: 14px; padding-left: 20px">
 							<!-- Search Form -->
-							<form class="" action="<?php echo base_url().'listings/land' ?>" method="GET" >
+							<form class="" action="<?php echo base_url().'listings' ?>" method="GET" >
 								<div class="row ">
 								  <div class="col-sm-3">
 								    <div class="dropdown_item_title">Location</div>
-								    <select name="property_type" id="property_type" class="dropdown_item_select">
-										<option value="">Any</option>
-										<option value="">Type 1</option>
-										<option value="">Type 2</option>
-									</select>
+								     <select name="lct" style="border-radius: 0px; height: 34px;" class="dropdown_item_select form-control">
+			                            <option value="">Any</option>
+			                            <optgroup label="Northern Region">
+			                            <?php foreach ($page_data['location']['data']['records'] as $key => $value): ?>
+			                              <?php if ($value['region']=='Northern Region'): ?>
+			                                  <option <?php if(isset($page_data['url_parameters']['params']['lct']) 
+				                                         && $page_data['url_parameters']['params']['lct'] == $value['location_id']) echo 'selected="selected"'; ?> 
+				                                         value="<?php echo $value['location_id'] ?>" >
+				                                         <?php echo $value['location_name'] ?>
+				                            </option>
+			                              <?php endif ?>
+			                            <?php endforeach ?> 
+			                            </optgroup>
+			                            <optgroup label="Central Region">
+			                            <?php foreach ($page_data['location']['data']['records'] as $key => $value): ?>
+			                              <?php if ($value['region']=='Central Region'): ?>
+			                                  <option <?php if(isset($page_data['url_parameters']['params']['lct']) 
+				                                         && $page_data['url_parameters']['params']['lct'] == $value['location_id']) echo 'selected="selected"'; ?> 
+				                                         value="<?php echo $value['location_id'] ?>" >
+				                                         <?php echo $value['location_name'] ?>
+				                            </option>
+			                              <?php endif ?>
+			                            <?php endforeach ?>
+			                            </optgroup>
+			                            <optgroup label="Southern Region"> 
+			                            <?php foreach ($page_data['location']['data']['records'] as $key => $value): ?>
+			                              <?php if ($value['region']=='Southern Region'): ?>
+			                                  <option <?php if(isset($page_data['url_parameters']['params']['lct']) 
+				                                         && $page_data['url_parameters']['params']['lct'] == $value['location_id']) echo 'selected="selected"'; ?> 
+				                                         value="<?php echo $value['location_id'] ?>" >
+				                                         <?php echo $value['location_name'] ?>
+				                            </option>
+			                              <?php endif ?>
+			                            <?php endforeach ?>
+			                            </optgroup> 
+			                          </select>
 								  </div>
 								  <div class="col-sm-3">
 								  	<div class="dropdown_item_title">Type</div>
 								    <select name="typ" id="property_type" class="dropdown_item_select">
 										<option value="">Any</option>
-										<option <?php if(isset($page_data['url_parameters']['params']['typ']) && $page_data['url_parameters']['params']['typ']==1)echo 'selected="selected"'; ?> value="1">For sale</option>
-										<option <?php if(isset($page_data['url_parameters']['params']['typ']) && $page_data['url_parameters']['params']['typ']==2)echo 'selected="selected"'; ?> value="2">For rent</option>
+										<?php foreach ($page_data['type']['data']['records'] as $key => $value): ?>
+				                            <option <?php if(isset($page_data['url_parameters']['params']['typ']) 
+				                                         && $page_data['url_parameters']['params']['typ'] == $value['type_id']) echo 'selected="selected"'; ?> 
+				                                         value="<?php echo $value['type_id'] ?>" >
+				                                         <?php echo $value['type_name'] ?>
+				                            </option>
+			                            <?php endforeach ?> 
 									</select>
 								  </div>
 								  <div class="col-sm-3">
@@ -104,7 +140,7 @@
 			</div>
 			<div class="row featured_row">
 	            <?php   foreach ($page_data['item']['data']['records'] as $key => $value) { ?>
-					<div class="col-lg-4 featured_card_col">						
+					<div class="col-sm-3 featured_card_col">						
 							<div class="featured_card_container">
 								<div class="card featured_card trans_300">
 									<a href="<?php echo base_url().'listings_single/'.$value['item_id']; ?>">

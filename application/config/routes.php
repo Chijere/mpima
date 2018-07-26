@@ -74,6 +74,7 @@ $route['(?i)contact'] = 'about/contact';
 #send_request
 $route['(?i)send_request'] = 'send_request';
 $route['(?i)send_request/form'] = 'send_request/send_request_form';
+$route['(?i)admin/edit_request/form/delete'] = 'admin/delete_request_form';
 #------
 
 #About
