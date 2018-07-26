@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2018 at 10:47 PM
+-- Generation Time: Jul 26, 2018 at 10:07 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -250,6 +250,53 @@ INSERT INTO `item_condition` (`condition_name`, `condition_id`, `date`, `rank`) 
 ('Excellent', 4, '2016-03-08 00:26:37', '3'),
 ('Fairly used', 7, '2016-04-10 09:10:33', '1'),
 ('Used', 9, '2016-04-10 09:10:33', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_request`
+--
+
+CREATE TABLE IF NOT EXISTS `item_request` (
+  `item_id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(255) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `category_id` bigint(255) NOT NULL,
+  `price` varchar(100) NOT NULL,
+  `condition_id` bigint(255) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `on_display` enum('0','1') NOT NULL DEFAULT '1',
+  `description` varchar(2200) NOT NULL,
+  `item_pic` varchar(5000) NOT NULL,
+  `deleted_by_seller` enum('0','1') NOT NULL DEFAULT '0',
+  `location_id` bigint(255) NOT NULL,
+  `type_id` bigint(255) NOT NULL,
+  `summary` varchar(700) NOT NULL,
+  `phone` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  PRIMARY KEY (`item_id`),
+  KEY `user_id` (`user_id`),
+  KEY `category_id` (`category_id`),
+  KEY `condition_id` (`condition_id`),
+  KEY `type_id` (`type_id`,`location_id`),
+  KEY `location_id` (`location_id`),
+  KEY `category_id_2` (`category_id`),
+  FULLTEXT KEY `name` (`name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+
+--
+-- Dumping data for table `item_request`
+--
+
+INSERT INTO `item_request` (`item_id`, `user_id`, `name`, `category_id`, `price`, `condition_id`, `date`, `on_display`, `description`, `item_pic`, `deleted_by_seller`, `location_id`, `type_id`, `summary`, `phone`, `email`) VALUES
+(11, 1, 'Tyer marks', 2, '', 1, '2018-07-09 23:32:50', '1', 'i love houses', '', '0', 29, 2, '', '0888 8789898', 'tiyachamdimba@gkmail.com'),
+(12, 1, 'Tyer marks', 2, '', 1, '2018-07-09 23:33:38', '1', 'i love houses', '', '0', 29, 2, '', '0888 8789898', 'tiyachamdimba@gkmail.com'),
+(13, 1, 'tyeer', 2, '', 1, '2018-07-09 23:44:47', '1', 'tyeer yutr', '', '0', 29, 2, '', '099876556', ''),
+(15, 1, 'tyeer', 2, '', 1, '2018-07-13 23:43:43', '1', 'My Love. My Fate Season 5 - 2016 Latest Nigerian', '', '0', 29, 2, '', '987987687', ''),
+(16, 1, 'tyuyu', 2, '', 1, '2018-07-13 23:44:14', '1', 'My Love. My Fate Season 5 - 2016 Latest Nigerian', '', '0', 29, 2, '', '769869879', ''),
+(17, 1, 'tyeer', 2, '', 1, '2018-07-13 23:47:31', '1', 'My Love. My Fate Season 5 - 2016 Latest Nigerian', '', '0', 29, 2, '', '97698769768', ''),
+(18, 1, 'tyeer', 2, '', 1, '2018-07-13 23:57:19', '1', 'position: relative;\r\n ', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_28/3046a2da8b04a8024361|#$(delimiter-2)$#|0', '0', 29, 2, '', '0900090090', ''),
+(20, 1, 'tyeer', 2, '', 1, '2018-07-14 00:03:49', '1', 'I want these thing please', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_28/744b62bf708354e82b9c|#$(delimiter-2)$#|0', '0', 29, 2, '', '0999 876 767', '');
 
 -- --------------------------------------------------------
 
