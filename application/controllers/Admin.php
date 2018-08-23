@@ -12,9 +12,9 @@ class Admin extends CI_Controller {
         // Call the CI_Model constructor
         parent::__construct();
 
-        $this->load->library('Mobile_redirect');
+        //$this->load->library('Mobile_redirect');
         
-        $this->mobile_redirect->mobile_redirect();
+        //$this->mobile_redirect->mobile_redirect();
         
         $this->load->library('user_account');
         
@@ -31,8 +31,7 @@ class Admin extends CI_Controller {
 	{
 
 
-		$pass_data = array(	'user_id' => $_SESSION['user_id'],
-							'on_display'=>1
+		$pass_data = array(	'on_display'=>1
    						   );
 
 		$model_data=$this->item_model->getItem($pass_data);
@@ -57,12 +56,47 @@ class Admin extends CI_Controller {
 
 	}
 
+
+	public function add_post()
+	{
+
+
+		/*########################################
+          0. load classes
+        #######################################*/		    
+
+          $this->load->model('Type_model');
+          $this->load->model('Category_model');
+          $this->load->model('Location_model');
+        
+		/*########################################
+          1. Get Data from Database using Models
+        #######################################*/		    
+   		
+		$type =$this->Type_model->getType(); 
+		$category =$this->Category_model->getCategory(); 
+		$location =$this->Location_model->getLocation(); 
+
+
+		$data['page_data']= array();
+		$data['page_data']['type']= $type;	
+		$data['page_data']['category']= $category;	
+		$data['page_data']['location']= $location;	
+
+
+		//echo "<pre>";
+		//print_r($location);
+		//return;
+		$this->load->view('admin/add_post',$data);
+
+	}
+
+
 	public function draft()
 	{
 
 
-		$pass_data = array(	'user_id' => $_SESSION['user_id'],
-   						    'on_display'=>0
+		$pass_data = array(	'on_display'=>0
    						   );
 
 		$model_data=$this->item_model->getItem($pass_data);
@@ -363,9 +397,16 @@ class Admin extends CI_Controller {
    		foreach ($model_data['data']['records'] as $key => $value) {
 
 			$model_data['data']['records'][$key]['price']='MK'.$value['price'];
-			$model_data['data']['records'][$key]['item_pic']['main']['size']=filesize(IMAGE_SRC_DIR.$model_data['data']['records'][$key]['item_pic']['main']['path'].'_t.jpg');
 			$model_data['data']['records'][$key]['date']=date( "j M Y", strtotime($value['date']));
-
+			foreach ($value['item_pic'] as $key2 => $value2) {
+				# calculate image dimensions
+				$width=600;$height =600;
+				if (file_exists($value2['path'].'.jpg')) 
+					list($width, $height, $type, $attr) = getimagesize($value2['path'].'.jpg');	
+				else
+					$model_data['data']['records'][$key]['item_pic'][$key2]['path'] = 'media/default/images/no_image';
+					$model_data['data']['records'][$key]['item_pic'][$key2]['dimension'] = $width.'x'.$height;
+			}
 			#limit length 				
 			if(strlen($value['item_name'])>23)
 				$model_data['data']['records'][$key]['item_name']=$this->general_functions->wordTrimmer($value['item_name'],23,'&hellip;');
@@ -393,7 +434,7 @@ class Admin extends CI_Controller {
         $data['info']['item']= $model_data;        
         $data['print_as']='json';         
         $this->load->view('ajaxCall/ajaxCall',$data);  
-       }
+       } 
        else
        { 
 		$this->load->view('admin/edit_property',$data);
@@ -771,6 +812,494 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/view_requests',$data);
        }
 
+	}
+
+	public function view_homepage_banners()
+	{
+
+		/*########################################
+          0. load classes
+        #######################################*/		    
+
+        $this->load->model('Banner_model');
+		$this->load->library('general_functions');
+		
+		
+		/*########################################
+          1. Get Data from Database using Models
+        #######################################*/		   
+        
+   		$pass_data = array(	
+   						   );
+
+   		$model_data=$this->Banner_model->getItem($pass_data);
+
+   		$href=base_url();
+   		$addition_info=$model_data['addition_info'];
+   		$status=$model_data['status'];
+
+
+   		//do some formating to the results
+   		foreach ($model_data['data']['records'] as $key => $value) {
+
+			$model_data['data']['records'][$key]['date']=date( "j M Y", strtotime($value['date']));
+			foreach ($value['item_pic'] as $key2 => $value2) {
+				# calculate image dimensions
+				$width=600;$height =600;
+				if (file_exists($value2['path'].'.jpg')) 
+					list($width, $height, $type, $attr) = getimagesize($value2['path'].'.jpg');	
+				else
+					$model_data['data']['records'][$key]['item_pic'][$key2]['path'] = 'media/default/images/no_image';
+					$model_data['data']['records'][$key]['item_pic'][$key2]['dimension'] = $width.'x'.$height;
+			}
+			#limit length 				
+			if(strlen($value['summary'])>25)
+				$model_data['data']['records'][$key]['summary']=$this->general_functions->wordTrimmer($value['summary'],25,'&hellip;');
+
+   		}
+
+		/*########################################
+          2. Send data to view
+        #######################################*/		    
+
+        $data['page_data']= array();	
+        $data['page_data']['item']= $model_data;
+
+        //echo "<pre>";
+		//print_r($model_data);
+		//return;
+         //check if is ajax call
+         // We added an ajax call because the item images got called by jquery after the page is already loaded
+       if($this->input->is_ajax_request())
+       {
+        $data['info']=array();         
+        $data['info']['item']= $model_data;        
+        $data['print_as']='json';         
+        $this->load->view('ajaxCall/ajaxCall',$data);  
+       }
+       else
+       { 
+		$this->load->view('admin/homepage_banners',$data);
+       }
+
+	}
+
+	public function add_homepage_banner_form($pdata=array())
+	{
+
+
+
+		//default valiables	
+		$status=false;
+		$fail_result=false;
+		$addition_info='';
+		$result_info="";
+		$item_id = '';
+		$result_array=array();
+		$href='';
+		
+		//echo "string";
+		//include libraries
+		$this->load->library('form_validation');
+
+		//validation configurations
+		$validationRules['rule1']=array(
+
+						        array(
+						                'field' => 'summary',
+						                'label' => 'Summary',
+						                'rules' => 'max_length[25]',
+						                'errors' => array(
+								                        'max_length' => 'Summary must not be more than 25 characters',
+						                				),	 		                
+						        	),
+						        array(
+						                'field' => 'input1',
+						                'label' => 'Image',
+						                'rules' => 'exact_length[20]|alpha_numeric|required',
+							            'errors' => array(
+									                        'exact_length' => 'system_error',
+									                        'alpha_numeric' => 'system_error', 
+									                        'required' => 'Provide a feature image',		                
+						        	),
+								),
+						    );
+
+
+		for ($i=2; $i <13 ; $i++) { 
+ 			array_push($validationRules['rule1'],array(
+							                'field' => 'input'.$i,
+							                'label' => 'Photo',
+							                'rules' => 'exact_length[20]|alpha_numeric',
+							                'errors' => array(
+									                        'exact_length' => 'system_error',
+									                        'alpha_numeric' => 'system_error',
+							            ),		                
+							        	));
+ 		}	        			
+		
+   							                   
+
+
+ 		//validate
+        $this->form_validation->set_rules($validationRules['rule1']);
+  
+	    if (!$fail_result && $this->form_validation->run() == FALSE)
+        {
+        	$fail_result=true;
+   			$addition_info='validation error';
+   			$result_info="Sorry An error Occurred";
+   			// control the error messsages
+   			$result_array= $this->form_validation->error_array(); 
+			
+   			//correct common errors first
+			$commonErrors=false;
+			foreach ($result_array as $key => $value) {
+				if('system_error'!= $value)
+					$commonErrors=true;
+			}
+
+			/*
+			the logic is treat common errors first then for systems error prompt user to refresh the page 
+			 */
+			// control the error messsages
+   			$errors = $this->form_validation->error_array();
+   			// define them
+   			if(!isset($errors['type']))$errors['type']='';
+   			if(!isset($errors['location']))$errors['location']='';
+   			if(!isset($errors['category']))$errors['category']='';
+
+   			if(($errors['type']=='system_error' || $errors['location']=='system_error' || $errors['category']=='system_error') && !$commonErrors)
+   			{
+   				$addition_info='system error';	
+   			}
+   			
+			for ($i=1; $i <5 ; $i++) { 
+       			
+       			if(isset($error['input'.$i]))
+       			if($errors['input'.$i]=='system_error' && !$commonErrors)
+       			{
+       				$addition_info='system error';	
+       			}					
+	 		}     			
+        }	  
+
+	   // flesh load	
+       if(!$fail_result)
+       {
+
+       		$pass_data = array(	'user_id' => $_SESSION['user_id'],
+       							'summary' => $this->input->post('summary',true),
+       						);
+       		$pass_data['addPic']=array();
+       		for ($i=1; $i <13 ; $i++) { 
+       		 	if($this->input->post('input'.$i,true)!='')
+       			array_push($pass_data['addPic'],$this->input->post('input'.$i));
+       		}
+
+		   	$this->load->model('Banner_model');
+       		$model_data=$this->Banner_model->addItem($pass_data);
+
+       		$href=base_url();
+       		$addition_info=$model_data['addition_info'];
+       		$status=$model_data['status'];
+       		$result_info=$model_data['data']['result_info'];
+       		$item_id=$model_data['data']['item_id'];
+       }
+       
+
+       //check if is ajax call
+       if($this->input->is_ajax_request())
+       {
+	       	$data['info']['status']=$status;
+	       	$data['info']['data']=array(
+	       								 'href'=>$href,
+	       								 'addition_info'=>$addition_info,	
+	       								 'result_array'=>$result_array,	
+	       								 'result_info'=>$result_info,
+	       								 'item_id'=>$item_id	
+	       								);
+	       	$data['print_as']='json';         
+	        $this->load->view('ajaxCall/ajaxCall',$data);
+       }
+       elseif(1==0)
+       {}
+	}
+
+
+	public function edit_homepage_banner_form($pdata=array())
+	{
+
+
+
+		//default valiables	
+		$status=false;
+		$fail_result=false;
+		$addition_info='';
+		$result_info="";
+		$item_id = '';
+		$result_array=array();
+		$href='';
+		
+		//echo "string";
+		//include libraries
+		$this->load->library('form_validation');
+
+		//validation configurations
+		$validationRules['rule1']=array(
+
+						        array(
+						                'field' => 'summary',
+						                'label' => 'Summary',
+						                'rules' => 'max_length[500]',
+						                'errors' => array(
+								                        'max_length' => 'Summary must not be less than 500 characters',
+						                				),	 		                
+						        	),
+						        array(
+						                'field' => 'input1',
+						                'label' => 'Image',
+						                'rules' => 'exact_length[20]|alpha_numeric',
+							            'errors' => array(
+									                        'exact_length' => 'system_error',
+									                        'alpha_numeric' => 'system_error', 
+									                        
+									                    ),
+								    ),
+						        array(
+						                'field' => 'i_ref',
+						                'label' => 'i_ref',
+						                'rules' => 'required|numeric',
+						                'errors' => array(
+						                				'required' => 'system_error',
+						                				'numeric' => '1system_error',
+						                				),	 		                
+						        	),
+						    );
+
+
+		for ($i=2; $i <13 ; $i++) { 
+ 			array_push($validationRules['rule1'],array(
+							                'field' => 'input'.$i,
+							                'label' => 'Photo',
+							                'rules' => 'exact_length[20]|alpha_numeric',
+							                'errors' => array(
+									                        'exact_length' => 'system_error',
+									                        'alpha_numeric' => 'system_error',
+							            ),		                
+							        	));
+ 		}	        					
+   	
+
+
+
+ 		//validate
+        $this->form_validation->set_rules($validationRules['rule1']);
+  
+	    if (!$fail_result && $this->form_validation->run() == FALSE)
+        {
+        	$fail_result=true;
+   			$addition_info='validation error';
+   			$result_info="Sorry An error Occurred";
+   			// control the error messsages
+   			$result_array= $this->form_validation->error_array(); 
+			
+   			//correct common errors first
+			$commonErrors=false;
+			foreach ($result_array as $key => $value) {
+				if('system_error'!= $value)
+					$commonErrors=true;
+			}
+
+			/*
+			the logic is treat common errors first then for systems error prompt user to refresh the page 
+			 */
+			// control the error messsages
+   			$errors = $this->form_validation->error_array();
+   			// define them
+   			if(!isset($errors['type']))$errors['type']='';
+   			if(!isset($errors['location']))$errors['location']='';
+   			if(!isset($errors['category']))$errors['category']='';
+
+   			if(($errors['type']=='system_error' || $errors['location']=='system_error' || $errors['category']=='system_error') && !$commonErrors)
+   			{
+   				$addition_info='system error';	
+   			}
+   			
+			for ($i=1; $i <5 ; $i++) { 
+       			
+       			if(isset($error['input'.$i]))
+       			if($errors['input'.$i]=='system_error' && !$commonErrors)
+       			{
+       				$addition_info='system error';	
+       			}					
+	 		}     			
+        }	  
+
+	   // flesh load	
+       if(!$fail_result)
+       {
+
+
+       		$pass_data = array(	'user_id' => $_SESSION['user_id'],
+       							'item_id' => $this->input->post('i_ref',true),
+       							'front_pic' => $this->input->post('input1',true),
+       							'summary' => $this->input->post('summary',true),
+       							'allow_null_photos' => true,
+       						);
+
+       		$pass_data['addPic']=array();
+       		for ($i=1; $i <13 ; $i++) { 
+       		 	if($this->input->post('input'.$i,true)!='')
+       			array_push($pass_data['addPic'],$this->input->post('input'.$i));
+       		}
+
+       		$pass_data['deletePic']=array();
+       		for ($i=1; $i <14 ; $i++) { 
+       			if($this->input->post('dlt'.$i,true)!='')
+       			array_push($pass_data['deletePic'],$this->input->post('dlt'.$i,true));
+       		}
+
+		   	$this->load->model('Banner_model');
+       		$model_data=$this->Banner_model->editItem($pass_data);
+
+       		$href=base_url();
+       		$addition_info=$model_data['addition_info'];
+       		$status=$model_data['status'];
+       		$result_info=$model_data['data']['result_info'];
+       		//$item_id=$model_data['data']['item_id'];
+       }
+
+
+       //check if is ajax call
+       if($this->input->is_ajax_request())
+       {
+	       	$data['info']['status']=$status;
+	       	$data['info']['data']=array(
+	       								 'href'=>$href,
+	       								 'addition_info'=>$addition_info,	
+	       								 'result_array'=>$result_array,	
+	       								 'result_info'=>$result_info,
+	       								 'item_id'=>$item_id	
+	       								);
+	       	$data['print_as']='json';         
+	        $this->load->view('ajaxCall/ajaxCall',$data);
+       }
+       elseif(1==0)
+       {}
+	}
+
+	public function delete_homepage_banner_form($pdata=array())
+	{
+
+
+
+		//default valiables	
+		$status=false;
+		$fail_result=false;
+		$addition_info='';
+		$result_info="";
+		$item_id = '';
+		$result_array=array();
+		$href='';
+		
+		//echo "string";
+		//include libraries
+		$this->load->library('form_validation');
+
+		//validation configurations
+		$validationRules['rule1']=array(
+						        array(
+						                'field' => 'i_ref',
+						                'label' => 'i_ref',
+						                'rules' => 'required|numeric',
+						                'errors' => array(
+						                				'required' => 'system_error',
+						                				'numeric' => '1system_error',
+						                				),	 		                
+						        	),
+						    );
+
+
+ 		//validate
+        $this->form_validation->set_rules($validationRules['rule1']);
+  
+	    if (!$fail_result && $this->form_validation->run() == FALSE)
+        {
+        	$fail_result=true;
+   			$addition_info='validation error';
+   			$result_info="Sorry An error Occurred";
+   			// control the error messsages
+   			$result_array= $this->form_validation->error_array(); 
+			
+   			//correct common errors first
+			$commonErrors=false;
+			foreach ($result_array as $key => $value) {
+				if('system_error'!= $value)
+					$commonErrors=true;
+			}
+
+			/*
+			the logic is treat common errors first then for systems error prompt user to refresh the page 
+			 */
+			// control the error messsages
+   			$errors = $this->form_validation->error_array();
+   			// define them
+   			if(!isset($errors['type']))$errors['type']='';
+   			if(!isset($errors['location']))$errors['location']='';
+   			if(!isset($errors['category']))$errors['category']='';
+
+   			if(($errors['type']=='system_error' || $errors['location']=='system_error' || $errors['category']=='system_error') && !$commonErrors)
+   			{
+   				$addition_info='system error';	
+   			}
+   			
+			for ($i=1; $i <5 ; $i++) { 
+       			
+       			if(isset($error['input'.$i]))
+       			if($errors['input'.$i]=='system_error' && !$commonErrors)
+       			{
+       				$addition_info='system error';	
+       			}					
+	 		}     			
+        }	  
+
+	   // flesh load	
+       if(!$fail_result)
+       {
+
+
+       		$pass_data = array(	'user_id' => $_SESSION['user_id'],
+       							'item_id' => $this->input->post('i_ref',true),
+       						);
+
+		   	$this->load->model('Banner_model');
+       		$model_data=$this->Banner_model->deleteItemPermanently($pass_data);
+
+       		$href=base_url();
+       		$addition_info=$model_data['addition_info'];
+       		$status=$model_data['status'];
+       		$result_info=$model_data['data']['result_info'];
+       		//$item_id=$model_data['data']['item_id'];
+       }
+
+
+       //check if is ajax call
+       if($this->input->is_ajax_request())
+       {
+	       	$data['info']['status']=$status;
+	       	$data['info']['data']=array(
+	       								 'href'=>$href,
+	       								 'addition_info'=>$addition_info,	
+	       								 'result_array'=>$result_array,	
+	       								 'result_info'=>$result_info,
+	       								 'item_id'=>$item_id	
+	       								);
+	       	$data['print_as']='json';         
+	        $this->load->view('ajaxCall/ajaxCall',$data);
+       }
+       elseif(1==0)
+       {}
 	}
 	public function delete_property_form($pdata=array())
 	{

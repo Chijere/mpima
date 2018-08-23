@@ -30,6 +30,36 @@ class General_actions extends CI_Controller {
 
   }
 
+  public function test_1()
+  {
+    //default valiables 
+    $status=false;
+    $fail_result=false;
+    $addition_info='';
+    $result_info="";
+
+            $temp_directory = "media/user/1";
+            
+            if(mkdir($temp_directory,0777,true))
+              $status=true;
+            else
+            {    
+              $addition_info='error_102_1 :failed to create temp_dir';
+              $result_info=" An Error Occurred, Try Again ";
+              $status=false;
+            }
+
+              $info=array("status"=>$status,
+              "data"=>array(
+                             'result_info'=>$result_info, 
+                            ),
+              "addition_info"=>$addition_info
+            );
+
+     echo "<pre>";
+     print_r($info);
+
+  }
     
     public function general_pic_attach($pdata=array())
     {
@@ -42,78 +72,64 @@ class General_actions extends CI_Controller {
     $pic_ref='';
     $path='';
     $href='';
+
+    if(!isset($pdata['thumbnail_width']))$pdata['thumbnail_width']=255;
+    if(!isset($pdata['thumbnail_height']))$pdata['thumbnail_height']=160;
+    if(!isset($pdata['medium_width']))$pdata['medium_width']=530;
+    if(!isset($pdata['medium_height']))$pdata['medium_height']=300;
+    if(!isset($pdata['normal_width']))$pdata['normal_width']=1280;
+    if(!isset($pdata['normal_height']))$pdata['normal_height']=720;    
     
 
-    
-       //check if is ajax call
-       if($this->input->is_ajax_request())
-       {
-          // attach image 
-         if(!$fail_result)
-         {
-       
-            $model_data=$this->pic_attach();
+    if(!empty($this->input->get('i_fmrt',true)))// image format                
+      {
+        if($this->input->get('i_fmrt',true)=="wd")
+        $pdata['format_type'] = "widescreen";
+      }    
 
-            $addition_info=$model_data['addition_info'];
-            $status=$model_data['status'];
-            $pic_ref=$model_data['data']['ref'];
-            $result_info=$model_data['data']['result_info'];
-            $result_array=$model_data['data']['result_array'];
-        $path=base_url().'temp/image/'.$pic_ref.'_t.jpg'; 
-         }
+    $this->load->library('attach_image');
+    $model_data=$this->attach_image->attach_image_to_temp($pdata);
 
+    $addition_info=$model_data['addition_info'];
+    $status=$model_data['status'];
+    $pic_ref=$model_data['data']['ref'];
+    $result_info=$model_data['data']['result_info'];
+    $result_array=$model_data['data']['result_array'];
 
-          $data['info']['status']=$status;
-          $data['info']['data']=array(
-                         'href'=>$href,
-                         'ref'=>$pic_ref,
-                         'path'=>$path,
-                         'result_info'=>$result_info  
-                        );
-          $data['print_as']='json';         
-          $this->load->view('ajaxCall/ajaxCall',$data);
-       }
-       else
-       {
-
-       }
-    }
-
-  private function pic_attach($pdata=array())
-  {
-
-    //default valiables 
-    $status=false;
-    $fail_result=false;
-    $addition_info='';
-    $result_info="";
-    $result_array=array();
-    $pic_ref='';
-    
-          
-          $pass_data = array();
-
-          $this->load->library('attach_image');
-          $model_data=$this->attach_image->attach_image_to_temp();
-
-          $addition_info=$model_data['addition_info'];
-          $status=$model_data['status'];
-          $pic_ref=$model_data['data']['ref'];
-          $result_info=$model_data['data']['result_info'];
-          $result_array=$model_data['data']['result_array'];
-     
-       
-        $info=array("status"=>$status,
-              "data"=>array(
-                             'ref'=>$pic_ref,
-                             'result_info'=>$result_info, 
-                             'result_array'=>$result_array, 
-                            ),
-              "addition_info"=>$addition_info
-            );
+    if($this->input->is_ajax_request())
+    {
+        $data['info']['status']=$status;
+        $data['info']['data']=array(
+                       'href'=>$href,
+                       'ref'=>$pic_ref,
+                       'path'=>$path,
+                       'result_info'=>$result_info,
+                       'result_array'=>$result_array,
+                       'addition_info'=>$addition_info,    
+                      );
+        $data['print_as']='json';         
+        $this->load->view('ajaxCall/ajaxCall',$data);  
+     }
+     else
+     { 
+      
+      $info=array("status"=>$status,
+            "data"=>array(
+                           'href'=>$href,
+                           'ref'=>$pic_ref,
+                           'path'=>$path,
+                           'result_info'=>$result_info, 
+                           'result_array'=>$result_array,
+                           'addition_info'=>$addition_info,     
+                          ),
+            "addition_info"=>$addition_info
+          );
 
       return $info;
-  }
 
+     }
+
+
+    }
 
 }

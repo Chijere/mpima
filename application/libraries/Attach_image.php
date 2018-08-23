@@ -45,6 +45,7 @@ class Attach_image {
 
   public function attach_image_to_temp($pdata=array())
   {
+    
 
     //default valiables 
     $status=false;
@@ -54,9 +55,179 @@ class Attach_image {
     $result_array=array();
     $pic_ref='';
     $file_data = array();
-    if(!isset($pdata['form_field']))$pdata['form_field']='file';
 
-        $temp_directory = "temp/image/";
+    if(!isset($pdata['format_type']))$pdata['format_type']='';
+    if(!isset($pdata['form_field']))$pdata['form_field']='file';
+    if(!isset($pdata['thumbnail_width']))$pdata['thumbnail_width']=255;
+    if(!isset($pdata['thumbnail_height']))$pdata['thumbnail_height']=160;
+    if(!isset($pdata['medium_width']))$pdata['medium_width']=400;
+    if(!isset($pdata['medium_height']))$pdata['medium_height']=300;
+    if(!isset($pdata['normal_width']))$pdata['normal_width']=1280;
+    if(!isset($pdata['normal_height']))$pdata['normal_height']=720;
+
+    $temp_directory = "temp/image/";
+
+    if($pdata['format_type']=='landscape' || $pdata['format_type']=='widescreen')
+  {
+
+        
+        
+      if(!$fail_result)
+      {     
+          if (!file_exists($temp_directory)) //check-if-temp-dir-exists
+          {
+            if(mkdir($temp_directory,0777,true))
+              $fail_result=true;
+            else
+            {    
+              $addition_info='error_102_1 :failed to create temp_dir';
+              $result_info=" An Error Occurred, Try Again ";
+              $fail_result=true;
+            }
+          }
+        }   
+
+     if(!$fail_result)
+       {
+
+          $pdata1= array('upload_path' => $temp_directory);
+          $pdata1['form_field']=$pdata['form_field'];
+          $model_data = $this->upload_to_temp_folder($pdata1);
+
+          $addition_info=$model_data['addition_info'];
+          $status=$model_data['status'];
+          $pic_ref=$model_data['data']['file_id'];
+          $file_data = $model_data['data']['file_data']; 
+          $result_info=$model_data['data']['result_info'];
+
+        if(!$status) $fail_result=true;
+       }
+    
+    //thum and medium sized images are resized and cropped. 
+    //this is so to remove the extra height/width if the image exceed the specified crop height or width
+    //and this is also due to ci as it can not resize and crop an image thru a single action so they (actions) have to be looped
+
+     if(!$fail_result)
+       {
+
+            $i=0;
+          do 
+          {
+
+          $image_config_data = array();
+
+          $skip = false;
+          $image_config_data['source_image'] = $temp_directory.$pic_ref.'.jpg';
+            
+              if($i==0)//thumbnail
+              {
+                  $image_config_data['new_image']         = $temp_directory.$pic_ref.'_t.jpg';
+                  $image_config_data['action'] = 'resize';
+                  $image_config_data['width']         = $pdata['thumbnail_width'];
+                  $image_config_data['maintain_ratio'] = true;
+
+              }elseif($i==4)//thumb - crop
+              {              
+
+                  $image_config_data['new_image']         = $temp_directory.$pic_ref.'_t.jpg';              
+                  $image_config_data['source_image']         = $temp_directory.$pic_ref.'_t.jpg';              
+                  $image_config_data['action'] = 'crop';
+                  $image_config_data['maintain_ratio'] = true;
+                  $image_config_data['height']         = $pdata['thumbnail_height'];
+                  $image_config_data['width']         = $pdata['thumbnail_width'];
+
+                  $heightRatio = $file_data['image_height'] / $image_config_data['height'];
+                  $widthRatio  = $file_data['image_width'] /  $image_config_data['width'];
+
+                  if ($heightRatio < $widthRatio) {
+                    $optimalRatio = $heightRatio;
+                  } else {
+                    $optimalRatio = $widthRatio;
+                  }
+
+                  $optimalHeight = $file_data['image_height'] / $optimalRatio;
+                  $optimalWidth  = $file_data['image_width']  / $optimalRatio;
+
+                  $image_config_data['x_axis']= 0;
+                  $image_config_data['y_axis'] = ( $optimalHeight/ 2) - ( $image_config_data['height']/2 );
+
+              }elseif($i==1)//medium
+              {
+                $image_config_data['new_image']         = $temp_directory.$pic_ref.'_m.jpg';              
+                  
+                  $image_config_data['width']         = $pdata['medium_width'];
+                  $image_config_data['action'] = 'resize';
+                  $image_config_data['maintain_ratio'] = true;
+
+              }elseif($i==3)//medium - crop
+              {              
+
+                  $image_config_data['new_image']         = $temp_directory.$pic_ref.'_m.jpg';              
+                  $image_config_data['source_image']         = $temp_directory.$pic_ref.'_m.jpg';              
+                  $image_config_data['action'] = 'crop';
+                  $image_config_data['maintain_ratio'] = true;
+                  $image_config_data['height']         = $pdata['medium_height'];
+                  $image_config_data['width']         = $pdata['medium_width'];
+
+                  $heightRatio = $file_data['image_height'] / $image_config_data['height'];
+                  $widthRatio  = $file_data['image_width'] /  $image_config_data['width'];
+
+                  if ($heightRatio < $widthRatio) {
+                    $optimalRatio = $heightRatio;
+                  } else {
+                    $optimalRatio = $widthRatio;
+                  }
+
+                  $optimalHeight = $file_data['image_height'] / $optimalRatio;
+                  $optimalWidth  = $file_data['image_width']  / $optimalRatio;
+
+                  $image_config_data['x_axis']= 0;
+                  $image_config_data['y_axis'] = ( $optimalHeight / 2) - ( $image_config_data['width'] /2 );
+
+              }elseif($i==2)//normal
+              {
+                  $image_config_data['new_image']         = $temp_directory.$pic_ref.'.jpg';
+                  $image_config_data['action'] = 'resize';
+                  if($file_data['image_height']>$pdata['normal_height'])
+                    $image_config_data['height']         = $pdata['normal_height'];
+                  else
+                    $image_config_data['height']         = $file_data['image_height'];
+              }else
+              {
+                  $this->fail_result=true;
+
+              }
+
+              if(!$fail_result && !$skip)
+              { 
+                $model_data = $this->manipulate_image($image_config_data);
+                $addition_info=$model_data['addition_info'];
+                $status=$model_data['status'];
+                $result_info=$model_data['data']['result_info'];
+              }
+            
+              if(!$status) $fail_result=true;
+
+              $i++;
+          } while (!$fail_result && $i<5);
+
+
+       }
+    
+       
+        $info=array("status"=>$status,
+              "data"=>array(
+                             'ref'=>$pic_ref,
+                             'result_info'=>$result_info, 
+                             'result_array'=>$result_array, 
+                            ),
+              "addition_info"=>$addition_info
+            );
+
+      return $info;
+  }
+  else
+  {
         
       if(!$fail_result)
       {     
@@ -100,25 +271,25 @@ class Attach_image {
           do 
           {
 
-          $pdata = array();
+          $image_config_data = array();
           $skip = false;
-        $pdata['source_image'] = $temp_directory.$pic_ref.'.jpg';
+        $image_config_data['source_image'] = $temp_directory.$pic_ref.'.jpg';
             
               if($i==0)//thumbnail
               {
-                  $pdata['new_image']         = $temp_directory.$pic_ref.'_t.jpg';
+                  $image_config_data['new_image']         = $temp_directory.$pic_ref.'_t.jpg';
                   if($file_data['image_height']>150)
-                    $pdata['height']         = 150;
+                    $image_config_data['height']         = 150;
                   else
-                    $pdata['height']         = $file_data['image_height'];
+                    $image_config_data['height']         = $file_data['image_height'];
 
               }elseif($i==1)//medium
               {
-                $pdata['new_image']         = $temp_directory.$pic_ref.'_m.jpg';              
+                $image_config_data['new_image']         = $temp_directory.$pic_ref.'_m.jpg';              
                   if($file_data['image_height']>300)
-                    $pdata['height']         = 300;
+                    $image_config_data['height']         = 300;
                   else
-                    $pdata['height']         = $file_data['image_height'];
+                    $image_config_data['height']         = $file_data['image_height'];
 
               }elseif($i==3)//medium - crop
               {              
@@ -127,15 +298,15 @@ class Attach_image {
                       $skip = true;
                     }                 
 
-                $pdata['new_image']         = $temp_directory.$pic_ref.'_m.jpg';              
-                $pdata['source_image']         = $temp_directory.$pic_ref.'_m.jpg';              
-                  $pdata['action'] = 'crop';
-                  $pdata['maintain_ratio'] = false;
-                  $pdata['height']         = 300;
-                  $pdata['width']         = 300;
+                $image_config_data['new_image']         = $temp_directory.$pic_ref.'_m.jpg';              
+                $image_config_data['source_image']         = $temp_directory.$pic_ref.'_m.jpg';              
+                  $image_config_data['action'] = 'crop';
+                  $image_config_data['maintain_ratio'] = false;
+                  $image_config_data['height']         = 300;
+                  $image_config_data['width']         = 300;
 
-                  $heightRatio = $file_data['image_height'] / $pdata['height'];
-          $widthRatio  = $file_data['image_width'] /  $pdata['width'];
+                  $heightRatio = $file_data['image_height'] / $image_config_data['height'];
+          $widthRatio  = $file_data['image_width'] /  $image_config_data['width'];
 
           if ($heightRatio < $widthRatio) {
             $optimalRatio = $heightRatio;
@@ -146,8 +317,8 @@ class Attach_image {
           $optimalHeight = $file_data['image_height'] / $optimalRatio;
           $optimalWidth  = $file_data['image_width']  / $optimalRatio;
 
-          $pdata['x_axis']= ( $optimalWidth / 2) - ( $pdata['width'] /2 );
-          $pdata['y_axis'] = ( $optimalHeight/ 2) - ( $pdata['height']/2 );
+          $image_config_data['x_axis']= ( $optimalWidth / 2) - ( $image_config_data['width'] /2 );
+          $image_config_data['y_axis'] = ( $optimalHeight/ 2) - ( $image_config_data['height']/2 );
 
 
               }elseif($i==4)//thumb - crop
@@ -158,15 +329,15 @@ class Attach_image {
                       $skip = true;
                     } 
 
-                $pdata['new_image']         = $temp_directory.$pic_ref.'_t.jpg';              
-                $pdata['source_image']         = $temp_directory.$pic_ref.'_t.jpg';              
-                  $pdata['action'] = 'crop';
-                  $pdata['maintain_ratio'] = false;
-                  $pdata['height']         = 150;
-                  $pdata['width']         = 150;
+                $image_config_data['new_image']         = $temp_directory.$pic_ref.'_t.jpg';              
+                $image_config_data['source_image']         = $temp_directory.$pic_ref.'_t.jpg';              
+                  $image_config_data['action'] = 'crop';
+                  $image_config_data['maintain_ratio'] = false;
+                  $image_config_data['height']         = 150;
+                  $image_config_data['width']         = 150;
 
-                  $heightRatio = $file_data['image_height'] / $pdata['height'];
-          $widthRatio  = $file_data['image_width'] /  $pdata['width'];
+                  $heightRatio = $file_data['image_height'] / $image_config_data['height'];
+          $widthRatio  = $file_data['image_width'] /  $image_config_data['width'];
 
           if ($heightRatio < $widthRatio) {
             $optimalRatio = $heightRatio;
@@ -177,18 +348,18 @@ class Attach_image {
           $optimalHeight = $file_data['image_height'] / $optimalRatio;
           $optimalWidth  = $file_data['image_width']  / $optimalRatio;
 
-          $pdata['x_axis']= ( $optimalWidth / 2) - ( $pdata['width'] /2 );
-          $pdata['y_axis'] = ( $optimalHeight/ 2) - ( $pdata['height']/2 );
+          $image_config_data['x_axis']= ( $optimalWidth / 2) - ( $image_config_data['width'] /2 );
+          $image_config_data['y_axis'] = ( $optimalHeight/ 2) - ( $image_config_data['height']/2 );
 
 
               }elseif($i==2)//normal
               {
-                  $pdata['new_image']         = $temp_directory.$pic_ref.'.jpg';
-                  $pdata['action'] = 'resize';
+                  $image_config_data['new_image']         = $temp_directory.$pic_ref.'.jpg';
+                  $image_config_data['action'] = 'resize';
                   if($file_data['image_height']>1020)
-                    $pdata['height']         = 1020;
+                    $image_config_data['height']         = 1020;
                   else
-                    $pdata['height']         = $file_data['image_height'];
+                    $image_config_data['height']         = $file_data['image_height'];
               }else
               {
                   $this->fail_result=true;
@@ -197,7 +368,7 @@ class Attach_image {
 
               if(!$fail_result && !$skip)
             { 
-              $model_data = $this->manipulate_image($pdata);
+              $model_data = $this->manipulate_image($image_config_data);
               $addition_info=$model_data['addition_info'];
               $status=$model_data['status'];
               $result_info=$model_data['data']['result_info'];
@@ -223,6 +394,8 @@ class Attach_image {
 
       return $info;
   }
+}
+
 
   //resize/crop and others
   public function manipulate_image($pdata=array())

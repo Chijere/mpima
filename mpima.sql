@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2018 at 10:07 AM
+-- Generation Time: Aug 23, 2018 at 07:59 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,6 +19,35 @@ SET time_zone = "+00:00";
 --
 -- Database: `mpima`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banner`
+--
+
+CREATE TABLE IF NOT EXISTS `banner` (
+  `item_id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(255) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `on_display` enum('0','1') NOT NULL DEFAULT '1',
+  `description` varchar(2200) NOT NULL,
+  `summary` varchar(700) NOT NULL,
+  `type` enum('landingpage_banner','leftside_banner','rightside_banner','footer_banner') NOT NULL,
+  `item_pic` varchar(5000) NOT NULL,
+  PRIMARY KEY (`item_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+
+--
+-- Dumping data for table `banner`
+--
+
+INSERT INTO `banner` (`item_id`, `user_id`, `date`, `on_display`, `description`, `summary`, `type`, `item_pic`) VALUES
+(19, 1, '2018-08-23 05:29:43', '1', '', 'The Modern Home', '', '0|#$(delimiter-2)$#|media/user/1/image/banner/2018_34/5b71c77dfb8d70c2afcb|#$(delimiter-2)$#|0'),
+(20, 1, '2018-08-23 05:39:58', '1', '', 'Everything at your pace', '', '0|#$(delimiter-2)$#|media/user/1/image/banner/2018_34/7276e5bc6b84731a0954|#$(delimiter-2)$#|0'),
+(21, 1, '2018-08-23 05:40:35', '1', '', 'Experience The Luxury', '', '0|#$(delimiter-2)$#|media/user/1/image/banner/2018_34/cbbea0499169ab61597e|#$(delimiter-2)$#|0'),
+(22, 1, '2018-08-23 05:40:57', '1', '', 'More Freedom', '', '0|#$(delimiter-2)$#|media/user/1/image/banner/2018_34/b1b36f6b1c59e2207918|#$(delimiter-2)$#|0');
 
 -- --------------------------------------------------------
 
@@ -212,18 +241,17 @@ CREATE TABLE IF NOT EXISTS `item` (
   KEY `location_id` (`location_id`),
   KEY `category_id_2` (`category_id`),
   FULLTEXT KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`item_id`, `user_id`, `name`, `category_id`, `price`, `condition_id`, `date`, `on_display`, `description`, `item_pic`, `deleted_by_seller`, `location_id`, `type_id`, `summary`) VALUES
-(3, 1, 'Nkolokosa', 2, '300000', 1, '2018-06-06 07:59:44', '1', '2 bedroom house best condtion', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_22/dc3f8e1d2ca73ce0c1db|#$(delimiter-2)$#|0|#$(delimiter-1)$#|1|#$(delimiter-2)$#|media/user/1/image/item/2018_22/9cfc8c65f18cd066dae9|#$(delimiter-2)$#|0', '0', 1, 1, '2 bedroom house best condtion'),
-(5, 1, 'Bangwe township', 4, '708880', 1, '2018-06-06 07:59:44', '1', 'Bangwe township', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_22/dd98133c29b2e005a1cf|#$(delimiter-2)$#|0', '0', 1, 2, 'Bangwe township morden'),
-(8, 1, 'Ndirande', 2, '200000', 1, '2018-07-06 22:17:52', '1', 'nice', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_27/f9d1f9796819ba818abf|#$(delimiter-2)$#|0|#$(delimiter-1)$#|1|#$(delimiter-2)$#|media/user/1/image/item/2018_27/b92f6f66c0fa7839b8f2|#$(delimiter-2)$#|0|#$(delimiter-1)$#|2|#$(delimiter-2)$#|media/user/1/image/item/2018_27/a34d31478bf47e2a7e7f|#$(delimiter-2)$#|0', '0', 17, 1, 'goose House'),
-(9, 1, 'chiromoni', 2, '30000', 1, '2018-07-06 22:48:53', '0', 'nice', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_27/d52328b829382fdb1a36|#$(delimiter-2)$#|0', '0', 29, 2, 'cool indeed'),
-(10, 1, 'Vumbwe', 2, '50000', 1, '2018-07-06 22:50:05', '1', 'really nice', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_27/38c63ce5bb6256c7c69d|#$(delimiter-2)$#|0|#$(delimiter-1)$#|1|#$(delimiter-2)$#|media/user/1/image/item/2018_27/7827d58fdea2434dd14d|#$(delimiter-2)$#|0', '0', 29, 2, 'right at the peek');
+(12, 1, 'home', 2, '40000', 1, '2018-08-23 05:20:26', '1', 'morden House nice', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_34/198315c590d4f4fec1c4|#$(delimiter-2)$#|0', '0', 29, 2, 'morden House '),
+(13, 1, 'Vacation Home', 2, '30000', 1, '2018-08-23 05:44:04', '1', 'Vacation home in Salima', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_34/6390441ed783eb15d698|#$(delimiter-2)$#|0', '0', 9, 2, 'Vacation home in Salima'),
+(14, 1, 'Family home', 2, '50000', 1, '2018-08-23 05:44:57', '1', 'Vacation Home in Salima', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_34/48afadc21d02657ad1be|#$(delimiter-2)$#|0', '0', 29, 2, 'Vacation Home in Salima'),
+(15, 1, 'Vacation Home in ', 2, '60000', 1, '2018-08-23 05:45:41', '1', 'Vacation Home in Salima', '0|#$(delimiter-2)$#|media/user/1/image/item/2018_34/d4bb2ab496f2f80f0610|#$(delimiter-2)$#|0', '0', 9, 2, 'Vacation Home in Salima');
 
 -- --------------------------------------------------------
 

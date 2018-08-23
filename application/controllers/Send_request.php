@@ -12,9 +12,9 @@ class Send_request extends CI_Controller {
         // Call the CI_Model constructor
         parent::__construct();
 
-        $this->load->library('Mobile_redirect');
+        //$this->load->library('Mobile_redirect');
         
-        $this->mobile_redirect->mobile_redirect();
+        //$this->mobile_redirect->mobile_redirect();
         
         $this->load->library('user_account');
         

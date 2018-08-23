@@ -23,7 +23,7 @@
 <div class="super_container">
 	
 	<!-- Home -->
-	<?php
+	<?php 
 	 $this->load->view("template/container2/home_banner",$page_data);
 	?>
 	<!-- Header -->

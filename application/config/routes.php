@@ -77,11 +77,16 @@ $route['(?i)send_request/form'] = 'send_request/send_request_form';
 $route['(?i)admin/edit_request/form/delete'] = 'admin/delete_request_form';
 #------
 
-#About
+#Admin
 $route['(?i)admin'] = 'admin';
+$route['(?i)admin/homepage_banners'] = 'admin/view_homepage_banners';
+$route['(?i)admin/homepage_banners/form/add'] = 'admin/add_homepage_banner_form';
+$route['(?i)admin/homepage_banners/form/edit'] = 'admin/edit_homepage_banner_form';
+$route['(?i)admin/homepage_banners/form/edit/delete'] = 'admin/delete_homepage_banner_form';
 $route['(?i)admin/draft'] = 'admin/draft';
 $route['(?i)admin/requests'] = 'admin/view_requests';
 $route['(?i)single_request/(:num)'] = 'admin/single_request';
+$route['(?i)add_post'] = 'admin/add_post';
 $route['(?i)add_property'] = 'admin/add_property';
 $route['(?i)edit_property/(:num)'] = 'admin/edit_property';
 $route['(?i)admin/add_property/form'] = 'admin/add_property_form';

@@ -82,11 +82,6 @@
 					<p class="intro_text">MPICO Investments designs modern building designs, house plans, monitor, control, operate oversee and account for property, survey sites and establishes the market value of urban and rural area lands</p>
 					<div class="button intro_button trans_200"><a class="trans_200" href="#">read more</a></div>
 				</div>
-				<div class="col-lg-5 order-lg-2 order-1">
-					<div class="intro_image">
-						<img src="<?php echo IMAGE_SRC_URL;?>media/default/images/intro.png" alt="">
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
