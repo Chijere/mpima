@@ -110,31 +110,26 @@
 					<div class="section_title text-center">
 						<a href="<?php echo base_url(); ?>about" style=" h3:hover color:#fd5524; span:hover {color:#fd5524;}
 						">
-						<h3>see how we operate</h3>
+						<h3>See Our Services</h3>
 						<span class="section_subtitle">What you need to do and know</span>
 					</a>
 					</div>
 				</div>
 			</div>
 
-			<div class="row workflow_row">
-				<div class="workflow_rocket"><img src="<?php echo IMAGE_SRC_URL;?>media/default/images/rocket.png" alt=""></div>
+			<div class="row workflow_row" style="padding-top: 40px">
 
 				<!-- Workflow Item -->
 				<div class="col-lg-4 workflow_col">
 					<div class="workflow_item">
 						<div class="workflow_image_container d-flex flex-column align-items-center justify-content-center">
-							<div class="workflow_image_background">
-								<div class="workflow_circle_outer trans_200"></div>
-								<div class="workflow_circle_inner trans_200"></div>
-								<div class="workflow_num text-center trans_200"><span>01.</span></div>
-							</div>
+							
 							<div class="workflow_image">
 								<img src="<?php echo IMAGE_SRC_URL;?>media/default/images/workflow_1.png" alt="">
 							</div>
 							
 						</div>
-						<div class="workflow_item_content text-center">
+						<div style="padding-top: 20px"  class="workflow_item_content text-center">
 							<div class="workflow_title">Choose a Location</div>
 							<p class="workflow_text">Then tell us whats in your imagination for a house design</p>
 						</div>
@@ -145,17 +140,12 @@
 				<div class="col-lg-4 workflow_col">
 					<div class="workflow_item">
 						<div class="workflow_image_container d-flex flex-column align-items-center justify-content-center">
-							<div class="workflow_image_background">
-								<div class="workflow_circle_outer trans_200"></div>
-								<div class="workflow_circle_inner trans_200"></div>
-								<div class="workflow_num text-center trans_200"><span>02.</span></div>
-							</div>
 							<div class="workflow_image">
 								<img src="<?php echo IMAGE_SRC_URL;?>media/default/images/workflow_2.png" alt="">
 							</div>
 							
 						</div>
-						<div class="workflow_item_content text-center">
+						<div style="padding-top: 20px"  class="workflow_item_content text-center">
 							<div class="workflow_title">We do the design sketches</div>
 							<p class="workflow_text">we do the house designs and land valuations and site survey</p>
 						</div>
@@ -166,17 +156,12 @@
 				<div class="col-lg-4 workflow_col">
 					<div class="workflow_item">
 						<div class="workflow_image_container d-flex flex-column align-items-center justify-content-center">
-							<div class="workflow_image_background">
-								<div class="workflow_circle_outer trans_200"></div>
-								<div class="workflow_circle_inner trans_200"></div>
-								<div class="workflow_num text-center trans_200"><span>03.</span></div>
-							</div>
 							<div class="workflow_image">
 								<img src="<?php echo IMAGE_SRC_URL;?>media/default/images/workflow_3.png" alt="">
 							</div>
 							
 						</div>
-						<div class="workflow_item_content text-center">
+						<div style="padding-top: 20px"  class="workflow_item_content text-center">
 							<div class="workflow_title">commision the design</div>
 							<p class="workflow_text">commision all the designs and paper work for a cheap cost</p>
 						</div>
@@ -198,7 +183,7 @@
 				<div class="col">
 					
 					<div class="cta_1_content d-flex flex-lg-row flex-column align-items-center justify-content-start">
-						<h3 class="cta_1_text text-lg-left text-center">Do you want to talk with one of our <span>company experts?</span></h3>
+						<h3 class="cta_1_text text-lg-left text-center">Do you want to talk with one of our <span>company experts, Urgently?</span></h3>
 						<div class="cta_1_phone">Call now:   +265991843315</div>
 					</div>
 					

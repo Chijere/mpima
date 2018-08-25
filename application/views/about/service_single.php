@@ -46,19 +46,18 @@
 	<!-- Home -->
 	<div class="home" style="height: 350px;">
 		<!-- Image by: https://unsplash.com/@jbriscoe -->
-		<div class="home_background" style="background-image:url(<?php echo IMAGE_SRC_URL;?>media/default/images/home_background.jpg)"></div>
+		<div class="home_background" style="background-image:url(<?php echo IMAGE_SRC_URL;?>media/default/images/news.jpg)"></div>
 		
 		<div class="container">
 			<div class="row">
 				<div class="col">
 					<div class="home_content">
 						<div class="home_title">
-							<h2>about us</h2>
+							<h2>Our Services</h2>
 						</div>
 						<div class="breadcrumbs">
-							<span><a href="index.html">Home</a></span>
-							<span><a href="#"> About Us</a></span>
-							<span><a href="#"> Our Agents</a></span>
+							<span><a href="<?php echo base_url(); ?>">Home</a></span>
+							<span><a href="#"> Service</a></span>
 						</div>
 					</div>
 				</div>
@@ -77,57 +76,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 order-lg-1 order-2">
-					<h2 class="intro_title">MPIMA Investments</h2>
-					<div class="intro_subtitle">Build a better Malawi with high quality standards and designs at cheap rates</div>
+					<h3 class="intro_title">Build a better Malawi with high quality standards and designs at cheap rates</h3>
 					<p class="intro_text">MPICO Investments designs modern building designs, house plans, monitor, control, operate oversee and account for property, survey sites and establishes the market value of urban and rural area lands</p>
-					<div class="button intro_button trans_200"><a class="trans_200" href="#">read more</a></div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- Agents -->
-
-	<div class="agents">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="section_title text-center">
-						<h3>our team</h3>
-						<span class="section_subtitle">The best out there</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="row agents_row">
-				
-		        <?php 
-                  foreach ($page_data['item']['data']['records'] as $key => $value) {
-                ?>
-				<!-- Agent -->
-				<div class="col-lg-3 agent_col text-center">
-					<div class="agent_image mx-auto">
-						<img src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'_t.jpg'; ?>" alt="chipala 2016">
-					</div>
-					<div class="agent_content">
-						<div class="agent_name"><?php echo $value['item_name']; ?></div>
-						<div class="agent_role"><?php echo $value['title']; ?></div>
-						<div class="agent_social">
-							<ul class="agent_social_list">
-								<li class="agent_social_item"><a href="<?php echo $value['link_linkedin']; ?>"><i class="fab fa-pinterest"></i></a></li>
-								<li class="agent_social_item"><a href="<?php echo $value['link_facebook']; ?>"><i class="fab fa-facebook-f"></i></a></li>
-								<li class="agent_social_item"><a href="<?php echo $value['link_twitter']; ?>"><i class="fab fa-twitter"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div> 
-				<?php } ?>
-				
-			</div>
-		</div>
-	</div>
-
-
 
 	<!-- Credits -->
 	<?php

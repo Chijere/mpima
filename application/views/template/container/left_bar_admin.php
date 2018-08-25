@@ -36,6 +36,13 @@
                     </ul>
                   </li>
 
+                  <li><a><i class="fa fa-file-text"></i> About <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="<?php echo base_url(); ?>admin/team_members">View Team Members</a></li>
+                      <li><a href="<?php echo base_url(); ?>admin/services">View Services</a></li>
+                    </ul>
+                  </li>
+
                   <li><a><i class="fa fa-file-text"></i> Post <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url(); ?>admin/posts">View posts</a></li>

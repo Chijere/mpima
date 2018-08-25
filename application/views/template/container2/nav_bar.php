@@ -27,6 +27,7 @@
                     <a class="dropdown-item" href="<?php echo base_url(); ?>listings/land">Land for Sell</a>
                   </div>
                 </li>
+                <li class="main_nav_item"><a href="<?php echo base_url(); ?>service">services</a></li>
                 <li class="main_nav_item"><a href="<?php echo base_url(); ?>contact">contact</a></li>
                 <li class="main_nav_item"><a href="<?php echo base_url(); ?>about">about us</a></li>
               </ul>
@@ -87,6 +88,15 @@
             <div class="row">
               <div class="col">
                 <a href="<?php echo base_url(); ?>contact">contact</a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="menu_item">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <a href="<?php echo base_url(); ?>service">services</a>
               </div>
             </div>
           </div>

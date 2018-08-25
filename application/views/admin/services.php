@@ -43,10 +43,6 @@
 
 <!-------Overrriden Css--------->
 <style type="text/css">
-.dropzone .dz-preview .dz-image {
-      width: 100% !important;
-      height: 170px !important;
-    }
  .sweet-modal-overlay{
   z-index: 1060 !important;
  }   
@@ -73,7 +69,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Homepage Banner</h3>
+                <h3>Team Members</h3>
               </div>
             </div>
 
@@ -109,7 +105,12 @@
                             </div>
                             </div>
                           <div class="caption">
-                            <p><?php echo $value['summary']; ?></p>
+                            <div>
+                              <strong><?php echo $value['item_name']; ?></strong>
+                            </div>
+                            <span class="role">
+                              <?php echo $value['title']; ?>
+                            </span>
                           </div>                          
                           </div>
                         </div>
@@ -123,7 +124,7 @@
               <div class="col-md-3 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Add a banner</h2>
+                    <h2>Add a Team Member</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -132,8 +133,8 @@
                   </div>
                   <div class="x_content">
                     <div class="form-group">
-                        <label class="control-label"><small> You can only add up to 5 banners </small></label>
-                        <label class="control-label"><small> Image should be : 1920x960px / higher </small></label>
+                        <label class="control-label"><small> Add a reasonable number please </small></label>
+                        <label class="control-label"><small> Image should be : 180x180px / higher </small></label>
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">
@@ -183,18 +184,61 @@
                             <div class="col-sm-12">
                               <div class="thumbnail"  style="padding: 0px">
                                 <div class="view view-first">
-                                <form id="add_banner_dropzone_form" action="<?php echo base_url(); ?>upload/pic/attch?i_fmrt=wd" class="dropzone add_banner_dropzone_form" style="border:none; padding:0px; "></form>
+                                <form id="add_banner_dropzone_form" action="<?php echo base_url(); ?>upload/pic/attch?i_fmrt=wd" class="dropzone add" style="border:none; padding:0px; "></form>
                                 </div>                          
                               </div>
                             </div>
                       </div>
-                      <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/homepage_banners/form/add" data-parsley-validate>                      
-                        <div class="form-group">
-                          <textarea name="summary" class="form-control" rows="2"
-                                data-parsley-length="[0, 25]" name="name" placeholder="e.g. Where The Magic Lives"
-                              data-parsley-length-message="Must not be more than 25 characters"
-                            ></textarea>
-                          </div>
+                      <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/team_members/form/add" data-parsley-validate>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Name<span class="required">*</span></label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="name" placeholder="e.g John Luke" required="required" 
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Title<span class="required">*</span></label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="title" placeholder="e.g Manager" required="required" 
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>                  
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">About<span class="required">*</span></label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <textarea name="description" class="form-control" rows="2"
+                              data-parsley-length="[0, 300]" name="name" placeholder="e.g. A really nice guy"
+                            data-parsley-length-message="Must not be more than 300 characters"
+                          ></textarea>
+                        </div>
+                        </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Facebook</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_fb" placeholder="e.g www.fb.com/johnluke" required="required" 
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tweeter</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_t" placeholder="e.g www.tweeter.com/johnluke" required="required" 
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">LinkedIn</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_lnk" placeholder="e.g www.LinkedIn.com/johnluke" required="required" 
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>    
                           <div class="ln_solid"></div>
                           <div class="form-group">
                               <button style="width: 140px" type="button" class="btn btn-default modal-change-photo"><i class="fa fa-pencil"></i> Change photo </button>
@@ -219,7 +263,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Banner</h4>
+        <h4 class="modal-title">Team Member</h4>
       </div>
       <div class="modal-body">
         <div class="alert alert-danger" role="alert" style="display: none;">
@@ -229,19 +273,62 @@
                             <div class="col-sm-12">
                               <div class="thumbnail"   data-size="<?php echo $value['item_pic']['main']['dimension']; ?>" data-thumb="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'_t.jpg'; ?>" data-src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'.jpg'; ?>"  style="padding: 0px">
                                 <div class="view view-first" style="height: 170px; overflow: hidden;">
-                                  <img ref="<?php echo $value['item_pic']['main']['id']; ?>" style="width: 100%; display:block; margin:auto;" class="single_img" src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'.jpg'; ?>" alt="No image" />
+                                  <img ref="<?php echo $value['item_pic']['main']['id']; ?>" style=" display:block; margin:auto;" class="single_img" src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'_t.jpg'; ?>" alt="No image" />
                                 <form id="gallery_form" action="<?php echo base_url(); ?>upload/pic/attch" class="dropzone gallery_form" style="border:none; padding:0px; display: none;"></form>
                                 </div>                          
                               </div>
                             </div>
                       </div>
-                      <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/homepage_banners/form/edit" data-parsley-validate>                      
+                      <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/team_members/form/edit" data-parsley-validate>                      
                         <div class="form-group">
-                          <textarea name="summary" class="form-control" rows="2"
-                                data-parsley-length="[0, 25]" name="name" placeholder="<?php echo $value['summary']; ?>" 
-                              data-parsley-length-message="It should be between 10 to 60 characters"
-                            ></textarea>
-                          </div>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="name" placeholder="<?php echo $value['item_name']; ?>" 
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="title" placeholder="<?php echo $value['title']; ?>" 
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>                  
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">About</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <textarea name="description" class="form-control" rows="2"
+                              data-parsley-length="[0, 300]" name="name" placeholder="<?php echo $value['item_description']; ?>"
+                            data-parsley-length-message="Must not be more than 300 characters"
+                          ></textarea>
+                        </div>
+                        </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Facebook</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_fb" placeholder="<?php echo $value['link_facebook']; ?>"  
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tweeter</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_t" placeholder="<?php echo $value['link_twitter']; ?>"  
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">LinkedIn</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_lnk" placeholder="<?php echo $value['link_linkedin']; ?>"  
+                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          >
+                        </div>
+                      </div>
                           <div class="ln_solid"></div>
                           <input type="hidden" name="i_ref" value="<?php echo $value['item_id'] ?>" />
                           <div class="form-group">
@@ -266,7 +353,7 @@
   <script src="<?php echo base_url(); ?>assets/vendors/parsleyjs/dist/parsley.min.js" ></script>
   <script src="<?php echo base_url(); ?>assets/vendors/Holdon/HoldOn.min.js" ></script>
   <script src="<?php echo base_url(); ?>assets/vendors/jquery.sweet-modal-1.3.3/min/jquery.sweet-modal.min.js" ></script>
-  <script src="<?php echo base_url(); ?>assets/js/admin_homepage_banners_custom.js" ></script>
+  <script src="<?php echo base_url(); ?>assets/js/admin_team_members_custom.js" ></script>
 
 
     <!-- Parsley -->

@@ -69,6 +69,8 @@ $route['(?i)logout'] = 'sign_in/sign_out';
 #About
 $route['(?i)about'] = 'about';
 $route['(?i)contact'] = 'about/contact';
+$route['(?i)service'] = 'about/service';
+$route['(?i)service/(:num)'] = 'about/service_single';
 #------
 
 #send_request
@@ -79,10 +81,22 @@ $route['(?i)admin/edit_request/form/delete'] = 'admin/delete_request_form';
 
 #Admin
 $route['(?i)admin'] = 'admin';
+	//banner
 $route['(?i)admin/homepage_banners'] = 'admin/view_homepage_banners';
 $route['(?i)admin/homepage_banners/form/add'] = 'admin/add_homepage_banner_form';
 $route['(?i)admin/homepage_banners/form/edit'] = 'admin/edit_homepage_banner_form';
 $route['(?i)admin/homepage_banners/form/edit/delete'] = 'admin/delete_homepage_banner_form';
+	//team
+$route['(?i)admin/team_members'] = 'admin/view_team_members';
+$route['(?i)admin/team_members/form/add'] = 'admin/add_team_members_form';
+$route['(?i)admin/team_members/form/edit'] = 'admin/edit_team_members_form';
+$route['(?i)admin/team_members/form/edit/delete'] = 'admin/delete_team_members_form';
+		//services
+$route['(?i)admin/services'] = 'admin/view_services';
+$route['(?i)admin/services/form/add'] = 'admin/add_services_form';
+$route['(?i)admin/services/form/edit'] = 'admin/edit_services_form';
+$route['(?i)admin/services/form/edit/delete'] = 'admin/delete_services_form';
+	
 $route['(?i)admin/draft'] = 'admin/draft';
 $route['(?i)admin/requests'] = 'admin/view_requests';
 $route['(?i)single_request/(:num)'] = 'admin/single_request';
