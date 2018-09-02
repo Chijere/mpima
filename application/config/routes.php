@@ -110,6 +110,7 @@ $route['(?i)admin/edit_property/form/delete'] = 'admin/delete_property_form';
 
 #defaults
 $route['(?i)upload/pic/attch'] = 'general_actions/general_pic_attach';
+$route['(?i)upload/file/attch'] = 'general_actions/general_file_attach';
 $route['default_controller'] = 'home';
 $route['404_override'] = 'errors/page_missing';
 $route['translate_uri_dashes'] = TRUE;

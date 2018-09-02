@@ -60,9 +60,64 @@ class General_actions extends CI_Controller {
      print_r($info);
 
   }
-    
-    public function general_pic_attach($pdata=array())
+
+public function general_file_attach($pdata=array())
+  {
+    //default valiables 
+    $status=false;
+    $fail_result=false;
+    $addition_info='';
+    $result_info="";
+    $result_array=array();
+    $pic_ref='';
+    $path='';
+    $href='';
+      
+
+    $this->load->library('attach_file');
+    $model_data=$this->attach_file->attach_file_to_temp($pdata);
+
+    $addition_info=$model_data['addition_info'];
+    $status=$model_data['status'];
+    $pic_ref=$model_data['data']['ref'];
+    $result_info=$model_data['data']['result_info'];
+    $result_array=$model_data['data']['result_array'];
+
+    if($this->input->is_ajax_request())
     {
+        $data['info']['status']=$status;
+        $data['info']['data']=array(
+                       'href'=>$href,
+                       'ref'=>$pic_ref,
+                       'path'=>$path,
+                       'result_info'=>$result_info,
+                       'result_array'=>$result_array,
+                       'addition_info'=>$addition_info,    
+                      );
+        $data['print_as']='json';         
+        $this->load->view('ajaxCall/ajaxCall',$data);  
+     }
+     else
+     { 
+      
+      $info=array("status"=>$status,
+            "data"=>array(
+                           'href'=>$href,
+                           'ref'=>$pic_ref,
+                           'path'=>$path,
+                           'result_info'=>$result_info, 
+                           'result_array'=>$result_array,
+                           'addition_info'=>$addition_info,     
+                          ),
+            "addition_info"=>$addition_info
+          );
+
+      return $info;
+    }
+  }
+
+public function general_pic_attach($pdata=array())
+  {
     //default valiables 
     $status=false;
     $fail_result=false;
@@ -128,8 +183,6 @@ class General_actions extends CI_Controller {
       return $info;
 
      }
-
-
-    }
+  }
 
 }

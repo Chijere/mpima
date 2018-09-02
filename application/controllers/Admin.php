@@ -1948,7 +1948,7 @@ class Admin extends CI_Controller {
        }
        else
        { 
-		$this->load->view('admin/team_members',$data);
+		$this->load->view('admin/services',$data);
        }
 
 	}

@@ -20,7 +20,7 @@
         assets/vendors/iCheck/icheck.min.js
      */
 
-    $page_data['page_title']='Mpima Edit Property';
+    $page_data['page_title']='Mpima Edit Services';
     $page_data['css_links']=array(  'assets/css/admin.min.css',
                                     'assets/vendors/PhotoSwipe-master/dist/photoswipe.css',
                                     'assets/vendors/PhotoSwipe-master/dist/default-skin/default-skin.css',
@@ -69,7 +69,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Team Members</h3>
+                <h3>Services</h3>
               </div>
             </div>
 
@@ -80,7 +80,7 @@
               <div class="col-md-8">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Current banners</h2>
+                    <h2>Current Services</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -139,7 +139,7 @@
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="">
-                          <button style="width:70px"  class="btn btn-success add-banner"> Add </button>
+                          <button style="width:70px"  class="btn btn-success add-service"> Add </button>
                         </div>
                       </div>
                   </div>
@@ -165,16 +165,16 @@
       <span id="IMAGE_SRC_URL"><?php echo IMAGE_SRC_URL; ?></span>
     </data>   
 
-<!--------------------banner--------------------------->
-<!-- Modal - Add Banner -->
-<div id="add-banner-Modal" class="modal fade add" role="dialog">
+<!--------------------service--------------------------->
+<!-- Modal - Add service -->
+<div id="add-service-Modal" class="modal fade add" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add Banner</h4>
+        <h4 class="modal-title">Add service</h4>
       </div>
       <div class="modal-body">
         <div class="alert alert-danger" role="alert" style="display: none;">
@@ -184,20 +184,13 @@
                             <div class="col-sm-12">
                               <div class="thumbnail"  style="padding: 0px">
                                 <div class="view view-first">
-                                <form id="add_banner_dropzone_form" action="<?php echo base_url(); ?>upload/pic/attch?i_fmrt=wd" class="dropzone add" style="border:none; padding:0px; "></form>
+                                <form id="add_service_dropzone_form" action="<?php echo base_url(); ?>upload/file/attch" class="dropzone add" style="border:none; padding:0px; "></form>
                                 </div>                          
                               </div>
                             </div>
                       </div>
                       <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/team_members/form/add" data-parsley-validate>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Name<span class="required">*</span></label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="name" placeholder="e.g John Luke" required="required" 
-                            data-parsley-length-message="It should be between 4 to 20 characters"
-                          >
-                        </div>
-                      </div>
+                      
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Title<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -214,34 +207,10 @@
                             data-parsley-length-message="Must not be more than 300 characters"
                           ></textarea>
                         </div>
-                        </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Facebook</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_fb" placeholder="e.g www.fb.com/johnluke" required="required" 
-                            data-parsley-length-message="It should be between 4 to 20 characters"
-                          >
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tweeter</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_t" placeholder="e.g www.tweeter.com/johnluke" required="required" 
-                            data-parsley-length-message="It should be between 4 to 20 characters"
-                          >
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">LinkedIn</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_lnk" placeholder="e.g www.LinkedIn.com/johnluke" required="required" 
-                            data-parsley-length-message="It should be between 4 to 20 characters"
-                          >
-                        </div>
-                      </div>    
+                        </div>   
                           <div class="ln_solid"></div>
                           <div class="form-group">
-                              <button style="width: 140px" type="button" class="btn btn-default modal-change-photo"><i class="fa fa-pencil"></i> Change photo </button>
+                              <button style="width: 140px" type="button" class="btn btn-default modal-change-photo"><i class="fa fa-pencil"></i> Change file </button>
                           </div>
                  </form>
       </div>
@@ -353,7 +322,7 @@
   <script src="<?php echo base_url(); ?>assets/vendors/parsleyjs/dist/parsley.min.js" ></script>
   <script src="<?php echo base_url(); ?>assets/vendors/Holdon/HoldOn.min.js" ></script>
   <script src="<?php echo base_url(); ?>assets/vendors/jquery.sweet-modal-1.3.3/min/jquery.sweet-modal.min.js" ></script>
-  <script src="<?php echo base_url(); ?>assets/js/admin_team_members_custom.js" ></script>
+  <script src="<?php echo base_url(); ?>assets/js/admin_services_custom.js" ></script>
 
 
     <!-- Parsley -->
