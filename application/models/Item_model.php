@@ -956,7 +956,7 @@ class Item_model extends CI_Model {
 				//echo '<pre>';
 				//print_r($valueFormated);
 				//print_r($dbquery1);
-				//print_r($dbquery1->errorInfo());
+				//print_r($dbquery2->errorInfo());
 				$this->addition_info = $dbquery2->errorInfo();
 				//$this->addition_info = 'error_100';
 			   }else{

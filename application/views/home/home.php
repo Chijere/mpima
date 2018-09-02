@@ -35,7 +35,7 @@
 
 	<div class="featured">
 		<div class="container">
-			<div class="row">
+			<div id="chawezi" class="row">
 				<div class="col">
 					<div class="section_title text-center">
 						<a href="<?php echo base_url(); ?>listings" style=" h3:hover color:#fd5524; span:hover {color:#fd5524;}
