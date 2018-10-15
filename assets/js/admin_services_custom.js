@@ -8,38 +8,13 @@
 
 1. Dropzone controller
 ******************************/
-
-/*################### ADD service DROPZONE###################################*/
-
 $(document).ready(function(){
 Dropzone.autoDiscover = false;
-	$(".add.dropzone").dropzone({
-		maxFilesize: 3,
-		maxFiles: 1,
-		acceptedFiles: ".jpeg,.jpg,.png,.pdf,.docx,.doc",
-		init: function() {
-			this.on("maxfilesexceeded", function(file){
-			        this.removeAllFiles(); this.addFile(file);
-			    });
-   
-			this.on("error", function(file,response,z) {
-			 var errorMessage = response.errorMessage;
-			 $(file.previewElement).find('.dz-error-message').text('Error Occured: 10');
-			});
-			this.on("success", function(file,response,z) {
-			 var errorMessage = response.errorMessage;
-
-			 var toPrint='<input type="hidden" value="'+response.data.ref+'" name="input1">'; //assign a permanent input1
-			 $(file.previewElement).prepend(toPrint);
-
-			});
-			
-			}
-	});	
+var thisElemnt; 
 
 /*################### ADD service FORMS###################################*/
 
-		var thisElemnt; 
+		
        $('.btn.add-service').on('click',function(event) {
           event.preventDefault();
       
@@ -163,7 +138,7 @@ Dropzone.autoDiscover = false;
             var valid=true;
            
             // check pics
-            if(thisElemnt.find('.dropzone').find('input[name="input1"]').length <1 && thisElemnt.find(".add")[0])
+            if(thisElemnt.find('.main_form').find('input[name="input1"]').length <1 && thisElemnt.find(".add")[0])
             {
               valid = false;
 
@@ -242,6 +217,45 @@ Dropzone.autoDiscover = false;
           } 
 
 
+
+/*################### ADD service DROPZONE###################################*/
+
+
+  $(".add.dropzone").dropzone({
+    maxFilesize: 3,
+    maxFiles: 1,
+    createImageThumbnails: false,
+    acceptedFiles: ".jpeg,.jpg,.png,.pdf,.docx,.doc,.txt,.text",
+    addedfile: function(file) { 
+      //console.log(file); 
+
+      },
+
+    init: function() {
+      this.on("maxfilesexceeded", function(file){
+              this.removeAllFiles(); this.addFile(file);
+          });
+
+
+      this.on("success", function(file,response,z) {
+       console.log(file); 
+       var errorMessage = response.errorMessage;
+
+       var toPrint='<input type="hidden" value="'+response.data.ref+'.'+response.data.file_extension+'" name="input1">'; //assign a permanent input1
+       
+       thisElemnt.find('.file_name').html(file.name);
+       thisElemnt.find('input[name="input1"]').remove();
+       thisElemnt.find('.main_form').append(toPrint); 
+      });   
+      
+
+      this.on("error", function(file,response,z) {
+       var errorMessage = response.errorMessage;
+        thisElemnt.find('.alert').show().find('span').html(' Error Occured: code 10');
+        setTimeout(function(){ thisElemnt.find('.alert').hide(); }, 30000);
+      });
+      }
+  }); 
 
 /*################### EDIT service DROPZONE###################################*/
 

@@ -70,6 +70,8 @@ public function general_file_attach($pdata=array())
     $result_info="";
     $result_array=array();
     $pic_ref='';
+    $file_data=array();
+    $file_extension='';
     $path='';
     $href='';
       
@@ -81,13 +83,21 @@ public function general_file_attach($pdata=array())
     $status=$model_data['status'];
     $pic_ref=$model_data['data']['ref'];
     $result_info=$model_data['data']['result_info'];
+    $file_data=$model_data['data']['file_data'];
+    $file_extension=$model_data['data']['file_extension'];
     $result_array=$model_data['data']['result_array'];
+    
+    //remove file data paths
+    if(isset($file_data['file_path']))$file_data['file_path']="";
+    if(isset($file_data['full_path']))$file_data['full_path']="";
 
     if($this->input->is_ajax_request())
     {
         $data['info']['status']=$status;
         $data['info']['data']=array(
                        'href'=>$href,
+                       'file_data'=>$file_data,
+                       'file_extension'=>$file_extension,
                        'ref'=>$pic_ref,
                        'path'=>$path,
                        'result_info'=>$result_info,

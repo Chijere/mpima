@@ -1975,59 +1975,29 @@ class Admin extends CI_Controller {
 		$validationRules['rule1']=array(
 
 						    		array(
-						                'field' => 'name',
-						                'label' => 'Name',
-						                'rules' => 'required|max_length[50]',
-						                'errors' => array(
-								                        'required' => 'Name is required',
-								                        'max_length' => 'Must not exceed 50 Characters',
-						                				),	                
-						        	),
-						    		array(
 						                'field' => 'title',
 						                'label' => 'Title',
-						                'rules' => 'required|max_length[50]',
+						                'rules' => 'required|max_length[100]',
 						                'errors' => array(
 								                        'required' => 'Title is required',
-								                        'max_length' => 'Must not exceed 50 Characters',
-						                				),	                
-						        	),
-						    		array(
-						                'field' => 'social_link_fb',
-						                'label' => 'Facebook',
-						                'errors' => array(
-								                        'max_length' => 'Must not exceed 50 Characters',
-						                				),	                
-						        	),
-						    		array(
-						                'field' => 'social_link_t',
-						                'label' => 'Tweeter',
-						                'errors' => array(
-								                        'max_length' => 'Must not exceed 50 Characters',
-						                				),	                
-						        	),
-						    		array(
-						                'field' => 'social_link_lnk',
-						                'label' => 'LinkedIn',
-						                'errors' => array(
-								                        'max_length' => 'Must not exceed 50 Characters',
+								                        'max_length' => 'Must not exceed 100 Characters',
 						                				),	                
 						        	),
 						        array(
 						                'field' => 'description',
 						                'label' => 'About',
-						                'rules' => 'max_length[300]',
+						                'rules' => 'max_length[2000]',
 						                'errors' => array(
-								                        'max_length' => 'About must not be less than 300 characters',
+								                        'max_length' => 'About must not be less than 2000 characters',
 						                				),	 		                
 						        	),
 						        array(
 						                'field' => 'input1',
 						                'label' => 'Image',
-						                'rules' => 'exact_length[20]|alpha_numeric|required',
+						                'rules' => 'exact_length[20]|callback_customAlpha_numeric|required',
 							            'errors' => array(
 									                        'exact_length' => 'system_error',
-									                        'alpha_numeric' => 'system_error', 
+									                        'callback_customAlpha_numeric' => 'system_error', 
 									                        'required' => 'Provide a feature image',		                
 						        	),
 								),
@@ -2037,11 +2007,11 @@ class Admin extends CI_Controller {
 		for ($i=2; $i <13 ; $i++) { 
  			array_push($validationRules['rule1'],array(
 							                'field' => 'input'.$i,
-							                'label' => 'Photo',
-							                'rules' => 'exact_length[20]|alpha_numeric',
+							                'label' => 'File',
+							                'rules' => 'exact_length[20]|callback_customAlpha_numeric',
 							                'errors' => array(
 									                        'exact_length' => 'system_error',
-									                        'alpha_numeric' => 'system_error',
+									                        'callback_customAlpha_numeric' => 'system_error',
 							            ),		                
 							        	));
  		}	        			
@@ -2098,20 +2068,19 @@ class Admin extends CI_Controller {
 
        		$pass_data = array(	'user_id' => $_SESSION['user_id'],
        							'description' => $this->input->post('description',true),
-       							'name' => $this->input->post('name',true),
        							'title' => $this->input->post('title',true),
-       							'link_facebook' => $this->input->post('social_link_fb',true),
-       							'link_twitter' => $this->input->post('social_link_t',true),
-       							'link_linkedin' => $this->input->post('social_link_lnk',true),
        						);
        		$pass_data['addPic']=array();
        		for ($i=1; $i <13 ; $i++) { 
        		 	if($this->input->post('input'.$i,true)!='')
-       			array_push($pass_data['addPic'],$this->input->post('input'.$i));
+       		 	{
+       			  array_push($pass_data['addPic'],pathinfo($this->input->post('input'.$i), PATHINFO_FILENAME));
+       			  array_push($pass_data['addfile']['name'], array('name' =>pathinfo($this->input->post('input'.$i), PATHINFO_FILENAME),'extension'=>pathinfo($this->input->post('input'.$i), PATHINFO_EXTENSION)		 ));       			  
+       			}
        		}
 
-		   	$this->load->model('Team_members_model');
-       		$model_data=$this->Team_members_model->addItem($pass_data);
+		   	$this->load->model('Services_model');
+       		$model_data=$this->Services_model->addItem($pass_data);
 
        		$href=base_url();
        		$addition_info=$model_data['addition_info'];
@@ -2682,5 +2651,14 @@ class Admin extends CI_Controller {
        elseif(1==0)
        {}
 	}	
+
+// callback function
+public function customAlpha_numeric($str) 
+{
+    if ( !preg_match('/[^a-zA-Z0-9\.\/]/',$str) )
+    {
+        return false;
+    }
+}
 
 }

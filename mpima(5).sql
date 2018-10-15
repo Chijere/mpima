@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2018 at 07:59 AM
+-- Generation Time: Sep 02, 2018 at 03:51 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -47,7 +47,7 @@ INSERT INTO `banner` (`item_id`, `user_id`, `date`, `on_display`, `description`,
 (19, 1, '2018-08-23 05:29:43', '1', '', 'The Modern Home', '', '0|#$(delimiter-2)$#|media/user/1/image/banner/2018_34/5b71c77dfb8d70c2afcb|#$(delimiter-2)$#|0'),
 (20, 1, '2018-08-23 05:39:58', '1', '', 'Everything at your pace', '', '0|#$(delimiter-2)$#|media/user/1/image/banner/2018_34/7276e5bc6b84731a0954|#$(delimiter-2)$#|0'),
 (21, 1, '2018-08-23 05:40:35', '1', '', 'Experience The Luxury', '', '0|#$(delimiter-2)$#|media/user/1/image/banner/2018_34/cbbea0499169ab61597e|#$(delimiter-2)$#|0'),
-(22, 1, '2018-08-23 05:40:57', '1', '', 'More Freedom', '', '0|#$(delimiter-2)$#|media/user/1/image/banner/2018_34/b1b36f6b1c59e2207918|#$(delimiter-2)$#|0');
+(22, 1, '2018-08-23 05:40:57', '1', '', 'property management', '', '0|#$(delimiter-2)$#|media/user/1/image/banner/2018_34/b1b36f6b1c59e2207918|#$(delimiter-2)$#|0');
 
 -- --------------------------------------------------------
 
@@ -676,6 +676,30 @@ INSERT INTO `profile_pic` (`user_id`, `date`, `user_pic`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `service`
+--
+
+CREATE TABLE IF NOT EXISTS `service` (
+  `item_id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(255) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `on_display` enum('0','1') NOT NULL DEFAULT '1',
+  `description` varchar(2200) NOT NULL,
+  `summary` varchar(700) NOT NULL,
+  `type` enum('landingpage_banner','leftside_banner','rightside_banner','footer_banner') NOT NULL,
+  `item_pic` varchar(5000) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `link_facebook` varchar(100) NOT NULL,
+  `link_twitter` varchar(100) NOT NULL,
+  `link_linkedin` varchar(100) NOT NULL,
+  PRIMARY KEY (`item_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sign_up_by_confirmcode`
 --
 
@@ -732,6 +756,38 @@ INSERT INTO `sign_up_by_otp` (`user_type`, `password`, `name`, `date`, `status`,
 ('shop', '$2y$10$vDvsBX5W1OGUkjCFFhppW.6.kQ5b3wDoxWgC4mHO7a.Zvs0yLraC6', 'Masautso', '2017-09-02 19:22:16', 'pending', '999888777898', 92, '425635'),
 ('buyer', '$2y$10$xX0arWzDdcMnjE4rktvq8uYpQ2x7P8ofxBRZuDUduGTyJBORwZ2ly', 'tyeer2', '2017-09-02 19:22:58', 'pending', '234543654765', 93, '259124'),
 ('shop', '$2y$10$YLfKD53E7Z0.oRTJrbLgRO80gE7XGSQaQArSXgzWmZt0f0tudUOiK', 'tyeer2', '2017-09-03 11:35:21', 'confirmed', '265888484921', 96, '560591');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `team_members`
+--
+
+CREATE TABLE IF NOT EXISTS `team_members` (
+  `item_id` bigint(255) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(255) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `on_display` enum('0','1') NOT NULL DEFAULT '1',
+  `description` varchar(2200) NOT NULL,
+  `summary` varchar(700) NOT NULL,
+  `type` enum('landingpage_banner','leftside_banner','rightside_banner','footer_banner') NOT NULL,
+  `item_pic` varchar(5000) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `link_facebook` varchar(100) NOT NULL,
+  `link_twitter` varchar(100) NOT NULL,
+  `link_linkedin` varchar(100) NOT NULL,
+  PRIMARY KEY (`item_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `team_members`
+--
+
+INSERT INTO `team_members` (`item_id`, `user_id`, `date`, `on_display`, `description`, `summary`, `type`, `item_pic`, `title`, `name`, `link_facebook`, `link_twitter`, `link_linkedin`) VALUES
+(1, 1, '2018-08-23 22:33:16', '1', 'Nice guy', '', '', '0|#$(delimiter-2)$#|media/user/1/image/team_members/2018_34/07ff710c43897b8f473f|#$(delimiter-2)$#|0', 'Manager', 'muje', 'www.fb.com/muje', 'www.twitter.com/muje', 'www.linkedin.com/muje'),
+(2, 1, '2018-08-23 23:59:55', '1', 'Nice guy', '', '', '0|#$(delimiter-2)$#|media/user/1/image/team_members/2018_34/8e8cac6686423e126314|#$(delimiter-2)$#|0', 'Manager', 'Muje', '', '', '');
 
 -- --------------------------------------------------------
 

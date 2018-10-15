@@ -53,6 +53,7 @@ class Attach_file {
     $result_array=array();
     $pic_ref='';
     $file_data = array();
+    $file_extension = "";
     if(!isset($pdata['form_field']))$pdata['form_field']='file';
     $temp_directory = "temp/file/";
 
@@ -83,6 +84,7 @@ class Attach_file {
           $status=$model_data['status'];
           $pic_ref=$model_data['data']['file_id'];
           $file_data = $model_data['data']['file_data']; 
+          $file_extension = $model_data['data']['file_extension']; 
           $result_info=$model_data['data']['result_info'];
 
         if(!$status) $fail_result=true;
@@ -92,6 +94,9 @@ class Attach_file {
         $info=array("status"=>$status,
               "data"=>array(
                              'ref'=>$pic_ref,
+                             'result_info'=>$result_info, 
+                             'file_data'=>$file_data, 
+                             'file_extension'=>$file_extension, 
                              'result_info'=>$result_info, 
                              'result_array'=>$result_array, 
                             ),
@@ -109,13 +114,7 @@ public function upload_to_temp_folder($pdata=array())
       $status = false;
       $result_info = 'Sorry an error occured';
       $max_size = 10240;
-      $file_data = array();
-
-      if(isset($pdata['file_extension']))
-      {
-        $file_extension = $pdata['file_extension'];
-        unset($pdata['file_extension']);
-      }else $file_extension = 'jpg';  
+      $file_data = array();  
 
       if(isset($pdata['form_field']))
       {
@@ -123,18 +122,24 @@ public function upload_to_temp_folder($pdata=array())
         unset($pdata['form_field']);
       }else $form_field = 'file';  
 
+
+      if(isset($pdata['file_extension']))
+      {
+        $file_extension = $pdata['file_extension'];
+        unset($pdata['file_extension']);
+      }else $file_extension = pathinfo($_FILES[$form_field]["name"], PATHINFO_EXTENSION);
+
       $this->CI->load->library('Id_generator');
       $file_id=Id_generator::rand_sha1(20);
 
       $config['file_name'] = $file_id.'.'.$file_extension;
-      $config['allowed_types'] = 'gif|jpg|png|jpeg|doc|pdf|docx|text|txt';
+      $config['allowed_types'] = 'doc|pdf|docx|txt|text|png|jpg|jpeg|gif';
       $config['max_size']     = $max_size;
       //$config['max_width'] = '1024';
       //$config['max_height'] = '768';
       $config['file_ext_tolower'] = true;
       $config['overwrite'] = true;
 
-print_r($config);
 
       foreach ($pdata as $key => $value) {
         if (array_key_exists($key, $config)) 
@@ -151,8 +156,7 @@ print_r($config);
       {
 
         if (strlen(stristr($this->CI->upload->display_errors('',''),strtolower('filetype you are attempting to upload is not allowed')))>0) {
-         $result_info = 'Select files only. .jpg/png/gif/doc/pdf/txt';
-         $addition_info = 'error 100_1 : '. $this->CI->upload->display_errors('','');
+         $result_info ='error 100_1 : '. $this->CI->upload->display_errors('','');
         }if (strlen(stristr($this->CI->upload->display_errors('',''),strtolower('file you are attempting to upload is larger than the permitted size')))>0) {
          $result_info = 'max file size should be '.(ceil($max_size/1024)).'mb';
          $addition_info = 'error 100_2 : '. $this->CI->upload->display_errors('','');
@@ -181,6 +185,7 @@ print_r($config);
       "data"=>array(
                       'result_info'=>$result_info,
                       'file_id'=>$file_id,
+                      'file_extension'=>$file_extension,
                       'file_data'=>$file_data,
         ),
       );

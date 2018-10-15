@@ -180,39 +180,41 @@
         <div class="alert alert-danger" role="alert" style="display: none;">
           <strong>Error: </strong> <span></span>
         </div>
-                      <div class="row" id="image-gallery">
-                            <div class="col-sm-12">
-                              <div class="thumbnail"  style="padding: 0px">
-                                <div class="view view-first">
-                                <form id="add_service_dropzone_form" action="<?php echo base_url(); ?>upload/file/attch" class="dropzone add" style="border:none; padding:0px; "></form>
-                                </div>                          
-                              </div>
-                            </div>
-                      </div>
-                      <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/team_members/form/add" data-parsley-validate>
+                      <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/services/form/add" data-parsley-validate>
                       
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Title<span class="required">*</span></label>
+                        <label class="control-label col-sm-2">Title<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="title" placeholder="e.g Manager" required="required" 
-                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          <input type="text" class="form-control" data-parsley-length="[0, 100]" name="title" placeholder="e.g Bidding" required="required" 
+                            data-parsley-length-message="It should be between 2 to 100 characters"
                           >
                         </div>
                       </div>                  
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">About<span class="required">*</span></label>
+                        <label class="control-label col-sm-2">About<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                        <textarea name="description" class="form-control" rows="2"
-                              data-parsley-length="[0, 300]" name="name" placeholder="e.g. A really nice guy"
-                            data-parsley-length-message="Must not be more than 300 characters"
+                        <textarea name="description" class="form-control" rows="15"
+                              data-parsley-length="[0, 2000]" name="name" placeholder="e.g. We are experts in this"
+                            data-parsley-length-message="Must not be more than 2000 characters"
                           ></textarea>
                         </div>
                         </div>   
                           <div class="ln_solid"></div>
                           <div class="form-group">
-                              <button style="width: 140px" type="button" class="btn btn-default modal-change-photo"><i class="fa fa-pencil"></i> Change file </button>
+                              <button style="width: 140px" type="button" class="btn btn-default modal-change-photo"><i class="fa fa-pencil"></i> Add Brochure </button>
+                              <span class="file_name"></span>
                           </div>
+
                  </form>
+                      <div class="row" id="image-gallery" style="display: none;">
+                            <div class="col-sm-12">
+                              <div class="thumbnail"  style="padding: 0px">
+                                <div class="view view-first">
+                                <form id="add_service_dropzone_form" action="<?php echo base_url(); ?>upload/file/attch" class="dropzone add" style="display: none; border:none; padding:0px; "></form>
+                                </div>                          
+                              </div>
+                            </div>
+                      </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success submit" >Submit</button>
