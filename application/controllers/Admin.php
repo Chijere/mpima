@@ -1890,7 +1890,7 @@ class Admin extends CI_Controller {
           0. load classes
         #######################################*/		    
 
-        $this->load->model('Team_members_model');
+        $this->load->model('Services_model');
 		$this->load->library('general_functions');
 		
 		
@@ -1901,7 +1901,7 @@ class Admin extends CI_Controller {
    		$pass_data = array(	
    						   );
 
-   		$model_data=$this->Team_members_model->getItem($pass_data);
+   		$model_data=$this->Services_model->getItem($pass_data);
 
    		$href=base_url();
    		$addition_info=$model_data['addition_info'];
@@ -1994,28 +1994,13 @@ class Admin extends CI_Controller {
 						        array(
 						                'field' => 'input1',
 						                'label' => 'Image',
-						                'rules' => 'exact_length[20]|callback_customAlpha_numeric|required',
+						                'rules' => 'callback_customAlpha_numeric|required',
 							            'errors' => array(
-									                        'exact_length' => 'system_error',
-									                        'callback_customAlpha_numeric' => 'system_error', 
+									                        'customAlpha_numeric' => 'system_error3', 
 									                        'required' => 'Provide a feature image',		                
 						        	),
 								),
-						    );
-
-
-		for ($i=2; $i <13 ; $i++) { 
- 			array_push($validationRules['rule1'],array(
-							                'field' => 'input'.$i,
-							                'label' => 'File',
-							                'rules' => 'exact_length[20]|callback_customAlpha_numeric',
-							                'errors' => array(
-									                        'exact_length' => 'system_error',
-									                        'callback_customAlpha_numeric' => 'system_error',
-							            ),		                
-							        	));
- 		}	        			
-		
+						    );		
    							                   
 
 
@@ -2043,11 +2028,11 @@ class Admin extends CI_Controller {
 			// control the error messsages
    			$errors = $this->form_validation->error_array();
    			// define them
-   			if(!isset($errors['type']))$errors['type']='';
+   			if(!isset($errors['input1']))$errors['input1']='';
    			if(!isset($errors['location']))$errors['location']='';
    			if(!isset($errors['category']))$errors['category']='';
 
-   			if(($errors['type']=='system_error' || $errors['location']=='system_error' || $errors['category']=='system_error') && !$commonErrors)
+   			if(($errors['input1']=='system_error' || $errors['location']=='system_error' || $errors['category']=='system_error') && !$commonErrors)
    			{
    				$addition_info='system error';	
    			}
@@ -2070,12 +2055,11 @@ class Admin extends CI_Controller {
        							'description' => $this->input->post('description',true),
        							'title' => $this->input->post('title',true),
        						);
-       		$pass_data['addPic']=array();
+       		$pass_data['addfile']=array();
        		for ($i=1; $i <13 ; $i++) { 
        		 	if($this->input->post('input'.$i,true)!='')
        		 	{
-       			  array_push($pass_data['addPic'],pathinfo($this->input->post('input'.$i), PATHINFO_FILENAME));
-       			  array_push($pass_data['addfile']['name'], array('name' =>pathinfo($this->input->post('input'.$i), PATHINFO_FILENAME),'extension'=>pathinfo($this->input->post('input'.$i), PATHINFO_EXTENSION)		 ));       			  
+       			  array_push($pass_data['addfile'], array('name' =>pathinfo($this->input->post('input'.$i), PATHINFO_FILENAME),'extension'=>pathinfo($this->input->post('input'.$i), PATHINFO_EXTENSION)		 ));       			  
        			}
        		}
 
@@ -2396,8 +2380,8 @@ class Admin extends CI_Controller {
        							'item_id' => $this->input->post('i_ref',true),
        						);
 
-		   	$this->load->model('Banner_model');
-       		$model_data=$this->Banner_model->deleteItemPermanently($pass_data);
+		   	$this->load->model('Services_model');
+       		$model_data=$this->Services_model->deleteItemPermanently($pass_data);
 
        		$href=base_url();
        		$addition_info=$model_data['addition_info'];
@@ -2405,7 +2389,7 @@ class Admin extends CI_Controller {
        		$result_info=$model_data['data']['result_info'];
        		//$item_id=$model_data['data']['item_id'];
        }
-
+ 
 
        //check if is ajax call
        if($this->input->is_ajax_request())
@@ -2655,9 +2639,9 @@ class Admin extends CI_Controller {
 // callback function
 public function customAlpha_numeric($str) 
 {
-    if ( !preg_match('/[^a-zA-Z0-9\.\/]/',$str) )
+	if ( !preg_match('/[^a-zA-Z0-9\.\/]/',$str) )
     {
-        return false;
+        return true;
     }
 }
 

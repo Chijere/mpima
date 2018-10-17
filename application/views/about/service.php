@@ -69,67 +69,23 @@
 	<?php
 	 $this->load->view("template/container2/nav_bar",$page_data);
 	?>
-	
-	<!-- Intro -->
+ 	<!-- Intro -->
 
 	<div class="intro">
 		<div class="container">
-	<div class="row">
-	            <div class="card-item panel col-sm-5 ">
-	                <div class="card-head panel-heading">Build a better Malawi with high quality standards and designs at cheap rates<span class="pull-right"></spant></span></div>
-	                <div class="card-body panel-body">Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also called placeholder (or filler) text. It's a convenient tool for mock-ups. It helps to outline the visual elements of a document or presentation, eg typography, font, or layout. Lorem ipsum is mostly a part of a Latin text by the classical author and philosopher Cicero. Its words and letters have been changed by addition or removal, so to deliberately render its content nonsensical; it's not genuine, correct, or comprehensible Latin anymore. </div>
-	                <div class="ln_solid"></div>
-	                <div class="card-foot panel-footer">
-	                	<a href="<?php echo base_url().'service/3'; ?>" class="btn btn-basic">Read more</a>
-	                	<a href="#" class="btn btn-basic">Download Brochure</a>
-	                </div>
-	            </div>
-	            <div class="card-item panel col-sm-5 ">
-	                <div class="card-head panel-heading">Build a better Malawi with high quality standards and designs at cheap rates<span class="pull-right"></spant></span></div>
-	                <div class="card-body panel-body">Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also called placeholder (or filler) text. It's a convenient tool for mock-ups. It helps to outline the visual elements of a document or presentation, eg typography, font, or layout. Lorem ipsum is mostly a part of a Latin text by the classical author and philosopher Cicero. Its words and letters have been changed by addition or removal, so to deliberately render its content nonsensical; it's not genuine, correct, or comprehensible Latin anymore. </div>
-	                <div class="ln_solid"></div>
-	                <div class="card-foot panel-footer">
-	                	<a href="<?php echo base_url().'service/3'; ?>" class="btn btn-basic">Read more</a>
-	                	<a href="#" class="btn btn-basic">Download Brochure</a>
-	                </div>
-	            </div>
-	            <div class="card-item panel col-sm-5 ">
-	                <div class="card-head panel-heading">Build a better Malawi with high quality standards and designs at cheap rates<span class="pull-right"></spant></span></div>
-	                <div class="card-body panel-body">Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also called placeholder (or filler) text. It's a convenient tool for mock-ups. It helps to outline the visual elements of a document or presentation, eg typography, font, or layout. Lorem ipsum is mostly a part of a Latin text by the classical author and philosopher Cicero. Its words and letters have been changed by addition or removal, so to deliberately render its content nonsensical; it's not genuine, correct, or comprehensible Latin anymore. </div>
-	                <div class="ln_solid"></div>
-	                <div class="card-foot panel-footer">
-	                	<a href="<?php echo base_url().'service/3'; ?>" class="btn btn-basic">Read more</a>
-	                	<a href="#" class="btn btn-basic">Download Brochure</a>
-	                </div>
-	            </div>
-	            <div class="card-item panel col-sm-5 ">
-	                <div class="card-head panel-heading">Build a better Malawi with high quality standards and designs at cheap rates<span class="pull-right"></spant></span></div>
-	                <div class="card-body panel-body">Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also called placeholder (or filler) text. It's a convenient tool for mock-ups. It helps to outline the visual elements of a document or presentation, eg typography, font, or layout. Lorem ipsum is mostly a part of a Latin text by the classical author and philosopher Cicero. Its words and letters have been changed by addition or removal, so to deliberately render its content nonsensical; it's not genuine, correct, or comprehensible Latin anymore. </div>
-	                <div class="ln_solid"></div>
-	                <div class="card-foot panel-footer">
-	                	<a href="<?php echo base_url().'service/3'; ?>" class="btn btn-basic">Read more</a>
-	                	<a href="#" class="btn btn-basic">Download Brochure</a>
-	                </div>
-	            </div>
-	            <div class="card-item panel col-sm-5 ">
-	                <div class="card-head panel-heading">Build a better Malawi with high quality standards and designs at cheap rates<span class="pull-right"></spant></span></div>
-	                <div class="card-body panel-body">Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also called placeholder (or filler) text. It's a convenient tool for mock-ups. It helps to outline the visual elements of a document or presentation, eg typography, font, or layout. Lorem ipsum is mostly a part of a Latin text by the classical author and philosopher Cicero. Its words and letters have been changed by addition or removal, so to deliberately render its content nonsensical; it's not genuine, correct, or comprehensible Latin anymore. </div>
-	                <div class="ln_solid"></div>
-	                <div class="card-foot panel-footer">
-	                	<a href="<?php echo base_url().'service/3'; ?>" class="btn btn-basic">Read more</a>
-	                	<a href="#" class="btn btn-basic">Download Brochure</a>
-	                </div>
-	            </div>
-	            <div class="card-item panel col-sm-5 ">
-	                <div class="card-head panel-heading">Build a better Malawi with high quality standards and designs at cheap rates<span class="pull-right"></spant></span></div>
-	                <div class="card-body panel-body">Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also called placeholder (or filler) text. It's a convenient tool for mock-ups. It helps to outline the visual elements of a document or presentation, eg typography, font, or layout. Lorem ipsum is mostly a part of a Latin text by the classical author and philosopher Cicero. Its words and letters have been changed by addition or removal, so to deliberately render its content nonsensical; it's not genuine, correct, or comprehensible Latin anymore. </div>
-	                <div class="ln_solid"></div>
-	                <div class="card-foot panel-footer">
-	                	<a href="<?php echo base_url().'service/3'; ?>" class="btn btn-basic">Read more</a>
-	                	<a href="#" class="btn btn-basic">Download Brochure</a>
-	                </div>
-	            </div>
-	</div>
+			<div class="row">
+				<?php foreach ($page_data['item']['data']['records'] as $key => $value) { ?>
+		            <div class="card-item panel col-sm-5 ">
+		                <div class="card-head panel-heading"><?php echo $value['title']; ?><span class="pull-right"></spant></span></div>
+		                <div class="card-body panel-body"><?php echo $value['item_description']; ?></div>
+		                <div class="ln_solid"></div>
+		                <div class="card-foot panel-footer">
+		                	<a href="<?php echo base_url().'service/'.$value['item_id']; ?>" class="btn btn-basic">Read more</a>
+		                	<a href="#" class="btn btn-basic">Download Brochure</a>
+		                </div>
+		            </div>
+		    	<?php } ?>        
+			</div>
 		</div>
 	</div>
 

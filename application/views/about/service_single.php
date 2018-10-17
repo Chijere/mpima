@@ -3,7 +3,7 @@
 <head>	
 	<?php
     
-    /* Already Loaded CSS & JS Links
+    /* Already Loaded CSS & JS Links 
     
 	  ##CSS	
 	    assets/vendors/bootstrap4/bootstrap.min.css
@@ -76,8 +76,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-7 order-lg-1 order-2">
-					<h3 class="intro_title">Build a better Malawi with high quality standards and designs at cheap rates</h3>
-					<p class="intro_text">MPICO Investments designs modern building designs, house plans, monitor, control, operate oversee and account for property, survey sites and establishes the market value of urban and rural area lands</p>
+					<h3 class="intro_title"><?php echo $page_data['item']['data']['records'][0]['title']; ?></h3>
+					<p class="intro_text"><?php echo $page_data['item']['data']['records'][0]['item_description']; ?></p>
 					
 				</div>
 			</div>

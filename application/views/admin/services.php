@@ -95,7 +95,7 @@
                         foreach ($page_data['item']['data']['records'] as $key => $value) {
                       ?>
                         <div class="col-sm-3">
-                          <div class="thumbnail" data-toggle="modal" data-target="#<?php echo $value['item_id']; ?>"  data-size="<?php echo $value['item_pic']['main']['dimension']; ?>" data-thumb="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'_t.jpg'; ?>" data-src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'.jpg'; ?>"  style="padding: 0px">
+                          <div class="thumbnail" data-toggle="modal" data-target="#<?php echo $value['item_id']; ?>"  style="padding: 0px">
                             <div class="image view view-first">
                               <img style="" src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'_t.jpg'; ?>" alt="No image" />
                               <div class="mask">
@@ -234,78 +234,43 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Team Member</h4>
+        <h4 class="modal-title">Edit Service</h4>
       </div>
       <div class="modal-body">
         <div class="alert alert-danger" role="alert" style="display: none;">
           <strong>Error: </strong> <span></span>
         </div>
-                      <div class="row" id="image-gallery">
-                            <div class="col-sm-12">
-                              <div class="thumbnail"   data-size="<?php echo $value['item_pic']['main']['dimension']; ?>" data-thumb="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'_t.jpg'; ?>" data-src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'.jpg'; ?>"  style="padding: 0px">
-                                <div class="view view-first" style="height: 170px; overflow: hidden;">
-                                  <img ref="<?php echo $value['item_pic']['main']['id']; ?>" style=" display:block; margin:auto;" class="single_img" src="<?php echo IMAGE_SRC_URL.$value['item_pic']['main']['path'].'_t.jpg'; ?>" alt="No image" />
-                                <form id="gallery_form" action="<?php echo base_url(); ?>upload/pic/attch" class="dropzone gallery_form" style="border:none; padding:0px; display: none;"></form>
-                                </div>                          
-                              </div>
-                            </div>
-                      </div>
-                      <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/team_members/form/edit" data-parsley-validate>                      
-                        <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="name" placeholder="<?php echo $value['item_name']; ?>" 
-                            data-parsley-length-message="It should be between 4 to 20 characters"
-                          >
-                        </div>
-                      </div>
+
+                    <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/services/form/edit" data-parsley-validate> 
+                      
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
+                        <label class="control-label col-sm-2">Title<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="title" placeholder="<?php echo $value['title']; ?>" 
-                            data-parsley-length-message="It should be between 4 to 20 characters"
+                          <input type="text" class="form-control" data-parsley-length="[0, 100]" name="title" placeholder="<?php echo $value['title']; ?>"  required="required" 
+                            data-parsley-length-message="It should be between 2 to 100 characters"
                           >
                         </div>
                       </div>                  
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">About</label>
+                        <label class="control-label col-sm-2">About<span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                        <textarea name="description" class="form-control" rows="2"
-                              data-parsley-length="[0, 300]" name="name" placeholder="<?php echo $value['item_description']; ?>"
-                            data-parsley-length-message="Must not be more than 300 characters"
+                        <textarea name="description" class="form-control" rows="15"
+                              data-parsley-length="[0, 2000]" name="name" placeholder="<?php echo $value['item_description']; ?>"
+                            data-parsley-length-message="Must not be more than 2000 characters"
                           ></textarea>
                         </div>
-                        </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Facebook</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_fb" placeholder="<?php echo $value['link_facebook']; ?>"  
-                            data-parsley-length-message="It should be between 4 to 20 characters"
-                          >
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Tweeter</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_t" placeholder="<?php echo $value['link_twitter']; ?>"  
-                            data-parsley-length-message="It should be between 4 to 20 characters"
-                          >
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">LinkedIn</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" data-parsley-length="[0, 50]" name="social_link_lnk" placeholder="<?php echo $value['link_linkedin']; ?>"  
-                            data-parsley-length-message="It should be between 4 to 20 characters"
-                          >
-                        </div>
-                      </div>
-                          <div class="ln_solid"></div>
+                        </div>   
+                          <div class="ln_solid"></div> 
                           <input type="hidden" name="i_ref" value="<?php echo $value['item_id'] ?>" />
                           <div class="form-group">
-                              <button style="width: 140px" type="button" class="btn btn-default modal-change-photo"><i class="fa fa-pencil"></i> Change photo </button>
-                              <button style="width: 140px" type="submit" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete </button>
+                              <button style="width: 170px" type="button" class="btn btn-default modal-change-photo"><i class="fa fa-pencil"></i> Change Brochure </button>
+
+                              <span class="file_name">Added File</span>
+
                           </div>
+
+                              <button style="width: 140px" type="submit" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete </button>
+
                  </form>
       </div>
       <div class="modal-footer">
