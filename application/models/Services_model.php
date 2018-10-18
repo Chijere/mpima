@@ -1804,14 +1804,14 @@ class Services_model extends CI_Model {
 					if(!$this->fail_result)
 					{	
 					
-						if((@rename($fileChange[$i]['path_old'].'.'.$fileChange['extension'],$fileChange[$i]['path_new'].'.'.$fileChange['extension']))) 
+						if((@rename($fileChange[$i]['path_old'].'.'.$fileChange[$i]['extension'],$fileChange[$i]['path_new'].'.'.$fileChange[$i]['extension']))) 
 						{		 
-						    array_push($fileSystemRollBack2,array(  'path_old'=>$fileChange[$i]['path_old'].'.'.$fileChange['extension'],
-																	'path_new'=>$fileChange[$i]['path_new'].'.'.$fileChange['extension'],
+						    array_push($fileSystemRollBack2,array(  'path_old'=>$fileChange[$i]['path_old'].'.'.$fileChange[$i]['extension'],
+																	'path_new'=>$fileChange[$i]['path_new'].'.'.$fileChange[$i]['extension'],
 																));
 						}else
 						{
-							$this->addition_info="error 111_1:".$i.":".$fileChange['extension'];
+							$this->addition_info="error 111_1:".$i.":".$fileChange[$i]['extension'];
 							$this->result_info="Sorry An Error Occurred,Try Again";
 							#dont stop the process ..continue anyway: despite the error that the image was not found
 			    			//$this->fail_result=true;
