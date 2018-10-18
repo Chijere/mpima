@@ -1918,7 +1918,7 @@ class Admin extends CI_Controller {
 				if (file_exists($value2['path'].'.jpg')) 
 					list($width, $height, $type, $attr) = getimagesize($value2['path'].'.jpg');	
 				else
-					$model_data['data']['records'][$key]['item_pic'][$key2]['path'] = 'media/default/images/no_image';
+					$model_data['data']['records'][$key]['item_pic'][$key2]['path'] = 'media/default/images/services';
 					$model_data['data']['records'][$key]['item_pic'][$key2]['dimension'] = $width.'x'.$height;
 			}
 			#limit length 				
@@ -1986,18 +1986,18 @@ class Admin extends CI_Controller {
 						        array(
 						                'field' => 'description',
 						                'label' => 'About',
-						                'rules' => 'max_length[2000]',
+						                'rules' => 'max_length[2000]|required',
 						                'errors' => array(
 								                        'max_length' => 'About must not be less than 2000 characters',
+								                        'required' => 'This is required',
 						                				),	 		                
 						        	),
 						        array(
 						                'field' => 'input1',
 						                'label' => 'Image',
-						                'rules' => 'callback_customAlpha_numeric|required',
+						                'rules' => 'callback_customAlpha_numeric',
 							            'errors' => array(
-									                        'customAlpha_numeric' => 'system_error3', 
-									                        'required' => 'Provide a feature image',		                
+									                        'customAlpha_numeric' => 'system_error3', 	                
 						        	),
 								),
 						    );		
@@ -2064,7 +2064,7 @@ class Admin extends CI_Controller {
        		}
 
 		   	$this->load->model('Services_model');
-       		$model_data=$this->Services_model->addItem($pass_data);
+       		$model_data=$this->Services_model->editItem($pass_data);
 
        		$href=base_url();
        		$addition_info=$model_data['addition_info'];
@@ -2096,9 +2096,7 @@ class Admin extends CI_Controller {
 	public function edit_services_form($pdata=array())
 	{
 
-
-
-		//default valiables	
+	//default valiables	
 		$status=false;
 		$fail_result=false;
 		$addition_info='';
@@ -2113,61 +2111,16 @@ class Admin extends CI_Controller {
 
 		//validation configurations
 		$validationRules['rule1']=array(
-						    		array(
-						                'field' => 'name',
-						                'label' => 'Name',
-						                'rules' => 'max_length[50]',
-						                'errors' => array(
-								                        'max_length' => 'Must not exceed 50 Characters',
-						                				),	                
-						        	),
+
 						    		array(
 						                'field' => 'title',
 						                'label' => 'Title',
-						                'rules' => 'max_length[50]',
+						                'rules' => 'max_length[100]',
 						                'errors' => array(
-								                        'max_length' => 'Must not exceed 50 Characters',
+								                        'required' => 'Title is required',
+								                        'max_length' => 'Must not exceed 100 Characters',
 						                				),	                
 						        	),
-						    		array(
-						                'field' => 'social_link_fb',
-						                'label' => 'Facebook',
-						                'errors' => array(
-								                        'max_length' => 'Must not exceed 50 Characters',
-						                				),	                
-						        	),
-						    		array(
-						                'field' => 'social_link_t',
-						                'label' => 'Tweeter',
-						                'errors' => array(
-								                        'max_length' => 'Must not exceed 50 Characters',
-						                				),	                
-						        	),
-						    		array(
-						                'field' => 'social_link_lnk',
-						                'label' => 'LinkedIn',
-						                'errors' => array(
-								                        'max_length' => 'Must not exceed 50 Characters',
-						                				),	                
-						        	),
-						        array(
-						                'field' => 'description',
-						                'label' => 'About',
-						                'rules' => 'max_length[300]',
-						                'errors' => array(
-								                        'max_length' => 'About must not be less than 300 characters',
-						                				),	 		                
-						        	),
-						        array(
-						                'field' => 'input1',
-						                'label' => 'Image',
-						                'rules' => 'exact_length[20]|alpha_numeric',
-							            'errors' => array(
-									                        'exact_length' => 'system_error',
-									                        'alpha_numeric' => 'system_error', 
-									                        
-									                    ),
-								    ),
 						        array(
 						                'field' => 'i_ref',
 						                'label' => 'i_ref',
@@ -2177,22 +2130,24 @@ class Admin extends CI_Controller {
 						                				'numeric' => '1system_error',
 						                				),	 		                
 						        	),
-						    );
-
-
-		for ($i=2; $i <13 ; $i++) { 
- 			array_push($validationRules['rule1'],array(
-							                'field' => 'input'.$i,
-							                'label' => 'Photo',
-							                'rules' => 'exact_length[20]|alpha_numeric',
-							                'errors' => array(
-									                        'exact_length' => 'system_error',
-									                        'alpha_numeric' => 'system_error',
-							            ),		                
-							        	));
- 		}	        					
-   	
-
+						        array(
+						                'field' => 'description',
+						                'label' => 'About',
+						                'rules' => 'max_length[2000]',
+						                'errors' => array(
+								                        'max_length' => 'About must not be less than 2000 characters',
+						                				),	 		                
+						        	),
+						        array(
+						                'field' => 'input1',
+						                'label' => 'Image',
+						                'rules' => 'callback_customAlpha_numeric',
+							            'errors' => array(
+									                        'customAlpha_numeric' => 'system_error3', 	                
+						        	),
+								),
+						    );		
+   							                   
 
 
  		//validate
@@ -2219,11 +2174,11 @@ class Admin extends CI_Controller {
 			// control the error messsages
    			$errors = $this->form_validation->error_array();
    			// define them
-   			if(!isset($errors['type']))$errors['type']='';
+   			if(!isset($errors['input1']))$errors['input1']='';
    			if(!isset($errors['location']))$errors['location']='';
    			if(!isset($errors['category']))$errors['category']='';
 
-   			if(($errors['type']=='system_error' || $errors['location']=='system_error' || $errors['category']=='system_error') && !$commonErrors)
+   			if(($errors['input1']=='system_error' || $errors['location']=='system_error' || $errors['category']=='system_error') && !$commonErrors)
    			{
    				$addition_info='system error';	
    			}
@@ -2242,33 +2197,21 @@ class Admin extends CI_Controller {
        if(!$fail_result)
        {
 
-
        		$pass_data = array(	'user_id' => $_SESSION['user_id'],
-       							'item_id' => $this->input->post('i_ref',true),
-       							'front_pic' => $this->input->post('input1',true),
-       							'summary' => $this->input->post('summary',true),
-       							'name' => $this->input->post('name',true),
+       							'description' => $this->input->post('description',true),
        							'title' => $this->input->post('title',true),
-       							'link_facebook' => $this->input->post('social_link_fb',true),
-       							'link_twitter' => $this->input->post('social_link_t',true),
-       							'link_linkedin' => $this->input->post('social_link_lnk',true),
-       							'allow_null_photos' => true,
+       							'item_id' => $this->input->post('i_ref',true),
        						);
-
-       		$pass_data['addPic']=array();
+       		$pass_data['addfile']=array();
        		for ($i=1; $i <13 ; $i++) { 
        		 	if($this->input->post('input'.$i,true)!='')
-       			array_push($pass_data['addPic'],$this->input->post('input'.$i));
+       		 	{
+       			  array_push($pass_data['addfile'], array('name' =>pathinfo($this->input->post('input'.$i), PATHINFO_FILENAME),'extension'=>pathinfo($this->input->post('input'.$i), PATHINFO_EXTENSION)		 ));       			  
+       			}
        		}
 
-       		$pass_data['deletePic']=array();
-       		for ($i=1; $i <14 ; $i++) { 
-       			if($this->input->post('dlt'.$i,true)!='')
-       			array_push($pass_data['deletePic'],$this->input->post('dlt'.$i,true));
-       		}
-
-		   	$this->load->model('Team_members_model');
-       		$model_data=$this->Team_members_model->editItem($pass_data);
+		   	$this->load->model('Services_model');
+       		$model_data=$this->Services_model->editItem($pass_data);
 
        		$href=base_url();
        		$addition_info=$model_data['addition_info'];
@@ -2276,7 +2219,7 @@ class Admin extends CI_Controller {
        		$result_info=$model_data['data']['result_info'];
        		//$item_id=$model_data['data']['item_id'];
        }
-
+       
 
        //check if is ajax call
        if($this->input->is_ajax_request())

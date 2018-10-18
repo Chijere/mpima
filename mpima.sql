@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 02, 2018 at 03:51 PM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Host: 127.0.0.1:3306
+-- Generation Time: Oct 18, 2018 at 08:13 PM
+-- Server version: 5.7.23
+-- PHP Version: 7.0.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `mpima`
@@ -26,6 +28,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `banner`
 --
 
+DROP TABLE IF EXISTS `banner`;
 CREATE TABLE IF NOT EXISTS `banner` (
   `item_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) NOT NULL,
@@ -37,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `banner` (
   `item_pic` varchar(5000) NOT NULL,
   PRIMARY KEY (`item_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `banner`
@@ -55,6 +58,7 @@ INSERT INTO `banner` (`item_id`, `user_id`, `date`, `on_display`, `description`,
 -- Table structure for table `cart`
 --
 
+DROP TABLE IF EXISTS `cart`;
 CREATE TABLE IF NOT EXISTS `cart` (
   `item_id` bigint(255) NOT NULL,
   `user_id` bigint(255) NOT NULL,
@@ -63,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
   PRIMARY KEY (`cart_id`),
   KEY `user_id` (`user_id`),
   KEY `item_id` (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -71,6 +75,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
 -- Table structure for table `category`
 --
 
+DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
   `parent_id` bigint(255) NOT NULL,
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
@@ -78,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `rank` enum('1','2','3','5','6','7','8','9','10') NOT NULL DEFAULT '1',
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -95,6 +100,7 @@ INSERT INTO `category` (`parent_id`, `id`, `name`, `rank`, `date`) VALUES
 -- Table structure for table `change_email_confirm`
 --
 
+DROP TABLE IF EXISTS `change_email_confirm`;
 CREATE TABLE IF NOT EXISTS `change_email_confirm` (
   `confirm_code` varchar(200) NOT NULL,
   `user_id` bigint(255) NOT NULL,
@@ -118,6 +124,7 @@ INSERT INTO `change_email_confirm` (`confirm_code`, `user_id`, `email`, `date`, 
 -- Table structure for table `contact_email`
 --
 
+DROP TABLE IF EXISTS `contact_email`;
 CREATE TABLE IF NOT EXISTS `contact_email` (
   `email` varchar(2000) NOT NULL,
   `user_id` bigint(255) NOT NULL,
@@ -139,6 +146,7 @@ INSERT INTO `contact_email` (`email`, `user_id`, `date`) VALUES
 -- Table structure for table `contact_map`
 --
 
+DROP TABLE IF EXISTS `contact_map`;
 CREATE TABLE IF NOT EXISTS `contact_map` (
   `map_description` varchar(2000) DEFAULT NULL,
   `user_id` bigint(255) NOT NULL,
@@ -162,6 +170,7 @@ INSERT INTO `contact_map` (`map_description`, `user_id`, `date`, `location`, `ma
 -- Table structure for table `contact_phone`
 --
 
+DROP TABLE IF EXISTS `contact_phone`;
 CREATE TABLE IF NOT EXISTS `contact_phone` (
   `phone` varchar(2000) DEFAULT NULL,
   `user_id` bigint(255) NOT NULL,
@@ -183,6 +192,7 @@ INSERT INTO `contact_phone` (`phone`, `user_id`, `date`) VALUES
 -- Table structure for table `contact_post`
 --
 
+DROP TABLE IF EXISTS `contact_post`;
 CREATE TABLE IF NOT EXISTS `contact_post` (
   `post_box` varchar(50) NOT NULL,
   `user_id` bigint(255) NOT NULL,
@@ -204,6 +214,7 @@ INSERT INTO `contact_post` (`post_box`, `user_id`, `date`) VALUES
 -- Table structure for table `followed_page`
 --
 
+DROP TABLE IF EXISTS `followed_page`;
 CREATE TABLE IF NOT EXISTS `followed_page` (
   `followed_id` bigint(255) NOT NULL,
   `user_id` bigint(255) NOT NULL,
@@ -218,6 +229,7 @@ CREATE TABLE IF NOT EXISTS `followed_page` (
 -- Table structure for table `item`
 --
 
+DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `item` (
   `item_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) NOT NULL,
@@ -239,9 +251,8 @@ CREATE TABLE IF NOT EXISTS `item` (
   KEY `condition_id` (`condition_id`),
   KEY `type_id` (`type_id`,`location_id`),
   KEY `location_id` (`location_id`),
-  KEY `category_id_2` (`category_id`),
-  FULLTEXT KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+  KEY `category_id_2` (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `item`
@@ -259,13 +270,14 @@ INSERT INTO `item` (`item_id`, `user_id`, `name`, `category_id`, `price`, `condi
 -- Table structure for table `item_condition`
 --
 
+DROP TABLE IF EXISTS `item_condition`;
 CREATE TABLE IF NOT EXISTS `item_condition` (
   `condition_name` varchar(15) NOT NULL,
   `condition_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `rank` enum('1','2','3','5','6','7','8','9','10') NOT NULL DEFAULT '1',
   PRIMARY KEY (`condition_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `item_condition`
@@ -285,6 +297,7 @@ INSERT INTO `item_condition` (`condition_name`, `condition_id`, `date`, `rank`) 
 -- Table structure for table `item_request`
 --
 
+DROP TABLE IF EXISTS `item_request`;
 CREATE TABLE IF NOT EXISTS `item_request` (
   `item_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) NOT NULL,
@@ -308,9 +321,8 @@ CREATE TABLE IF NOT EXISTS `item_request` (
   KEY `condition_id` (`condition_id`),
   KEY `type_id` (`type_id`,`location_id`),
   KEY `location_id` (`location_id`),
-  KEY `category_id_2` (`category_id`),
-  FULLTEXT KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+  KEY `category_id_2` (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `item_request`
@@ -332,6 +344,7 @@ INSERT INTO `item_request` (`item_id`, `user_id`, `name`, `category_id`, `price`
 -- Table structure for table `location`
 --
 
+DROP TABLE IF EXISTS `location`;
 CREATE TABLE IF NOT EXISTS `location` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `region` varchar(15) CHARACTER SET utf8 DEFAULT NULL,
@@ -340,7 +353,7 @@ CREATE TABLE IF NOT EXISTS `location` (
   `description` varchar(500) NOT NULL,
   `rank` enum('1','2','3','4','5','6','7','8','9','10') NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `location`
@@ -383,6 +396,7 @@ INSERT INTO `location` (`id`, `region`, `name`, `date`, `description`, `rank`) V
 -- Table structure for table `message`
 --
 
+DROP TABLE IF EXISTS `message`;
 CREATE TABLE IF NOT EXISTS `message` (
   `message_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `sender_id` bigint(255) NOT NULL,
@@ -392,7 +406,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   PRIMARY KEY (`message_id`),
   KEY `sender_id` (`sender_id`),
   KEY `subject_id` (`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `message`
@@ -446,6 +460,7 @@ INSERT INTO `message` (`message_id`, `sender_id`, `date`, `message`, `subject_id
 -- Table structure for table `message_deletion`
 --
 
+DROP TABLE IF EXISTS `message_deletion`;
 CREATE TABLE IF NOT EXISTS `message_deletion` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `subject_id` bigint(255) NOT NULL,
@@ -455,7 +470,7 @@ CREATE TABLE IF NOT EXISTS `message_deletion` (
   PRIMARY KEY (`id`),
   KEY `subject_id` (`subject_id`),
   KEY `user_id` (`deleter_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `message_deletion`
@@ -475,6 +490,7 @@ INSERT INTO `message_deletion` (`id`, `subject_id`, `deleter_id`, `deletion_leve
 -- Table structure for table `message_receiver`
 --
 
+DROP TABLE IF EXISTS `message_receiver`;
 CREATE TABLE IF NOT EXISTS `message_receiver` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `message_id` bigint(255) NOT NULL,
@@ -485,7 +501,7 @@ CREATE TABLE IF NOT EXISTS `message_receiver` (
   PRIMARY KEY (`id`),
   KEY `subject_id` (`message_id`),
   KEY `user_id` (`receiver_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `message_receiver`
@@ -539,12 +555,13 @@ INSERT INTO `message_receiver` (`id`, `message_id`, `receiver_id`, `reception_ty
 -- Table structure for table `message_subject`
 --
 
+DROP TABLE IF EXISTS `message_subject`;
 CREATE TABLE IF NOT EXISTS `message_subject` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `subject_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `subject` varchar(300) NOT NULL DEFAULT '---',
   PRIMARY KEY (`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `message_subject`
@@ -572,6 +589,7 @@ INSERT INTO `message_subject` (`date`, `subject_id`, `subject`) VALUES
 -- Table structure for table `notification`
 --
 
+DROP TABLE IF EXISTS `notification`;
 CREATE TABLE IF NOT EXISTS `notification` (
   `notification_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `sender_id` bigint(255) NOT NULL,
@@ -583,7 +601,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
   PRIMARY KEY (`notification_id`),
   KEY `user_id` (`sender_id`),
   KEY `notification_type` (`notification_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -591,12 +609,13 @@ CREATE TABLE IF NOT EXISTS `notification` (
 -- Table structure for table `notification_type`
 --
 
+DROP TABLE IF EXISTS `notification_type`;
 CREATE TABLE IF NOT EXISTS `notification_type` (
   `type` varchar(100) NOT NULL,
   `type_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -604,6 +623,7 @@ CREATE TABLE IF NOT EXISTS `notification_type` (
 -- Table structure for table `notification_viewed`
 --
 
+DROP TABLE IF EXISTS `notification_viewed`;
 CREATE TABLE IF NOT EXISTS `notification_viewed` (
   `notification_id` bigint(255) NOT NULL,
   `user_id` bigint(255) NOT NULL,
@@ -619,6 +639,7 @@ CREATE TABLE IF NOT EXISTS `notification_viewed` (
 -- Table structure for table `ordered_items`
 --
 
+DROP TABLE IF EXISTS `ordered_items`;
 CREATE TABLE IF NOT EXISTS `ordered_items` (
   `item_id` bigint(20) NOT NULL,
   `order_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -631,7 +652,7 @@ CREATE TABLE IF NOT EXISTS `ordered_items` (
   PRIMARY KEY (`order_id`),
   KEY `item_id` (`item_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -639,6 +660,7 @@ CREATE TABLE IF NOT EXISTS `ordered_items` (
 -- Table structure for table `profile_cover_pic`
 --
 
+DROP TABLE IF EXISTS `profile_cover_pic`;
 CREATE TABLE IF NOT EXISTS `profile_cover_pic` (
   `user_id` bigint(255) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -659,6 +681,7 @@ INSERT INTO `profile_cover_pic` (`user_id`, `date`, `user_pic`) VALUES
 -- Table structure for table `profile_pic`
 --
 
+DROP TABLE IF EXISTS `profile_pic`;
 CREATE TABLE IF NOT EXISTS `profile_pic` (
   `user_id` bigint(255) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -676,26 +699,30 @@ INSERT INTO `profile_pic` (`user_id`, `date`, `user_pic`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `service`
+-- Table structure for table `services`
 --
 
-CREATE TABLE IF NOT EXISTS `service` (
+DROP TABLE IF EXISTS `services`;
+CREATE TABLE IF NOT EXISTS `services` (
   `item_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `on_display` enum('0','1') NOT NULL DEFAULT '1',
   `description` varchar(2200) NOT NULL,
   `summary` varchar(700) NOT NULL,
-  `type` enum('landingpage_banner','leftside_banner','rightside_banner','footer_banner') NOT NULL,
   `item_pic` varchar(5000) NOT NULL,
   `title` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `link_facebook` varchar(100) NOT NULL,
-  `link_twitter` varchar(100) NOT NULL,
-  `link_linkedin` varchar(100) NOT NULL,
   PRIMARY KEY (`item_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`item_id`, `user_id`, `date`, `on_display`, `description`, `summary`, `item_pic`, `title`, `name`) VALUES
+(6, 1, '2018-10-18 18:00:27', '1', 'Blazing-fast VPN speeds\r\nHuge network of 2,000+ global VPN servers optimized for fast connections. Unlimited bandwidth, no throttling.\r\n \r\nEasy-to-use VPN service for Windows, Mac, iOS, Android, Linux, and routers\r\nGet set up in minutes on any device. Download, install, and connect to ExpressVPN with the push of a button.\r\n \r\nNo restrictions\r\nStream or download anything, from any of our servers, anywhere on Earth, with your IP address hidden from prying eyes.\r\n \r\nOffshore privacy protection', '', '0|#$(delimiter-2)$#|media/user/1/file/2018_42/8325cd3a0eeb6ccf7403.jpg|#$(delimiter-2)$#|0', 'The fasttest', '');
 
 -- --------------------------------------------------------
 
@@ -703,6 +730,7 @@ CREATE TABLE IF NOT EXISTS `service` (
 -- Table structure for table `sign_up_by_confirmcode`
 --
 
+DROP TABLE IF EXISTS `sign_up_by_confirmcode`;
 CREATE TABLE IF NOT EXISTS `sign_up_by_confirmcode` (
   `confirm_code` varchar(200) NOT NULL,
   `user_type` varchar(10) NOT NULL,
@@ -714,7 +742,7 @@ CREATE TABLE IF NOT EXISTS `sign_up_by_confirmcode` (
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_pass` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sign_up_by_confirmcode`
@@ -730,6 +758,7 @@ INSERT INTO `sign_up_by_confirmcode` (`confirm_code`, `user_type`, `email`, `pas
 -- Table structure for table `sign_up_by_otp`
 --
 
+DROP TABLE IF EXISTS `sign_up_by_otp`;
 CREATE TABLE IF NOT EXISTS `sign_up_by_otp` (
   `user_type` varchar(10) NOT NULL,
   `password` longtext NOT NULL,
@@ -741,7 +770,7 @@ CREATE TABLE IF NOT EXISTS `sign_up_by_otp` (
   `otp` varchar(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `phone` (`phone`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=97 ;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sign_up_by_otp`
@@ -763,6 +792,7 @@ INSERT INTO `sign_up_by_otp` (`user_type`, `password`, `name`, `date`, `status`,
 -- Table structure for table `team_members`
 --
 
+DROP TABLE IF EXISTS `team_members`;
 CREATE TABLE IF NOT EXISTS `team_members` (
   `item_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(255) NOT NULL,
@@ -779,7 +809,7 @@ CREATE TABLE IF NOT EXISTS `team_members` (
   `link_linkedin` varchar(100) NOT NULL,
   PRIMARY KEY (`item_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `team_members`
@@ -795,13 +825,14 @@ INSERT INTO `team_members` (`item_id`, `user_id`, `date`, `on_display`, `descrip
 -- Table structure for table `type`
 --
 
+DROP TABLE IF EXISTS `type`;
 CREATE TABLE IF NOT EXISTS `type` (
   `name` varchar(15) NOT NULL,
   `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `rank` enum('1','2','3','5','6','7','8','9','10') NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `type`
@@ -817,6 +848,7 @@ INSERT INTO `type` (`name`, `id`, `date`, `rank`) VALUES
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` bigint(255) NOT NULL AUTO_INCREMENT,
   `password` longtext NOT NULL,
@@ -834,15 +866,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `phone` (`phone`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `password`, `email`, `user_type`, `date`, `registration_status`, `phone`, `profile_pic`, `display_name`, `first_name`, `last_name`, `username`, `rights`) VALUES
-(1, '$2y$10$duEdaGbKBlwh.oQ.n56yOe7ZQRjP4YN7zeQeSORwEIia/DbaqRRrS', 'tiyachamdimba@gkmail.com', 'shop', '2015-12-27 21:30:25', 'confirmed', 'akjhsdasdy87q68', '', '', '', '', '', ''),
-(10, '$2y$10$j0RG7cGiiOjPIk/w6THLKO7yfPS4nSov6iwYaiCnEreOjXNj9cE9q', 'tiyachamdimba@egmail.com', 'buyer', '2016-02-10 23:40:47', 'confirmed', 'ajhdakjh67', '', '', '', '', '', ''),
+(1, '$2y$10$duEdaGbKBlwh.oQ.n56yOe7ZQRjP4YN7zeQeSORwEIia/DbaqRRrS', 'superuser@shoppedtech.com', 'shop', '2015-12-27 21:30:25', 'confirmed', 'akjhsdasdy87q68', '', '', '', '', '', ''),
+(10, '$2y$10$duEdaGbKBlwh.oQ.n56yOe7ZQRjP4YN7zeQeSORwEIia/DbaqRRrS', 'admin123@mpimainvestment.com', 'shop', '2016-02-10 23:40:47', 'confirmed', 'ajhdakjh67', '', '', '', '', '', ''),
 (18, '$2y$10$4qY3QxVhdVAOQoMswyBVfOxESB5KXcqdKE6kVAr0i7Lyenvztwhg2', '7004d5eef33e247bcbe5', 'buyer', '2017-09-01 22:49:49', 'confirmed', '265992626077', '', '', '', '', '', ''),
 (32, '$2y$10$Qw6dbiwU0Cg39MF2Ik.TGueXxWl3SDoftqSeVjRuvg4AybogMt6iG', '95a701fb7208ba7e9af0', 'buyer', '2017-09-01 23:17:54', 'confirmed', '265999876768', '', '', '', '', '', ''),
 (34, '$2y$10$duEdaGbKBlwh.oQ.n56yOe7ZQRjP4YN7zeQeSORwEIia/DbaqRRrS', 'NULLVALUE**4bb532e09c776e9152e6', 'buyer', '2017-09-01 23:21:50', 'confirmed', '265888777987', '', '', '', '', '', ''),
@@ -855,13 +887,13 @@ INSERT INTO `users` (`user_id`, `password`, `email`, `user_type`, `date`, `regis
 -- Table structure for table `user_info`
 --
 
+DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE IF NOT EXISTS `user_info` (
   `user_id` bigint(255) NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'date joined',
   `about` varchar(2000) DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  FULLTEXT KEY `user_name` (`user_name`)
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -869,8 +901,8 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 --
 
 INSERT INTO `user_info` (`user_id`, `user_name`, `date`, `about`) VALUES
-(1, 'GlobalShoppers', '2016-02-10 23:40:47', 'the best and coolest shop in town'),
-(10, 'Tyeer', '2016-02-10 23:40:47', 'CodeIgniter is an Application Development Framework - a toolkit - for people who build web sites using PHP. Its goal is to enable you to develop projects                           '),
+(1, 'GlobalAdmin', '2018-10-18 20:07:59', 'the best and coolest shop in town'),
+(10, 'Admin', '2018-10-18 20:07:59', 'CodeIgniter is an Application Development Framework - a toolkit - for people who build web sites using PHP. Its goal is to enable you to develop projects                           '),
 (18, 'BB3920', '2017-09-01 22:49:49', NULL),
 (32, 'hjooh', '2017-09-01 23:17:55', NULL),
 (34, 'hjooh', '2017-09-01 23:21:50', NULL),
@@ -883,6 +915,7 @@ INSERT INTO `user_info` (`user_id`, `user_name`, `date`, `about`) VALUES
 -- Table structure for table `user_license`
 --
 
+DROP TABLE IF EXISTS `user_license`;
 CREATE TABLE IF NOT EXISTS `user_license` (
   `license_description` varchar(2000) DEFAULT NULL,
   `user_id` bigint(255) NOT NULL,
@@ -905,6 +938,7 @@ INSERT INTO `user_license` (`license_description`, `user_id`, `date`, `license_p
 -- Table structure for table `verification`
 --
 
+DROP TABLE IF EXISTS `verification`;
 CREATE TABLE IF NOT EXISTS `verification` (
   `user_id` bigint(255) NOT NULL,
   `verification` varchar(30) NOT NULL DEFAULT 'normal',
@@ -919,6 +953,25 @@ CREATE TABLE IF NOT EXISTS `verification` (
 
 INSERT INTO `verification` (`user_id`, `verification`, `date`, `rank`) VALUES
 (1, 'verified', '2017-10-19 22:16:23', '1');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `item`
+--
+ALTER TABLE `item` ADD FULLTEXT KEY `name` (`name`);
+
+--
+-- Indexes for table `item_request`
+--
+ALTER TABLE `item_request` ADD FULLTEXT KEY `name` (`name`);
+
+--
+-- Indexes for table `user_info`
+--
+ALTER TABLE `user_info` ADD FULLTEXT KEY `user_name` (`user_name`);
 
 --
 -- Constraints for dumped tables
@@ -1043,6 +1096,7 @@ ALTER TABLE `user_license`
 --
 ALTER TABLE `verification`
   ADD CONSTRAINT `verification_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

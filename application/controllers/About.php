@@ -123,15 +123,7 @@ class About extends CI_Controller {
       foreach ($model_data['data']['records'] as $key => $value) {
 
       $model_data['data']['records'][$key]['date']=date( "j M Y", strtotime($value['date']));
-      foreach ($value['item_pic'] as $key2 => $value2) {
-        # calculate image dimensions
-        $width=600;$height =600;
-        if (file_exists($value2['path'].'.jpg')) 
-          list($width, $height, $type, $attr) = getimagesize($value2['path'].'.jpg'); 
-        else
-          $model_data['data']['records'][$key]['item_pic'][$key2]['path'] = 'media/default/images/no_image';
-          $model_data['data']['records'][$key]['item_pic'][$key2]['dimension'] = $width.'x'.$height;
-      }
+
       #limit length         
       if(strlen($value['item_description'])>200)
         $model_data['data']['records'][$key]['item_description']=$this->general_functions->wordTrimmer($value['item_description'],200,'&hellip;');
@@ -170,66 +162,63 @@ class About extends CI_Controller {
           0. load classes
         #######################################*/       
 
-      $this->load->model('Service_model');
-      $this->load->library('general_functions');
-
+    $this->load->model('Services_model');
+    $this->load->model('Download_model');
+    $this->load->library('general_functions');
     
     /*########################################
           1. Get Data from Database using Models
-        #######################################*/      
-        
-      $pass_data = array( 
+        #######################################*/       
+      $pass_data = array( 'item_id' => $this->uri->segment(3)
                  );
 
-      $model_data=$this->Service_model->getItem($pass_data);
-
+      $model_data=$this->Services_model->getItem($pass_data);
       $href=base_url();
       $addition_info=$model_data['addition_info'];
       $status=$model_data['status'];
-
-
-      //do some formating to the results
-      foreach ($model_data['data']['records'] as $key => $value) {
-
-      $model_data['data']['records'][$key]['date']=date( "j M Y", strtotime($value['date']));
-      foreach ($value['item_pic'] as $key2 => $value2) {
-        # calculate image dimensions
-        $width=600;$height =600;
-        if (file_exists($value2['path'].'.jpg')) 
-          list($width, $height, $type, $attr) = getimagesize($value2['path'].'.jpg'); 
-        else
-          $model_data['data']['records'][$key]['item_pic'][$key2]['path'] = 'media/default/images/no_image';
-          $model_data['data']['records'][$key]['item_pic'][$key2]['dimension'] = $width.'x'.$height;
-      }
       
-      #limit length         
-      if(strlen($value['summary'])>25)
-        $model_data['data']['records'][$key]['summary']=$this->general_functions->wordTrimmer($value['summary'],25,'&hellip;');
+    if($status)
+    {
 
-      }
+      if(count($model_data['data']['records']) > 0 )
+      {
+        $pass_data = array(
+                      'file_name' => 'Brochure - (MpimaInvestments.com)',
+                      'file_path' => $model_data['data']['records'][0]['item_pic']['main']['path'],
+                        );
+        $downloadSong=$this->Download_model->force_download($pass_data);
+        
+
+            if(!$downloadSong['status'])
+            { 
+              $result_info=$downloadSong['data']['result_info'];  
+              $addition_info = $downloadSong['addition_info'];  
+              $status=false;
+            }
+      }else 
+      {
+              $result_info='File not found';    
+              $status=false;
+      }      
+    } 
 
     /*########################################
           2. Send data to view
         #######################################*/       
 
-        $data['page_data']= array();  
-        $data['page_data']['item']= $model_data;
-
-        //echo "<pre>";
-        //print_r($model_data);
-        //return;
-        //check if is ajax call
-        // We added an ajax call because the item images got called by jquery after the page is already loaded
-       if($this->input->is_ajax_request())
-       {
         $data['info']=array();         
-        $data['info']['item']= $model_data;        
+        $data['info']['item']= $model_data;  
+
+        
+      if($this->input->is_ajax_request())
+       {
+             
         $data['print_as']='json';         
         $this->load->view('ajaxCall/ajaxCall',$data);  
        }
        else
        { 
-    $this->load->view('about/about',$data);
+         $this->service();
        }
 
   }

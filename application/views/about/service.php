@@ -81,7 +81,7 @@
 		                <div class="ln_solid"></div>
 		                <div class="card-foot panel-footer">
 		                	<a href="<?php echo base_url().'service/'.$value['item_id']; ?>" class="btn btn-basic">Read more</a>
-		                	<a href="#" class="btn btn-basic">Download Brochure</a>
+		                	<a href="<?php echo base_url().'service/download/'.$value['item_id']; ?>" class="btn btn-basic">Download Brochure</a>
 		                </div>
 		            </div>
 		    	<?php } ?>        

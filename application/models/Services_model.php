@@ -849,7 +849,7 @@ class Services_model extends CI_Model {
 				$this->status=false;
 				$this->fail_result=true;
 				//echo '<pre>';
-				//print_r($valueFormated);
+				
 				//print_r($dbquery1);
 				//print_r($dbquery1->errorInfo());
 				$this->addition_info = $dbquery2->errorInfo();
@@ -1094,7 +1094,7 @@ class Services_model extends CI_Model {
           	while (($i<$max_number_of_file-count($existingRecords)) && ($v<count($data['addfile'])))
           	{
           		
-          		array_push($existingRecords,substr(strstr($file_directory['data']['directory'], IMAGE_SRC_DIR), strlen(IMAGE_SRC_DIR)).$data['addfile'][$i]['name'].$data['addfile'][$i]['extension']);
+          		array_push($existingRecords,substr(strstr($file_directory['data']['directory'], IMAGE_SRC_DIR), strlen(IMAGE_SRC_DIR)).$data['addfile'][$i]['name'].'.'.$data['addfile'][$i]['extension']);
          		
 	      		array_push($fileChange, array(	'path_new'=>$file_directory['data']['directory'].$data['addfile'][$i]['name'],
 	      										'path_old'=>$temp_directory.$data['addfile'][$i]['name'],	
@@ -1264,7 +1264,7 @@ class Services_model extends CI_Model {
 	    //set defaults
 	    $max_number_of_file=4;
 	    $file_directory='';
-	    $temp_directory=IMAGE_SRC_DIR.'temp/image/';
+	    $temp_directory=IMAGE_SRC_DIR.'temp/file/';
 	    $existingRecords=array();
 	    $fileSystemRollBack1=array();
 	    $fileSystemRollBack2=array();
@@ -1279,15 +1279,12 @@ class Services_model extends CI_Model {
 	    if(!isset($data['summary'])) $data['summary']='';
 	    if(!isset($data['title'])) $data['title']='';
 	    if(!isset($data['name'])) $data['name']='';
-	    if(!isset($data['link_twitter'])) $data['link_twitter']='';
-	    if(!isset($data['link_facebook'])) $data['link_facebook']='';
-	    if(!isset($data['link_linkedin'])) $data['link_linkedin']='';
 	    if(!isset($data['description'])) $data['description']='';
-	    if(!isset($data['addPic'])) $data['addPic']=array();
-	    if(!isset($data['deletePic'])) $data['deletePic']=array();
+	    if(!isset($data['addfile'])) $data['addfile']=array();
+	    if(!isset($data['deletefile'])) $data['deletefile']=array();
 	    if(!isset($data['front_pic'])) $data['front_pic']='';
 	    if(!isset($data['on_display'])) $data['on_display']="";
-	    if(!isset($data['allow_null_photos'])) $data['allow_null_photos']=false;
+	    if(!isset($data['allow_null_photos'])) $data['allow_null_photos']=true;
 
 
 	    // check if required data is supplied      
@@ -1369,7 +1366,7 @@ class Services_model extends CI_Model {
 	    if(!$this->fail_result)
 	    {
 	    	$temp_data=array(
-	    					'path'=>IMAGE_SRC_DIR.'media/user/'.$data['user_id'].'/image/item/',
+	    					'path'=>IMAGE_SRC_DIR.'media/user/'.$data['user_id'].'/file/',
 	    					'user_id'=>$data['user_id'],
 	    					'create_user_dir'=>true,
 	    				);
@@ -1384,23 +1381,23 @@ class Services_model extends CI_Model {
 	    }
 
 	    //delete/re-organise the pics
-	    if(!$this->fail_result && !empty($data['deletePic']) && is_array($data['deletePic']) && count($data['deletePic'])>0)
+	    if(!$this->fail_result && !empty($data['deletefile']) && is_array($data['deletefile']) && count($data['deletefile'])>0)
 	    {
 	    	/* you delete pics with received id '$data[addpics]' from the existing pics 'collectedpics'
 			   then make a string 'addpicstring' out of it 'collectedpics' with delimiters to store in Db
 			*/
           	$i=0;
           	#remove empty values
-          	$data['deletePic'] = array_filter($data['deletePic'],'is_numeric');          	
+          	$data['deletefile'] = array_filter($data['deletefile'],'is_numeric');          	
 		
-          	while (($i<count($data['deletePic'])))
+          	while (($i<count($data['deletefile'])))
           	{
-          		if(isset($existingRecords[$data['deletePic'][$i]]))
+          		if(isset($existingRecords[$data['deletefile'][$i]]))
           		{	
     	      		array_push($fileChange, array(	'path_new'=>$temp_directory,
-	      											'path_old'=>IMAGE_SRC_DIR.$existingRecords[$data['deletePic'][$i]]));
+	      											'path_old'=>IMAGE_SRC_DIR.$existingRecords[$data['deletefile'][$i]]));
     	      		          			
-          			unset($existingRecords[$data['deletePic'][$i]]);
+          			unset($existingRecords[$data['deletefile'][$i]]);
     	      	}
 
     	      	$i++;	
@@ -1419,24 +1416,28 @@ class Services_model extends CI_Model {
 
 	    }
 
+
 	    //add/re-organise the pics
-	    if(!$this->fail_result  && !empty($data['addPic']) && is_array($data['addPic']) && count($data['addPic'])>0)
+	    if(!$this->fail_result  && !empty($data['addfile']) && is_array($data['addfile']) && count($data['addfile'])>0)
 	    {
-	    	/* you add received pics '$addPics' to the existing pics 'collectedpics'
-			   then make a string 'addPicString' out of it 'collectedpics' with delimiters to store in Db
+	    	/* you add received pics '$addfiles' to the existing pics 'collectedpics'
+			   then make a string 'addfileString' out of it 'collectedpics' with delimiters to store in Db
 			   limit the pics to only 3
 			*/
           	$i=0;$v=0;
           	#remove empty values
-          	$data['addPic'] =array_filter($data['addPic']);
-          	$data['addPic'] =array_values($data['addPic']);
+          	$data['addfile'] =array_filter($data['addfile']);
+          	$data['addfile'] =array_values($data['addfile']);
           	
-          	while (($i<$max_number_of_file-count($existingRecords)) && ($v<count($data['addPic'])))
+          	while (($i<$max_number_of_file-count($existingRecords)) && ($v<count($data['addfile'])))
           	{
-          		array_push($existingRecords,substr(strstr($file_directory['data']['directory'], IMAGE_SRC_DIR), strlen(IMAGE_SRC_DIR)).$data['addPic'][$i]);
+          		
+          		array_push($existingRecords,substr(strstr($file_directory['data']['directory'], IMAGE_SRC_DIR), strlen(IMAGE_SRC_DIR)).$data['addfile'][$i]['name'].'.'.$data['addfile'][$i]['extension']);
          		
-	      		array_push($fileChange, array(	'path_new'=>$file_directory['data']['directory'].$data['addPic'][$i],
-	      										'path_old'=>$temp_directory.$data['addPic'][$i]	));
+	      		array_push($fileChange, array(	'path_new'=>$file_directory['data']['directory'].$data['addfile'][$i]['name'],
+	      										'path_old'=>$temp_directory.$data['addfile'][$i]['name'],	
+	      										'extension'=>$data['addfile'][$i]['extension']	
+	      									   ));
     	      	
     	      	$i++;$v++;	
           	}
@@ -1453,11 +1454,10 @@ class Services_model extends CI_Model {
           	{
           		$this->fail_result=true;
           		//empty 
-	            $this->addition_info='error 108_1';
+	            $this->addition_info='error 103_1';
 	            $this->result_info=" An Error Occurred, Try Again ";
           	}
 	    }
-
 
 	    //check if paths exists
 	    if(!$this->fail_result)
@@ -1465,36 +1465,19 @@ class Services_model extends CI_Model {
 	    	$i=0;
 	    	while ($i<count($fileChange) && !$this->fail_result) 
 	    	{
-					$v=0;
-					do
-					{
-						$fileIndexArray =array();
-						if($v==0)
-						{	
-							$fileIndexArray['extension']='.jpg';
-						}elseif($v==1)
-						{	
-							$fileIndexArray['extension']='_t.jpg';
-						}elseif($v==2)
-						{	
-							$fileIndexArray['extension']='_m.jpg';
-						}
 
 						//	file transfer consist of two paths i.e. new and old path. so old path has to exist always
-						if(!file_exists($fileChange[$i]['path_old'].$fileIndexArray['extension']))
+						if(!file_exists($fileChange[$i]['path_old'].'.'.$fileChange[$i]['extension']))
 			    		{
 			    			if(empty($this->addition_info))
-			    			$this->addition_info="error 109_1:".$i.":path_old:".$fileIndexArray['extension'];
+			    			$this->addition_info="error 104_1, path_old:".$fileChange[$i]['path_old'].'.'.$fileChange[$i]['extension'];
 			    			
 			    			$this->fail_result=true;
+
+			    			//echo $fileChange[$i]['path_old'].$fileIndexArray['extension'];
 			    		}
-			    		$v++;
-
-		    		}while ( $v<3 && !$this->fail_result);
-
 	    		$i++;
 	    	}
-
 	    }	
 
 
@@ -1531,16 +1514,13 @@ class Services_model extends CI_Model {
 	    if(!$this->fail_result)   
 	    {             
 			$dbquery2=$this->db->conn_id->prepare("
-							 UPDATE `team_members` SET 
+							 UPDATE `services` SET 
 							`date`= `date`,
 							`on_display`= CASE WHEN :on_display=:emptyField THEN `on_display` ELSE :on_display END,
 							`description`= CASE WHEN :description=:emptyField THEN `description` ELSE :description END,
 							`summary`= CASE WHEN :summary=:emptyField THEN `summary` ELSE :summary END,
 							`name`= CASE WHEN :name=:emptyField THEN `name` ELSE :name END,
 							`title`= CASE WHEN :title=:emptyField THEN `title` ELSE :title END,
-							`link_linkedin`= CASE WHEN :link_linkedin=:emptyField THEN `link_linkedin` ELSE :link_linkedin END,
-							`link_facebook`= CASE WHEN :link_facebook=:emptyField THEN `link_facebook` ELSE :link_facebook END,
-							`link_twitter`= CASE WHEN :link_twitter=:emptyField THEN `link_twitter` ELSE :link_twitter END,
 							`item_pic`= :item_pic
 							WHERE (`item_id`=:item_id AND `user_id`=:user_id )
 			");
@@ -1552,14 +1532,12 @@ class Services_model extends CI_Model {
 			$dbquery2->bindParam(":summary",$data['summary']);
 			$dbquery2->bindParam(":name",$data['name']);
 			$dbquery2->bindParam(":title",$data['title']);
-			$dbquery2->bindParam(":link_facebook",$data['link_facebook']);
-			$dbquery2->bindParam(":link_twitter",$data['link_twitter']);
-			$dbquery2->bindParam(":link_linkedin",$data['link_linkedin']);
 			$dbquery2->bindParam(":emptyField",$emptyField);                 
 	        
 	        if(!($dbquery2->execute()))
 	        {
-	            //print_r($dbquery2->errorInfo());
+	            print_r($data);
+	            print_r($dbquery2->errorInfo());
 	            $this->fail_result=true;
 	            $this->addition_info='error 110_1';
 	            $this->result_info=" An Error Occurred, Try Again ";
@@ -1572,41 +1550,21 @@ class Services_model extends CI_Model {
 		{					
 			$i=0;
 			while($i<count($fileChange) && !$this->fail_result)
-			{   					
-				$v=0;
-				do
-				{
-					$fileIndexArray =array();
-					if($v==0)
-					{	
-						$fileIndexArray['extension']='.jpg';
-					}elseif($v==1)
-					{	
-						$fileIndexArray['extension']='_t.jpg';
-					}elseif($v==2)
-					{	
-						$fileIndexArray['extension']='_m.jpg';
-					}	
-
-					if(!$this->fail_result)
-					{	
+			{   		
 					
-						if((@rename($fileChange[$i]['path_old'].$fileIndexArray['extension'],$fileChange[$i]['path_new'].$fileIndexArray['extension']))) 
+						if((@rename($fileChange[$i]['path_old'].'.'.$fileChange[$i]['extension'],$fileChange[$i]['path_new'].'.'.$fileChange[$i]['extension']))) 
 						{		 
-						    array_push($fileSystemRollBack2,array(  'path_old'=>$fileChange[$i]['path_old'].$fileIndexArray['extension'],
-																	'path_new'=>$fileChange[$i]['path_new'].$fileIndexArray['extension'],
+						    array_push($fileSystemRollBack2,array(  'path_old'=>$fileChange[$i]['path_old'].'.'.$fileChange[$i]['extension'],
+																	'path_new'=>$fileChange[$i]['path_new'].'.'.$fileChange[$i]['extension'],
 																));
 						}else
 						{
-							$this->addition_info="error 111_1:".$i.":".$fileIndexArray['extension'];
+							$this->addition_info="error 106_1:".$i.":".$fileIndexArray['extension'];
 							$this->result_info="Sorry An Error Occurred,Try Again";
 							$this->fail_result=true;
 						}
-						
-					}
-
-					$v++;
-				}while ($v<3 && !$this->fail_result);
+					
+					
 				$i++;
 			};
 				
@@ -1646,6 +1604,7 @@ class Services_model extends CI_Model {
                                                ),
                               "addition_info"=>$this->addition_info);
 	}
+
 	public function deleteItemPermanently($data=array())
 	{
 	    //reset default variable;

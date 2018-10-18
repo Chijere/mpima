@@ -105,74 +105,29 @@ class Download_model extends CI_Model {
 				   	
 		}					   	
 		
-		if(!$this->fail_result)
+		if(!$this->fail_result && file_exists($data['file_path']))
 		{					   
-			// required for IE
-			    if(ini_get('zlib.output_compression')) { ini_set('zlib.output_compression', 'Off'); }
-			
 			// set the headers, prevent caching
-			header("Pragma: public");
-			header("Expires: -1");
-			header("Cache-Control: public, must-revalidate, post-check=0, pre-check=0");
-			  
-			header("Content-Disposition: attachment; filename=".$data['file_name']);
-			header("Content-Type: audio/mpeg");
-					  
-			//check if http_range is sent by browser (or download manager)
-			if(isset($data['server_http_range']) && preg_match('/^bytes=(\d+)-(\d*)/',$data['server_http_range'], $range))
-			{
-			  // in parts
-			}
-
-				
-			//figure out download piece from range (if set)
-			list($seek_start, $seek_end) = explode('-', $range, 2);
-
-			//set start and end based on range (if set), else set defaults
-			//also check for invalid ranges.
-		    $seek_end   = (empty($seek_end)) ? ($file_size - 1) : min(abs(intval($seek_end)),($file_size - 1));
-		    $seek_start = (empty($seek_start) || $seek_end < abs(intval($seek_start))) ? 0 : max(abs(intval($seek_start)),0);
-
-			 //Only send partial content header if downloading a piece of the file (IE workaround)
-		    if ($seek_start > 0 || $seek_end < ($file_size - 1))
-			{
-			   	header('HTTP/1.1 206 Partial Content');
-			   	header('Content-Range: bytes '.$seek_start.'-'.$seek_end.'/'.$file_size);
-			   	header('Content-Length: '.($seek_end - $seek_start + 1));
-			}
-		   else
-			{	
-				header("Content-Length: ".$file_size);
-			}
-
-			header('Accept-Ranges: bytes');
-			set_time_limit(0);
-			fseek($file, $seek_start);
-						 
-			while(!feof($file)) 
-			{
-				print(@fread($file, 1024*8));
-				ob_flush();
-				flush();
-					  if (connection_status()!=0) 
-						{
-				          	$this->fail_result=true;
-				          	$this->addition_info="error 100_2 client:connection terminated";
-				          	$this->result_info="Connection problem check Your internet services";							
-							@fclose($file);
-						}
-			}
+			
+			header('Content-Description: File Transfer');
+		    header('Content-Type: application/octet-stream');
+		    header("Content-Disposition: attachment; filename=".$data['file_name']);
+		    header('Expires: 0');
+		    header('Cache-Control: must-revalidate');
+		    header('Pragma: public');
+		    header('Content-Length: ' . $file_size);
+		    readfile($data['file_path']);
+		    
 		}
 
 		if(!$this->fail_result)
 		{	
-		  	@fclose($file);
-  			$this->result_info="success";	
+		  	$this->result_info="success";	
   			$this->status=true;	
 		  
 		}
 
-
+         exit;
 		return $info = array("status"=>$this->status,
 			  "data"=> array("result_info"=> $this->result_info,),
 			"addition_info"=>$this->addition_info);	

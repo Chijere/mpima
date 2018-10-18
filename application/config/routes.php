@@ -71,6 +71,7 @@ $route['(?i)about'] = 'about';
 $route['(?i)contact'] = 'about/contact';
 $route['(?i)service'] = 'about/service';
 $route['(?i)service/(:num)'] = 'about/service_single';
+$route['(?i)service/download/(:num)'] = 'about/download_service_brochure';
 #------
 
 #send_request
@@ -93,7 +94,7 @@ $route['(?i)admin/team_members/form/edit'] = 'admin/edit_team_members_form';
 $route['(?i)admin/team_members/form/edit/delete'] = 'admin/delete_team_members_form';
 		//services
 $route['(?i)admin/services'] = 'admin/view_services';
-$route['(?i)admin/services/form/add'] = 'admin/add_services_form';
+$route['(?i)admin/services/form/add'] = 'admin/add_services_form'; 
 $route['(?i)admin/services/form/edit'] = 'admin/edit_services_form';
 $route['(?i)admin/services/form/edit/delete'] = 'admin/delete_services_form';
 	

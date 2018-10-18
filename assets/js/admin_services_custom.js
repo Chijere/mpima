@@ -136,15 +136,6 @@ var thisElemnt;
           function beforeSubmit()
           {
             var valid=true;
-           
-            // check pics
-            if(thisElemnt.find('.main_form').find('input[name="input1"]').length <1 && thisElemnt.find(".add")[0])
-            {
-              valid = false;
-
-                thisElemnt.find('.alert').show().find('span').html(' Upload an Image');
-                setTimeout(function(){ thisElemnt.find('.alert').hide(); }, 30000);
-            }
 
             if(valid)
             {

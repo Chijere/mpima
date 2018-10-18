@@ -42,13 +42,15 @@
                       <li><a href="<?php echo base_url(); ?>admin/services">View Services</a></li>
                     </ul>
                   </li>
-
+                   
+                   <!--
                   <li><a><i class="fa fa-file-text"></i> Post <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url(); ?>admin/posts">View posts</a></li>
                       <li><a href="<?php echo base_url(); ?>admin/add_post">add posts</a></li>
                     </ul>
                   </li>
+                -->
                 </ul>
               </div>
 
