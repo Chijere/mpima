@@ -1851,8 +1851,8 @@ class Admin extends CI_Controller {
        							'item_id' => $this->input->post('i_ref',true),
        						);
 
-		   	$this->load->model('Banner_model');
-       		$model_data=$this->Banner_model->deleteItemPermanently($pass_data);
+		   	$this->load->model('Team_members_model');
+       		$model_data=$this->Team_members_model->deleteItemPermanently($pass_data);
 
        		$href=base_url();
        		$addition_info=$model_data['addition_info'];
@@ -2064,7 +2064,7 @@ class Admin extends CI_Controller {
        		}
 
 		   	$this->load->model('Services_model');
-       		$model_data=$this->Services_model->editItem($pass_data);
+       		$model_data=$this->Services_model->addItem($pass_data);
 
        		$href=base_url();
        		$addition_info=$model_data['addition_info'];

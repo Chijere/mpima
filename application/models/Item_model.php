@@ -616,7 +616,6 @@ class Item_model extends CI_Model {
 			 $count=0;
 			 $result=array();
 			 $filters['deleted_by_seller'] = 0; // get only those that aren't deleted unless otherwise
-			 $filters['verification'] = 'verified';
 			 $total_records=false;		 
 			 $get_total_records=false;
 			 $filteringCondtion=' AND ';
@@ -716,14 +715,6 @@ class Item_model extends CI_Model {
 					}elseif($key==='not_type_id' || ($key==='not_type_id'.$n) )
 					{
 						array_push($miniWhereSubQueryArry,'`type_id`!=:not_type_id'.$n ); 
-						$n++;
-					}elseif($key==='verification' || ($key==='verification'.$n) )
-					{
-						array_push($miniWhereSubQueryArry,'`verification`=:verification'.$n ); 
-						$n++;
-					}elseif($key==='not_verification' || ($key==='not_verification'.$n) )
-					{
-						array_push($miniWhereSubQueryArry,'`verification`!=:not_verification'.$n ); 
 						$n++;
 					}elseif($key==='condition' || ($key==='condition'.$n) )
 					{
@@ -851,6 +842,7 @@ class Item_model extends CI_Model {
 														)			
 													");		
 			$n=1;	
+
 			foreach($filters as $key => $value)
 			{
 				if(is_array($value))
@@ -876,8 +868,6 @@ class Item_model extends CI_Model {
 					if($key==='condition' || ($key==='condition'.$n) ) 
 					{$dbquery1->bindValue(":condition".$n,$value2); $n++; }
 					
-					if($key==='verification' || ($key==='verification'.$n) ) 
-					{$dbquery1->bindValue(":verification".$n,$value2); $n++; }
 					
 					if($key==='user_id' || ($key==='user_id'.$n) ) 
 					{$dbquery1->bindValue(":user_id".$n,$value2); $n++; }
@@ -896,9 +886,6 @@ class Item_model extends CI_Model {
 
 					if($key==='not_condition' || ($key==='not_condition'.$n) ) 
 					{$dbquery1->bindValue(":not_condition".$n,$value2); $n++; }
-					
-					if($key==='not_verification' || ($key==='not_verification'.$n) ) 
-					{$dbquery1->bindValue(":not_verification".$n,$value2); $n++; }
 					
 					if($key==='not_user_id' || ($key==='not_user_id'.$n) ) 
 					{$dbquery1->bindValue(":not_user_id".$n,$value2); $n++; }
@@ -969,31 +956,6 @@ class Item_model extends CI_Model {
 				}
 			   }
 			}				
-
-			//get the items' groups of verification
-			if(!$this->fail_result)
-			{
-
-				$dbquery3 =  $this->db->conn_id->prepare("	
-															SELECT COUNT(*) AS `itemsPerVerification`,
-																	CASE WHEN ISNULL(`verification`) THEN 'Unverified' ELSE `verification` END  AS `verification`
-															FROM `temp_table`
-															GROUP BY `verification`											
-															LIMIT 15									
-														");
-					
-				if(!$dbquery3->execute())
-				{
-					$this->status=false;
-					!$this->fail_result=true;
-					//echo '<pre>';
-					//print_r($valueFormated);
-					//print_r($dbquery1);
-					//print_r($dbquery1->errorInfo());
-					$this->addition_info = $dbquery3->errorInfo();
-					//$this->addition_info = 'error_100';
-				}
-			}						
 
 			//get the items' groups of categories
 			if(!$this->fail_result)
@@ -1094,7 +1056,6 @@ class Item_model extends CI_Model {
 			   
 
 				#collect for items'group
-			   	$itemsPerVerification = $dbquery3->fetchAll();
 			   	$itemsPerCategory = $dbquery4->fetchAll();
 			   	$itemsPerLocation = $dbquery5->fetchAll();
 			   	$itemsPerType = $dbquery6->fetchAll();
@@ -1221,7 +1182,6 @@ class Item_model extends CI_Model {
 	                            "data"=> array('records'=> $result,
 											   'count'=>$count,
 											   'total_records'=>$total_records,
-											   'itemsPerVerification'=>$itemsPerVerification,
 											   'itemsPerCategory'=>$itemsPerCategory,
 											   'itemsPerLocation'=>$itemsPerLocation,
 											   'itemsPerType'=>$itemsPerType,

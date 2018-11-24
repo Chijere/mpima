@@ -46,10 +46,10 @@ Dropzone.autoDiscover = false;
           var totalthumbs=0;
           $('#image-gallery').find('.thumbnail').each(function(){totalthumbs++;});
 
-          if(totalthumbs>5)
+          if(totalthumbs>20)
           {
 	        $.sweetModal({
-	        content: 'You can only add up to 5 banners, delete some banners first before you add',
+	        content: 'You can only add up to 20 banners, delete some Member first before you add',
 	        icon: $.sweetModal.ICON_ERROR,
 	        theme:$.sweetModal.THEME_MIXED,                
 	        buttons: {
@@ -80,7 +80,7 @@ Dropzone.autoDiscover = false;
           thisElemnt = $(this).closest('.modal');
           
           $.sweetModal({
-          content: 'Confirm to delete this Banner?',
+          content: 'Confirm to delete this Member?',
           theme:$.sweetModal.THEME_MIXED,
           showCloseButton:false,                
           buttons: {
@@ -100,7 +100,7 @@ Dropzone.autoDiscover = false;
                               type : 'POST',
                               data : thisElemnt.find('.main_form,.dropzone').serialize(),
                               success : function(result,status,xhr) {
-                              				var other = {message:"Banner deleted"};
+                              				var other = {message:"Member deleted"};
                               				afterSuccess(result,status,xhr,other);
                               			},
                               beforeSend: function() {
@@ -198,9 +198,9 @@ Dropzone.autoDiscover = false;
               if(typeof other !== 'undefined' && other.message!=="")
               	var mssg = other.message;
               else if(thisElemnt.hasClass("add"))
-              	var mssg = "Banner Added.";
+              	var mssg = "Member Added.";
               else 
-              	var mssg = "Banner edited."; 
+              	var mssg = "Member edited."; 
               
               $.sweetModal({
                 content: mssg,

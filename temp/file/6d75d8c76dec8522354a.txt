@@ -1,0 +1,30 @@
+<pre>Array
+(
+    [status] => 1
+    [data] => Array
+        (
+            [records] => Array
+                (
+                    [0] => Array
+                        (
+                            [user_id] => 1
+                            [item_name] => 
+                            [title] => Blazing-fast VPN speeds
+                            [item_id] => 6
+                            [item_pic] => Array
+                                (
+                                    [main] => Array
+                                        (
+                                            [front_pic] => 1
+                                            [id] => 0
+                                            [path] => media/user/1/file/2018_42/d9e1a243d4564a7ccd48.txt
+                                        )
+
+                                )
+
+                            [on_display] => 1
+                            [date] => 2018-10-19 00:00:27
+                            [item_description] => Blazing-fast VPN speeds
+Huge network of 2,000+ global VPN servers optimized for fast connections. Unlimited bandwidth, no throttling.
+ 
+Easy-

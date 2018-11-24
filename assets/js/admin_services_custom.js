@@ -217,21 +217,26 @@ var thisElemnt;
     maxFiles: 1,
     createImageThumbnails: false,
     acceptedFiles: ".jpeg,.jpg,.png,.pdf,.docx,.doc,.txt,.text",
-    addedfile: function(file) { 
+    totaluploadprogress(uploadProgress) {
+    thisElemnt.find('.progress-bar').css('width', uploadProgress + '%')
+     },
+    addedfile: function(file) {
+      thisElemnt.find('.alert').hide(); 
+      thisElemnt.find('.progress').show();
       //console.log(file); 
+      //console.log(thisElemnt.find('.progress-bar').attr('class')); 
 
       },
 
     init: function() {
       this.on("maxfilesexceeded", function(file){
               this.removeAllFiles(); this.addFile(file);
-          });
+      });
 
 
       this.on("success", function(file,response,z) {
-       console.log(file); 
-       var errorMessage = response.errorMessage;
-
+       //console.log(file); 
+       setTimeout(function(){ thisElemnt.find('.progress').hide(); }, 1000);
        var toPrint='<input type="hidden" value="'+response.data.ref+'.'+response.data.file_extension+'" name="input1">'; //assign a permanent input1
        
        thisElemnt.find('.file_name').html(file.name);
@@ -239,10 +244,17 @@ var thisElemnt;
        thisElemnt.find('.main_form').append(toPrint); 
       });   
       
+ /*     uploadprogress: function(file, progress, bytesSent) {
+    if (a.previewElement) {
+        var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+        progressElement.style.width = progress + "%";
+        progressElement.querySelector(".progress-text").textContent = progress + "%";
+    }
+}*/
 
       this.on("error", function(file,response,z) {
-       var errorMessage = response.errorMessage;
-        thisElemnt.find('.alert').show().find('span').html(' Error Occured: code 10');
+        thisElemnt.find('.progress').hide();
+        thisElemnt.find('.alert').show().find('span').html(' Error Occured: code 10, '+response);
         setTimeout(function(){ thisElemnt.find('.alert').hide(); }, 30000);
       });
       }
@@ -254,12 +266,19 @@ var thisElemnt;
 		maxFilesize: 3,
 		maxFiles: 1,
 		acceptedFiles: ".jpeg,.jpg,.png",
+    totaluploadprogress(uploadProgress) {
+    thisElemnt.find('.progress-bar').css('width', uploadProgress + '%')
+     },
 		init: function() {
 			this.on("maxfilesexceeded", function(file){
 			        this.removeAllFiles(); this.addFile(file);
 			    });
 
 			this.on("addedfile", function(file){
+           
+      thisElemnt.find('.alert').hide(); 
+      thisElemnt.find('.progress').show();
+
 			        $(".gallery_form").show().parent('.view').find('img.single_img').hide();
 					thisElemnt = $(file.previewElement).parents('.modal');
 					var ref = thisElemnt.find('.single_img').attr('ref');
@@ -270,12 +289,12 @@ var thisElemnt;
 			    });
    
 			this.on("error", function(file,response,z) {
-			 var errorMessage = response.errorMessage;
-			 $(file.previewElement).find('.dz-error-message').text('Error Occured: 10');
+        thisElemnt.find('.progress').hide();
+			 $(file.previewElement).find('.dz-error-message').text('Error Occured: 11, '+response);
 			});
 			this.on("success", function(file,response,z) {
-			 var errorMessage = response.errorMessage;
-
+       
+       setTimeout(function(){ thisElemnt.find('.progress').hide(); }, 1000);
 			 var toPrint='<input type="hidden" value="'+response.data.ref+'" name="input1">'; //assign a permanent input1
 			 $(file.previewElement).prepend(toPrint);
 

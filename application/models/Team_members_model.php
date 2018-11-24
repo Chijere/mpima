@@ -1866,7 +1866,7 @@ class Team_members_model extends CI_Model {
 	    {             
 			$dbquery2=$this->db->conn_id->prepare("
 							DELETE FROM
-							`banner` 
+							`team_members` 
 							WHERE (`item_id`=:item_id AND `user_id`=:user_id  )
 			");
 			$dbquery2->bindParam(":item_id",$data['item_id']);               
@@ -1932,7 +1932,7 @@ class Team_members_model extends CI_Model {
 		{
 			$this->db->conn_id->commit();
 			$this->status=true;
-			$this->result_info="item edited permanently";
+			$this->result_info="item deleted permanently";
 		}
 		else
 		{

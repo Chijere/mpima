@@ -34,6 +34,7 @@
                                 );
 
     $page_data['tag']=array( 
+                        '<script src="'.base_url().'assets/vendors/progressbar/bootstrap-progressbar.min" ></script>',
                         '<script src="'.base_url().'assets/js/admin_custom.min.js" async ></script>',
                         '<script src="'.base_url().'assets/vendors/dropzone/dist/min/dropzone.min.js" ></script>'
                       );
@@ -180,6 +181,11 @@
         <div class="alert alert-danger" role="alert" style="display: none;">
           <strong>Error: </strong> <span></span>
         </div>
+        <div class="progress" style="display: none; width: 80%; margin-left: 10%;">
+            <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+                <span class="progress-text"></span>
+            </div>
+        </div>
                       <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/services/form/add" data-parsley-validate>
                       
                       <div class="form-group">
@@ -240,7 +246,12 @@
         <div class="alert alert-danger" role="alert" style="display: none;">
           <strong>Error: </strong> <span></span>
         </div>
-
+        
+        <div class="progress" style="display: none; width: 80%; margin-left: 10%;">
+            <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+                <span class="progress-text"></span>
+            </div>
+        </div>
                     <form class=" main_form form-horizontal form-label-left" action="<?php echo base_url(); ?>admin/services/form/edit" data-parsley-validate> 
                       
                       <div class="form-group">
