@@ -1610,6 +1610,7 @@ class Banner_model extends CI_Model {
 	        }
 	    }	
 
+
 	    //move files from temporary dir to permanent dir
 	    ##add pics
 		if(!$this->fail_result)
@@ -1690,6 +1691,8 @@ class Banner_model extends CI_Model {
                                                ),
                               "addition_info"=>$this->addition_info);
 	}
+
+
 	public function deleteItemPermanently($data=array())
 	{
 	    //reset default variable;

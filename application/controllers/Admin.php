@@ -1163,7 +1163,7 @@ class Admin extends CI_Controller {
 
 		   	$this->load->model('Banner_model');
        		$model_data=$this->Banner_model->editItem($pass_data);
-
+ 
        		$href=base_url();
        		$addition_info=$model_data['addition_info'];
        		$status=$model_data['status'];
@@ -1993,6 +1993,14 @@ class Admin extends CI_Controller {
 						                				),	 		                
 						        	),
 						        array(
+						                'field' => 'addTofrntBanner',
+						                'label' => 'addTofrntBanner',
+						                'rules' => 'numeric',
+						                'errors' => array(
+						                				'numeric' => '1system_error',
+						                				),	 		                
+						        	),
+						        array(
 						                'field' => 'input1',
 						                'label' => 'Image',
 						                'rules' => 'callback_customAlpha_numeric',
@@ -2054,6 +2062,7 @@ class Admin extends CI_Controller {
        		$pass_data = array(	'user_id' => $_SESSION['user_id'],
        							'description' => $this->input->post('description',true),
        							'title' => $this->input->post('title',true),
+       							'addTo_front_Banner' => $this->input->post('addTofrntBanner',true),
        						);
        		$pass_data['addfile']=array();
        		for ($i=1; $i <13 ; $i++) { 
@@ -2131,6 +2140,14 @@ class Admin extends CI_Controller {
 						                				),	 		                
 						        	),
 						        array(
+						                'field' => 'addTofrntBanner',
+						                'label' => 'addTofrntBanner',
+						                'rules' => 'numeric',
+						                'errors' => array(
+						                				'numeric' => '1system_error',
+						                				),	 		                
+						        	),
+						        array(
 						                'field' => 'description',
 						                'label' => 'About',
 						                'rules' => 'max_length[2000]',
@@ -2192,6 +2209,7 @@ class Admin extends CI_Controller {
        			}					
 	 		}     			
         }	  
+        
 
 	   // flesh load	
        if(!$fail_result)
@@ -2200,6 +2218,7 @@ class Admin extends CI_Controller {
        		$pass_data = array(	'user_id' => $_SESSION['user_id'],
        							'description' => $this->input->post('description',true),
        							'title' => $this->input->post('title',true),
+       							'addTo_front_Banner' => $this->input->post('addTofrntBanner',true),
        							'item_id' => $this->input->post('i_ref',true),
        						);
        		$pass_data['addfile']=array();

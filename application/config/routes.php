@@ -85,7 +85,7 @@ $route['(?i)admin'] = 'admin';
 	//banner
 $route['(?i)admin/homepage_banners'] = 'admin/view_homepage_banners';
 $route['(?i)admin/homepage_banners/form/add'] = 'admin/add_homepage_banner_form';
-$route['(?i)admin/homepage_banners/form/edit'] = 'admin/edit_homepage_banner_form';
+$route['(?i)admin/homepage_banners/form/edit'] = 'admin/edit_homepage_banner_form'; 
 $route['(?i)admin/homepage_banners/form/edit/delete'] = 'admin/delete_homepage_banner_form';
 	//team
 $route['(?i)admin/team_members'] = 'admin/view_team_members';

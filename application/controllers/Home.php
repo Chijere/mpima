@@ -35,6 +35,7 @@ class Home extends CI_Controller {
         #######################################*/		    
 
         $this->load->model('Banner_model');
+        $this->load->model('Services_model');
 		$this->load->library('general_functions');
 
 		/*##################################
@@ -58,6 +59,10 @@ class Home extends CI_Controller {
 		/*####Get Banners######*/
 		$pass_data=array(); // refresh pass_data
    		$model_data_banner=$this->Banner_model->getItem($pass_data);
+
+		/*####Get Service######*/
+		$pass_data=array(); // refresh pass_data
+   		$model_data_service=$this->Services_model->getItem($pass_data);
 
 		  
 
@@ -103,8 +108,31 @@ class Home extends CI_Controller {
 
    		}
 
+   		   		//do some formating to the results
+   		foreach ($model_data_service['data']['records'] as $key => $value) {
+
+			$model_data_service['data']['records'][$key]['date']=date( "j M Y", strtotime($value['date']));
+			foreach ($value['item_pic'] as $key2 => $value2) {
+				# calculate image dimensions
+				$width=600;$height =600;
+				if (file_exists($value2['path'].'.jpg')) 
+					list($width, $height, $type, $attr) = getimagesize($value2['path'].'.jpg');	
+				else
+					$model_data_service['data']['records'][$key]['item_pic'][$key2]['path'] = 'media/default/images/services';
+					$model_data_service['data']['records'][$key]['item_pic'][$key2]['dimension'] = $width.'x'.$height;
+			}
+			#limit length 				
+			if(strlen($value['item_description'])>90)
+				$model_data_service['data']['records'][$key]['item_description']=$this->general_functions->wordTrimmer($value['item_description'],90,'&hellip;');
+			#limit length 				
+			if(strlen($value['title'])>50)
+				$model_data_service['data']['records'][$key]['title']=$this->general_functions->wordTrimmer($value['title'],50,'&hellip;');
+
+   		}
+
 		$data['page_data']['item']= $model_data_property;	
 		$data['page_data']['banner']= $model_data_banner;	
+		$data['page_data']['service']= $model_data_service;	
 		$this->load->view('home/home',$data);
 
 	}

@@ -1911,10 +1911,9 @@ section
 .home-sidelinks {
   list-style: none;
   font-family: "metropolis-regular", sans-serif;
-  font-size: 1.4rem;
+  font-size: 0.5rem;
   line-height: 1.714;
-  text-transform: uppercase;
-  letter-spacing: 0.3rem;
+  letter-spacing: 0.1rem;
   margin: 0;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -1928,7 +1927,7 @@ section
   display: block;
   padding: 0;
   text-align: left;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.4);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
@@ -1945,25 +1944,25 @@ section
   background-color: #cc147f;
   border-radius: 50%;
   position: absolute;
-  top: 3rem;
-  left: 2rem;
+  top: 2rem;
+  left: 1rem;
 }
 .home-sidelinks a {
   display: block;
-  padding: 2.1rem 15rem 2.1rem 4rem;
+  padding: 1rem 1rem 1rem 2rem;
   color: #ffffff;
 }
 .home-sidelinks span {
   display: block;
   font-family: "metropolis-regular", sans-serif;
-  font-size: 1.5rem;
+  font-size: 1rem;
   line-height: 1.6rem;
   color: rgba(255, 255, 255, 0.5);
   text-transform: none;
   letter-spacing: 0;
 }
 .home-sidelinks li:hover {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 

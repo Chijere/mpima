@@ -20,10 +20,10 @@
 
       </div>
 
-        <ul class="home-sidelinks">
-            <li><a class="smoothscroll" href="#about">About<span>who we are</span></a></li>
-            <li><a class="smoothscroll" href="#services">Services<span>what we do</span></a></li>
-            <li><a  class="smoothscroll" href="#contact">Contact<span>get in touch</span></a></li>
+        <ul class="home-sidelinks col-lg-3 col-md-3 col-sm-3 col-xs-12">
+          <?php $n=0;  foreach ($page_data['service']['data']['records'] as $key => $value) { if($value['addTo_front_Banner'] && $n<2){ ?>
+            <li><a  class="smoothscroll" href="<?php echo base_url()."service/".$value['item_id']; ?>"><?php echo $value['title']; ?><span><?php echo $value['item_description']; ?></span></a></li> 
+          <?php $n++;}} ?>
         </ul> <!-- end home-sidelinks -->
 
        

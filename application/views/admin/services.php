@@ -125,7 +125,7 @@
               <div class="col-md-3 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Add a Team Member</h2>
+                    <h2>Add a Service</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -134,8 +134,8 @@
                   </div>
                   <div class="x_content">
                     <div class="form-group">
-                        <label class="control-label"><small> Add a reasonable number please </small></label>
-                        <label class="control-label"><small> Image should be : 180x180px / higher </small></label>
+                        <label class="control-label"><small> - Only 2 services can be featured on the front banner </small></label>
+                        <label class="control-label"><small> - Add a file to the services </small></label>
                       </div>
                       <div class="ln_solid"></div>
                       <div class="form-group">
@@ -206,6 +206,11 @@
                         </div>
                         </div>   
                           <div class="ln_solid"></div>
+                          <div class="checkbox " style="margin-bottom: 10px">
+                          <label>
+                          <input type="checkbox" name="addTofrntBanner" value="1"> Add on Front banner as Special Service
+                          </label>
+                          </div>
                           <div class="form-group">
                               <button style="width: 140px" type="button" class="btn btn-default modal-change-photo"><i class="fa fa-pencil"></i> Add Brochure </button>
                               <span class="file_name"></span>
@@ -271,13 +276,18 @@
                           ></textarea>
                         </div>
                         </div>   
-                          <div class="ln_solid"></div> 
+                          <div class="ln_solid"></div>
+                
+                          <div class="checkbox " style="margin-bottom: 10px">
+                          <label>
+                          <input <?php if($value['addTo_front_Banner']) echo "checked"; ?> type="checkbox" name="addTofrntBanner" value="1"> Add on Front banner as Special Service
+                          </label>
+                          </div>
+
                           <input type="hidden" name="i_ref" value="<?php echo $value['item_id'] ?>" />
                           <div class="form-group">
                               <button style="width: 170px" type="button" class="btn btn-default modal-change-photo"><i class="fa fa-pencil"></i> Change Brochure </button>
-
                               <span class="file_name">Added File</span>
-
                           </div>
 
                               <button style="width: 140px" type="submit" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete </button>

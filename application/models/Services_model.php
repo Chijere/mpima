@@ -991,6 +991,7 @@ class Services_model extends CI_Model {
 											"user_profile_pic"=>$profile_picArray,
 											"user_name"=>$value['user_name'],									
 											"user_about"=>$value['about'],											
+											"addTo_front_Banner"=>$value['addTo_front_Banner'],									
 											"summary"=>$value['summary'],												
 											);
 					}
@@ -1033,11 +1034,13 @@ class Services_model extends CI_Model {
 	    if(!isset($data['summary'])) $data['summary']='';
 	    if(!isset($data['name'])) $data['name']='';
 	    if(!isset($data['title'])) $data['title']='';
+	    if(!isset($data['addTo_front_Banner'])) $data['addTo_front_Banner']='';
 	    if(!isset($data['type'])) $data['type']='';
 	    if(!isset($data['link_linkedin'])) $data['link_linkedin']='';
 	    if(!isset($data['link_twitter'])) $data['link_twitter']='';
 	    if(!isset($data['link_facebook'])) $data['link_facebook']='';
 	    if(!isset($data['on_display'])) $data['on_display']=1;// default is to put it on display 
+	    if(!isset($data['allow_null_file'])) $data['allow_null_file']=true;
 
 
 	    // check if required data is supplied      
@@ -1052,7 +1055,7 @@ class Services_model extends CI_Model {
 	    // collect received pics      
 	    if(!$this->fail_result)
 	    {   
-	        if(empty($data['addfile']))
+	        if(empty($data['addfile'])  && !$data['allow_null_file'])
 	        {
 		        $this->addition_info='error 101_1';
 		        //$addition_info = "empty fields provided";
@@ -1165,8 +1168,8 @@ class Services_model extends CI_Model {
 	    if(!$this->fail_result)   
 	    {             
 			$dbquery2=$this->db->conn_id->prepare("
-							INSERT INTO `services`(`user_id`,`item_pic`,`on_display`,`description`,`summary`,`name`,`title`) 
-							VALUES(:user_id,:item_pic,:on_display,:description,:summary,:name,:title)
+							INSERT INTO `services`(`user_id`,`item_pic`,`on_display`,`description`,`summary`,`name`,`title`,`addTo_front_Banner`) 
+							VALUES(:user_id,:item_pic,:on_display,:description,:summary,:name,:title,:addTo_front_Banner)
 			");
 			$data['user_id']=preg_replace("/[^a-zA-Z0-9]+/","",$data['user_id']);
 			$dbquery2->bindParam(":user_id",$data['user_id']);
@@ -1176,6 +1179,7 @@ class Services_model extends CI_Model {
 			$dbquery2->bindParam(":summary",$data['summary']);
 			$dbquery2->bindParam(":name",$data['name']);
 			$dbquery2->bindParam(":title",$data['title']);
+			$dbquery2->bindParam(":addTo_front_Banner",$data['addTo_front_Banner']);
 	        
 
 	        if(!($dbquery2->execute()))
@@ -1278,6 +1282,7 @@ class Services_model extends CI_Model {
 	    if(!isset($data['item_id'])) $data['item_id']='';
 	    if(!isset($data['summary'])) $data['summary']='';
 	    if(!isset($data['title'])) $data['title']='';
+	    if(!isset($data['addTo_front_Banner'])) $data['addTo_front_Banner']='';
 	    if(!isset($data['name'])) $data['name']='';
 	    if(!isset($data['description'])) $data['description']='';
 	    if(!isset($data['addfile'])) $data['addfile']=array();
@@ -1303,7 +1308,7 @@ class Services_model extends CI_Model {
 
 			$dbquery1=$this->db->conn_id->prepare("
 			SELECT `item_pic` 
-			FROM `team_members`
+			FROM `services`
 			WHERE `item_id`=:item_id
 			");
 			$data['item_id']=preg_replace("/[^a-zA-Z0-9]+/","",$data['item_id']);
@@ -1351,7 +1356,7 @@ class Services_model extends CI_Model {
             //remove empty values
             $existingRecords=array_filter($existingRecords);
 
-          	if((count($existingRecords)-count($data['deletePic']))>=$max_number_of_file)
+          	if((count($existingRecords)-count($data['addfile']))>=$max_number_of_file)
           	{
           		$this->fail_result=true;
           		//delete some pics first
@@ -1521,6 +1526,7 @@ class Services_model extends CI_Model {
 							`summary`= CASE WHEN :summary=:emptyField THEN `summary` ELSE :summary END,
 							`name`= CASE WHEN :name=:emptyField THEN `name` ELSE :name END,
 							`title`= CASE WHEN :title=:emptyField THEN `title` ELSE :title END,
+							`addTo_front_Banner`= CASE WHEN :addTo_front_Banner=:emptyField THEN `addTo_front_Banner` ELSE :addTo_front_Banner END,
 							`item_pic`= :item_pic
 							WHERE (`item_id`=:item_id AND `user_id`=:user_id )
 			");
@@ -1532,12 +1538,13 @@ class Services_model extends CI_Model {
 			$dbquery2->bindParam(":summary",$data['summary']);
 			$dbquery2->bindParam(":name",$data['name']);
 			$dbquery2->bindParam(":title",$data['title']);
+			$dbquery2->bindParam(":addTo_front_Banner",$data['addTo_front_Banner']);
 			$dbquery2->bindParam(":emptyField",$emptyField);                 
-	        
+
 	        if(!($dbquery2->execute()))
 	        {
-	            print_r($data);
-	            print_r($dbquery2->errorInfo());
+	            #print_r($data);
+	            #print_r($dbquery2->errorInfo());
 	            $this->fail_result=true;
 	            $this->addition_info='error 110_1';
 	            $this->result_info=" An Error Occurred, Try Again ";
